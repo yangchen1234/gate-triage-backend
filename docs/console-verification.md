@@ -25,3 +25,12 @@ Scope: the three-port console on top of Ryan's `ca08d9e` main branch. The indepe
 ## Limits
 
 This is a synthetic advisory demo with expiring process-memory sessions. It does not validate live Terminal49 data, real port capacity/tariffs, realized savings, enterprise accounts/RBAC, durable database approval history, or multi-instance operation. Real Claude connectivity and its actual cost still require the user's valid key and available model ID. Existing `/health` model fields describe the legacy explanation extension; the console reports its own configuration and actual plan mode separately.
+
+## Render environment connection extension — 2026-10-17
+
+- Full Python suite: **156 tests passed**; frontend: **14 tests passed**, TypeScript/Vite production build passed. New coverage includes incomplete environment configuration, team-code throttling across sessions, authorization expiry/revocation, secret-free metadata, per-session personal-key override, and the legacy public plan route never spending the shared key.
+- Production Docker image built successfully. A separate local container used explicitly synthetic, nonfunctional environment credentials; the HTTP console checker passed all three 100-container profiles, idempotent dispatch, isolation, and stale-decision rejection with **zero model requests**.
+- Actual browser verification authorized team access using the synthetic access code, showed the configured model, then disconnected and returned to the access-code form. No provider request was made. This verifies configuration and session authorization, not real Anthropic authentication or account permissions.
+- Independent read-only review found no publication blocker in the backend, frontend, or setup instructions. `git diff --check` passed.
+- This extension builds `index-2yL17N5j.js` and `index-D_He2JNO.css`. The environment values remain runtime configuration, outside the image and Git history.
+- Public-deployment verification and a real, billable model request are separate checks. The owner must save valid Render environment values and authorize a session before requesting a live plan.

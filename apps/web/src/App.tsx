@@ -65,7 +65,7 @@ export default function App() {
   }
   async function restart() {
     setLoading(true); setError('');
-    try { setSnapshot(await newSession()); setJobs([]); setSelectedId(null); setExpired(false); setUncertain(false); intent.current = null; notify('New temporary session started. No Claude key is configured.'); }
+    try { setSnapshot(await newSession()); setJobs([]); setSelectedId(null); setExpired(false); setUncertain(false); intent.current = null; notify('New temporary session started. Connect Claude to authorize model requests.'); }
     catch (err) { onError(err); } finally { setLoading(false); }
   }
   async function patchScenario(patch: Partial<Scenario>) {
@@ -93,7 +93,7 @@ export default function App() {
   }
   function modelUpdated(model: ModelStatus) {
     setSnapshot(previous => previous ? { ...previous, model } : previous);
-    notify(model.configured ? 'Key saved temporarily. No verification or model call was made.' : 'Claude disconnected. The backend has forgotten this session’s key.');
+    notify(model.configured ? model.source === 'render_environment' ? 'Team Claude connected for this session. No model call was made.' : 'Personal key saved temporarily. No model call was made.' : 'Claude disconnected for this session. The team key remains in Render; any personal key was forgotten.');
   }
   function changeView(next: 'operations' | 'assistant') { setView(next); window.scrollTo({ top: 0, behavior: 'smooth' }); }
   const port = ports.find(item => item.code === snapshot?.scenario.port) || ports[0];

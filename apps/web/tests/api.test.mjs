@@ -31,6 +31,27 @@ test('config unwraps metadata and never stores API key in browser storage', asyn
   assert.equal([...mod.storage.values()].includes('test-only-placeholder'), false);
   assert.equal((await mod.api.disconnect()).configured, false);
 });
+test('team access sends only the code in a scoped request and never stores it', async () => {
+  const mod = await isolatedApi('session-test-token'); const calls = [];
+  const status = { configured: true, server_available: true, source: 'render_environment', model: 'team-model-id', key_expires_at: '2026-10-17T10:15:00Z' };
+  globalThis.fetch = async (url, init) => { calls.push({ url, init }); return response({ model: status }); };
+  assert.deepEqual(await mod.api.connectTeam('test-only-team-code'), status);
+  assert.equal(calls[0].url, '/api/console/agent/team');
+  assert.equal(calls[0].init.method, 'PUT');
+  assert.equal(calls[0].init.headers.get('X-Console-Token'), 'session-test-token');
+  assert.equal(calls[0].init.credentials, 'same-origin');
+  assert.deepEqual(JSON.parse(calls[0].init.body), { access_code: 'test-only-team-code' });
+  assert.deepEqual([...mod.storage.entries()], [['gate-triage-console-token', 'session-test-token']]);
+  await mod.api.disconnect();
+  assert.equal(calls[1].url, '/api/console/agent/config');
+  assert.equal(calls[1].init.method, 'DELETE');
+});
+test('rejected team code does not masquerade as an expired browser session', async () => {
+  const mod = await isolatedApi('session-test-token');
+  globalThis.fetch = async () => response({ detail: 'Team access code is invalid' }, 403);
+  await assert.rejects(mod.api.connectTeam('incorrect-test-code'), err => err instanceof mod.ApiError && err.status === 403 && err.message === 'Team access code is invalid');
+  assert.equal(mod.storage.get('gate-triage-console-token'), 'session-test-token');
+});
 test('plan POST transmits stable idempotency key, revision and explicit use_model', async () => {
   const mod = await isolatedApi('session-test-token'); let captured;
   globalThis.fetch = async (_url, init) => { captured = init; return response({ id: 'job-test', status: 'queued' }, 202); };

@@ -21,7 +21,7 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
   if (token !== requestToken && !(path === '/session' && init.method === 'POST')) throw new ApiError(-1, 'Previous session response discarded.');
   if (!response.ok) {
     const detail = typeof data?.detail === 'string' ? data.detail : undefined;
-    throw new ApiError(response.status, response.status === 401 ? 'Your preview session has expired. Start a new session; the previous Claude key is no longer available here.' :
+    throw new ApiError(response.status, response.status === 401 ? 'Your preview session has expired. Start a new session and reconnect Claude to continue.' :
       response.status === 409 || response.status === 412 ? detail || 'The queue changed. Refresh its current state, then generate a new plan.' :
       detail || `Request failed (${response.status}). Please try again.`);
   }
@@ -47,6 +47,7 @@ export const api = {
   ports: () => request<{ ports: Port[]; tariff_notice: string }>('/ports'),
   scenario: (patch: object, revision: number) => request<Snapshot>('/scenario', { method: 'POST', headers: { 'If-Match': String(revision) }, body: JSON.stringify(patch) }),
   configure: async (api_key: string, model: string) => (await request<{ model: ModelStatus }>('/agent/config', { method: 'PUT', body: JSON.stringify({ api_key, model }) })).model,
+  connectTeam: async (access_code: string) => (await request<{ model: ModelStatus }>('/agent/team', { method: 'PUT', body: JSON.stringify({ access_code }) })).model,
   disconnect: async () => (await request<{ model: ModelStatus }>('/agent/config', { method: 'DELETE' })).model,
   plans: () => request<{ plans: Job[] }>('/plans'),
   plan: (id: string) => request<Job>(`/plans/${encodeURIComponent(id)}`),

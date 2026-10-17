@@ -12,6 +12,9 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 import json
+import hmac
+import os
+import re
 from secrets import token_urlsafe
 from threading import BoundedSemaphore, Event, RLock, Thread
 from time import time
@@ -62,6 +65,11 @@ class PlanInput(BaseModel):
     use_model: StrictBool = False
 
 
+class TeamInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    access_code: SecretStr = Field(min_length=1, max_length=256, repr=False)
+
+
 class DecisionInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
     container_id: StrictStr = Field(min_length=1, max_length=32)
@@ -97,6 +105,7 @@ class Session:
     stats: dict = field(default_factory=dict)
     key: SecretStr | None = field(default=None, repr=False)
     model: str | None = None
+    source: str = "none"
     key_expires: float = 0
     jobs: dict = field(default_factory=dict)
     idempotency: dict = field(default_factory=dict)
@@ -116,6 +125,21 @@ class ConsoleStore:
         self._model_slots = BoundedSemaphore(2)
         self._created = defaultdict(deque)
         self._model_ips = defaultdict(deque)
+        self._team_attempts = defaultdict(deque)
+        # Render injects these at runtime. A provider key alone never enables
+        # public spending; an explicit model and a strong private gate are required.
+        self._server_key = None
+        self._server_model = None
+        self._team_code = None
+        key = os.getenv("ANTHROPIC_API_KEY", "")
+        model = os.getenv("ANTHROPIC_MODEL", "")
+        code = os.getenv("CONSOLE_TEAM_ACCESS_CODE", "")
+        if (16 <= len(key) <= 2048 and not any(c.isspace() for c in key)
+                and re.fullmatch(r"claude-[A-Za-z0-9._-]{1,80}", model)
+                and 16 <= len(code) <= 256 and not any(c.isspace() for c in code)):
+            self._server_key = SecretStr(key)
+            self._server_model = model
+            self._team_code = SecretStr(code)
         self._stop = Event()
         self._sweeper = Thread(target=self._sweep, daemon=True, name="console-key-expiry")
         self._sweeper.start()
@@ -131,11 +155,9 @@ class ConsoleStore:
             if session.expires <= now:
                 self._erase(session)
                 del self.sessions[token]
-            elif session.key is not None and session.key_expires <= now:
-                session.key = None
-                session.model = None
-                session.cancel.set()
-        for history in (self._created, self._model_ips):
+            elif (session.key is not None or session.source == "render_environment") and session.key_expires <= now:
+                self._erase(session)
+        for history in (self._created, self._model_ips, self._team_attempts):
             for ip, stamps in list(history.items()):
                 while stamps and stamps[0] <= now - 3600:
                     stamps.popleft()
@@ -146,6 +168,7 @@ class ConsoleStore:
     def _erase(session):
         session.key = None
         session.model = None
+        session.source = "none"
         session.key_expires = 0
         session.cancel.set()
 
@@ -155,6 +178,9 @@ class ConsoleStore:
             for session in self.sessions.values():
                 self._erase(session)
             self.sessions.clear()
+            self._server_key = None
+            self._team_code = None
+            self._server_model = None
         self._executor.shutdown(wait=False, cancel_futures=True)
         self._sweeper.join(timeout=1)
 
@@ -185,12 +211,17 @@ class ConsoleStore:
             result["token"] = session.token
         return result
 
-    @staticmethod
-    def _model_meta(session):
-        return {"configured": session.key is not None,
-                "model": session.model if session.key else None,
-                "key_expires_at": _iso(session.key_expires) if session.key else None,
-                "provider": "anthropic", "storage": "process_memory_only"}
+    def _server_available(self):
+        return self._server_key is not None and self._team_code is not None and self._server_model is not None
+
+    def _model_meta(self, session):
+        authorized = session.key is not None or (session.source == "render_environment" and self._server_available())
+        return {"configured": authorized,
+                "model": session.model if authorized else self._server_model if self._server_available() else None,
+                "key_expires_at": _iso(session.key_expires) if authorized else None,
+                "provider": "anthropic", "server_available": self._server_available(),
+                "source": session.source if authorized else "none",
+                "storage": "render_environment" if authorized and session.source == "render_environment" else "process_memory_only"}
 
     @staticmethod
     def _check_revision(session, revision):
@@ -250,7 +281,31 @@ class ConsoleStore:
             if session.active_job:
                 raise HTTPException(409, "Wait for the current plan to finish before changing model configuration")
             session.key, session.model = config.api_key, config.model
+            session.source = "session"
             session.key_expires = min(session.expires, time() + KEY_TTL)
+            session.cancel = Event()
+            return {"model": self._model_meta(session)}
+
+    def authorize_team(self, token, request):
+        with self._lock:
+            session = self._get(token)
+            if not self._server_available():
+                raise HTTPException(409, "Team Claude is not configured by the service owner")
+            if session.active_job:
+                raise HTTPException(409, "Wait for the current plan to finish before changing model configuration")
+            now = time()
+            failures = self._team_attempts[session.ip]
+            if sum(stamp > now - 60 for stamp in failures) >= 5 or len(failures) >= 20:
+                raise HTTPException(429, "Team access attempt limit reached; try again later", headers={"Retry-After": "60"})
+            entered = request.access_code.get_secret_value().encode("utf-8")
+            expected = self._team_code.get_secret_value().encode("utf-8")
+            if not hmac.compare_digest(entered, expected):
+                failures.append(now)
+                raise HTTPException(403, "Team access code was not accepted")
+            session.key = None  # The shared provider key is never copied into a session.
+            session.model = self._server_model
+            session.source = "render_environment"
+            session.key_expires = min(session.expires, now + KEY_TTL)
             session.cancel = Event()
             return {"model": self._model_meta(session)}
 
@@ -300,8 +355,8 @@ class ConsoleStore:
                 raise HTTPException(429, "Plan request limit reached; wait a minute", headers={"Retry-After": "60"})
             reserved = False
             if request.use_model:
-                if session.key is None:
-                    raise HTTPException(409, "Configure a session Claude key before requesting model assistance")
+                if not self._model_meta(session)["configured"]:
+                    raise HTTPException(409, "Authorize team Claude or configure a personal key before requesting model assistance")
                 if session.model_jobs >= 12 or len(self._model_ips[session.ip]) >= 24:
                     raise HTTPException(429, "Model plan limit reached; continue in deterministic mode")
                 if not self._model_slots.acquire(blocking=False):
@@ -318,7 +373,8 @@ class ConsoleStore:
             session.cancel = Event()
             cfg = None
             if request.use_model:
-                cfg = {"base_url": "https://api.anthropic.com/v1/", "api_key": session.key.get_secret_value(),
+                selected_key = self._server_key if session.source == "render_environment" else session.key
+                cfg = {"base_url": "https://api.anthropic.com/v1/", "api_key": selected_key.get_secret_value(),
                        "model": session.model, "_cancel": session.cancel}
                 session.model_jobs += 1
                 self._model_ips[session.ip].append(now)
@@ -428,6 +484,10 @@ def install_console(app: FastAPI, settings: Settings) -> ConsoleStore:
     @router.delete("/agent/config")
     def clear_config(x_console_token: str | None = Header(default=None)):
         return store.clear_config(x_console_token)
+
+    @router.put("/agent/team")
+    def team(body: TeamInput, x_console_token: str | None = Header(default=None)):
+        return store.authorize_team(x_console_token, body)
 
     @router.post("/plans", status_code=202)
     def plan(body: PlanInput, x_console_token: str | None = Header(default=None), if_match: str | None = Header(default=None),

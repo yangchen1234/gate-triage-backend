@@ -10,7 +10,7 @@ The web console now adapts the existing Workbench design to Ryan's 100-container
 - **Interactive API documentation:** <https://gate-triage-backend.onrender.com/docs>
 - **Frontend examples:** [JavaScript and curl guide](docs/api-usage.md)
 
-The repository includes Ryan's scoring engine and **100 synthetic containers**, re-evaluated under three port profiles. These are what-if configurations of one dataset, not live containers in three ports. It does not use live Terminal49 data or execute real port operations. Rules-only mode works without a key. To use Claude, open **Connection settings** in the console and paste a project-specific API key and exact model ID. The key stays in this expiring server session's memory, is never returned or stored in the browser, and is cleared on disconnect/expiry/restart. Configuration is not a live model-access check; the generation result reports the actual mode and any fallback. See the [agent and credential contract](docs/agent-console.md).
+The repository includes Ryan's scoring engine and **100 synthetic containers**, re-evaluated under three port profiles. These are what-if configurations of one dataset, not live containers in three ports. It does not use live Terminal49 data or execute real port operations. Rules-only mode works without a key. For a shared team Claude connection, the service owner sets `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, and a private `CONSOLE_TEAM_ACCESS_CODE` in **Render → Environment**. Teammates enter only that access code in the web console; the API key never enters the browser. All three values are required, and a key alone does not enable public model use. Per-session personal keys remain an advanced option. Configuration is not a live model-access check; generation reports the actual mode and any fallback. See the [agent and credential contract](docs/agent-console.md).
 
 ## Run locally
 
@@ -60,7 +60,7 @@ The script checks the endpoints, all four scenario presets, queue ordering, acti
 | `POST` | `/plan/approve` | Legacy shared in-memory decision; no message is sent |
 | `GET` | `/plan/approvals` | Legacy shared decisions |
 
-The web console uses isolated authenticated endpoints under `/api/console`, not the legacy shared scenario. Create a session, configure a session-only key if desired, explicitly dispatch a plan, poll the returned job, then record a decision. See [the full flow](docs/agent-console.md#agent-api-flow) and `/docs`. Model calls require a console token, a configured session key, an explicit generation request, and the current revision. Page refresh and job polling do not trigger new model calls.
+The web console uses isolated authenticated endpoints under `/api/console`, not the legacy shared scenario. Create a session, authorize its team connection or configure an optional personal key, explicitly dispatch a plan, poll the returned job, then record a decision. See [the full flow](docs/agent-console.md#agent-api-flow) and `/docs`. Model calls require a console token, an authorized team connection or personal session key, an explicit generation request, and the current revision. Page refresh and job polling do not trigger new model calls.
 
 Container records retain their original data fields, including `container_id`, `cargo_type`, `consignee_type`, `sources`, `demurrage_usd_per_day`, `free_days_left`, `zone` and `arrived_at`. The scorer adds source `trust` values and the fields `priority`, `urgency`, `conflict_score`, `action` and `reason`. Scores range from 0 to 1. Non-refrigerated containers have `sources.reefer: null`.
 

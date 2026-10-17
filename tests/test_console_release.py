@@ -8,6 +8,9 @@ def test_public_legacy_plan_never_uses_deployment_model_credentials(monkeypatch)
     monkeypatch.setenv("LLM_BASE_URL", "https://api.anthropic.com/v1/")
     monkeypatch.setenv("LLM_MODEL", "test-model")
     monkeypatch.setenv("LLM_API_KEY", "synthetic-do-not-transmit")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "synthetic-render-key-do-not-transmit")
+    monkeypatch.setenv("ANTHROPIC_MODEL", "claude-test-model")
+    monkeypatch.setenv("CONSOLE_TEAM_ACCESS_CODE", "synthetic-team-access-code")
     seen = []
 
     def fake_agent(containers, scenario, top_n=5, *, cfg="would-read-env"):
@@ -21,6 +24,7 @@ def test_public_legacy_plan_never_uses_deployment_model_credentials(monkeypatch)
         assert response.json()["agent_mode"] == "deterministic"
         assert seen == [None]
         assert "synthetic-do-not-transmit" not in response.text
+        assert "synthetic-render-key" not in response.text
 
 
 def test_static_console_headers_and_api_routes_are_independent(monkeypatch, tmp_path):

@@ -16,17 +16,19 @@ Queue fee statistics and planner counterfactuals answer different questions. Que
 2. Select Los Angeles, Shanghai, or Rotterdam. Scenario controls change lanes, customs availability, and Zone B power only in this session.
 3. Search or filter the worklist and inspect a container's source evidence.
 4. Open **Action assistant**. Generate a rules-only plan first. No paid API is called on page load, refresh, polling, or port changes.
-5. Open **Connection settings** to paste an Anthropic API key and the exact model ID available to that key. This configures the session; it does not prove model access until a generation succeeds.
+5. The service owner configures `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, and `CONSOLE_TEAM_ACCESS_CODE` in Render Environment, then saves and deploys. In **Connection settings**, teammates enter only the private team access code to authorize this session. The API key remains on Render. A personal session-only key is available as an advanced alternative. Configuration does not prove model access until generation succeeds.
 6. Choose Claude and explicitly generate a plan. The browser polls the existing job; it does not create another paid generation for each poll.
 7. Inspect the deterministic before/after estimates, model/tool trace, model mode, and draft. Approve or reject an action with an optional note. The application never sends the draft, removes a hold, or controls equipment.
 8. Change the port or scenario. Prior plans remain inspectable but are stale and cannot be approved.
-9. Disconnect Claude to remove the session's key. An already-running provider request may complete; disconnecting cannot unsend data already transmitted.
+9. Disconnect Claude to revoke this session's shared-model access or remove its personal key. Render's environment key remains on Render until the owner changes it. An already-running provider request may complete; disconnecting cannot unsend data already transmitted.
 
 ## Session and credential boundaries
 
-The browser stores only its opaque console token in `sessionStorage`, never the Claude key. It submits the key once over the same-origin connection. The backend holds it in process memory for this expiring session. The key is excluded from responses, saved plans, traces, public errors, logs, and Git. Use HTTPS outside localhost and a project-specific Anthropic key with a provider-side spend cap.
+The browser stores only its opaque console token in `sessionStorage`, never a Claude key or team access code. In shared mode, the key/model/team code come from Render Environment; all three must be valid before the connection is available. The private team code is checked with a constant-time comparison and attempt limits. Authorization lasts 15 minutes within the current session. Only job dispatch reads the server-held key. Neither the key nor access code is returned in API responses or saved in a plan, trace, public error, or Git.
 
-This release's sessions, keys, and approval records are volatile. Render restart, redeploy, or session expiry resets them. This is intentional for a shareable synthetic demonstration; it is not the PostgreSQL persistence supplied by the separate Workbench branch. Run one application instance and one Uvicorn worker. Cross-instance session routing and organizational user accounts are outside this release.
+For an optional personal key, the browser submits it once over the same-origin connection and the backend keeps it in this expiring session's memory. Use HTTPS outside localhost and a project-specific Anthropic key with a provider-side spend cap. A team access code is not an individual identity or an organizational role system; share it only with people permitted to consume the team's model budget.
+
+Sessions, per-session authorizations, personal keys, and approval records are volatile. Restart, redeploy, or session expiry resets them. Render's saved environment configuration persists across deployments, so an authorized teammate can create a new session and re-enter the team code. This is not the PostgreSQL persistence supplied by the separate Workbench branch. Run one application instance and one Uvicorn worker. Cross-instance session routing and organizational user accounts are outside this release.
 
 Calls are authenticated with `X-Console-Token`. A token grants access to its own session and must be treated as a credential. Scenario revision checks reject stale writes; idempotency keys prevent duplicate plan dispatch. The service bounds session creation, concurrent model jobs, model requests, output tokens, and request timeouts. These controls reduce abuse; provider-side spend caps remain necessary because application request limits are not exact currency budgets.
 
@@ -44,7 +46,8 @@ All console endpoints use `/api/console`. Request and response schemas are avail
 | `DELETE /session` | Disconnect and close this session |
 | `POST /scenario` | Change the session's scenario with `If-Match` |
 | `PUT /agent/config` | Configure a session-only Claude key/model; never echoes the key |
-| `DELETE /agent/config` | Disconnect the model |
+| `PUT /agent/team` | Authorize this session to use Render's model with `{access_code}` |
+| `DELETE /agent/config` | Revoke this session's authorization or remove its personal key |
 | `POST /plans` | Explicitly dispatch one plan; requires revision and idempotency key |
 | `GET /plans` | List saved plan jobs in this session |
 | `GET /plans/{id}` | Poll one existing job and inspect its result |
@@ -58,7 +61,7 @@ Legacy `/containers`, `/scenario`, `/stats`, `/health`, `/plan`, and approval ro
 
 The Dockerfile builds the React frontend with Node/pnpm, then copies only its compiled output into the Python runtime. `main:app` serves both frontend and API on Render's `$PORT`. No new database, paid service, or model credential is required for rules-only operation. Render follows `main` with On Commit deployment; wait for a successful deployment before sharing the updated URL.
 
-Keep actual keys out of `render.yaml`, `.env.example`, issue reports, screenshots, frontend build variables, and GitHub. The web key entry applies to the current session only, so team members can use their own separately budgeted keys.
+Keep actual keys and team codes out of `render.yaml`, `.env.example`, issue reports, screenshots, frontend build variables, and GitHub. In Render Environment, add the variable names, let the owner paste the secrets directly, then select **Save, rebuild, and deploy**. Use an exact Claude model ID available to the account. An unset/invalid access code or model fails closed even when a provider key is present. A custom code must contain at least 16 non-whitespace characters.
 
 ## Acceptance checks
 

@@ -14,7 +14,7 @@ export type Container = {
   decision_trace?: { rule_fired: string; mode: string; trust_at_decision: Record<string, number | null>; weights: Record<string, number> };
 };
 export type Stats = Record<Action, number> & { baseline_demurrage_usd_per_day: number; optimized_demurrage_usd_per_day: number; savings_usd_per_day: number };
-export type ModelStatus = { configured: boolean; model: string | null; key_expires_at?: string | null };
+export type ModelStatus = { configured: boolean; model: string | null; key_expires_at?: string | null; server_available: boolean; source: 'none' | 'session' | 'render_environment' };
 export type Snapshot = { revision: number; scenario: Scenario; queue: Container[]; stats: Stats; model: ModelStatus; expires_at: string; data_kind: string };
 export type Port = { code: PortCode; name: string; currency: string; symbol: string; language: string; customs_agency: string };
 export type PlanAction = {

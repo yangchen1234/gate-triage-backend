@@ -365,3 +365,180 @@ def test_empty_model_draft_is_a_template_fallback(monkeypatch):
     cfg = {'base_url': 'https://api.anthropic.com/v1/', 'model': 'claude-sonnet-4-6', 'api_key': 'sk-ant-private-key'}
     result = agent.draft_outreach(action, cfg)
     assert result['source'] == 'template' and result['subject'].strip() and result['body'].strip()
+
+
+# Deployment secrets stay in the server; a separate team capability unlocks one
+# bounded browser session without copying the API key into that session.
+@pytest.fixture
+def environment_console(monkeypatch):
+    clients = []
+    defaults = {
+        'ANTHROPIC_API_KEY': 'sk-ant-environment-private-key',
+        'ANTHROPIC_MODEL': 'claude-sonnet-4-6',
+        'CONSOLE_TEAM_ACCESS_CODE': 'team-access-private-code-2026',
+    }
+    def build(**overrides):
+        for name, value in {**defaults, **overrides}.items():
+            if value is None:
+                monkeypatch.delenv(name, raising=False)
+            else:
+                monkeypatch.setenv(name, value)
+        app = FastAPI()
+        store = console.install_console(app, Settings())
+        client = TestClient(app)
+        client.__enter__()
+        clients.append((client, store))
+        return client, store
+    yield build
+    for client, store in clients:
+        client.__exit__(None, None, None)
+        store.close()
+
+
+def authorize_team(client, headers, access_code='team-access-private-code-2026'):
+    return client.put('/api/console/agent/team', json={'access_code': access_code}, headers=headers)
+
+
+@pytest.mark.parametrize('changes', [
+    {'CONSOLE_TEAM_ACCESS_CODE': None},
+    {'CONSOLE_TEAM_ACCESS_CODE': 'too-short'},
+    {'ANTHROPIC_API_KEY': None},
+    {'ANTHROPIC_API_KEY': 'too-short'},
+    {'ANTHROPIC_MODEL': None},
+    {'ANTHROPIC_MODEL': 'https://attacker.invalid/claude'},
+])
+def test_environment_requires_all_valid_settings_and_never_autounlocks(environment_console, changes):
+    client, _ = environment_console(**changes)
+    snapshot, headers = create(client)
+    assert snapshot['model']['server_available'] is False
+    assert snapshot['model']['configured'] is False
+    assert snapshot['model']['source'] == 'none'
+    assert launch(client, headers, use_model=True).status_code == 409
+    response = authorize_team(client, headers)
+    assert response.status_code == 409
+    assert 'sk-ant-environment-private-key' not in response.text
+
+
+def test_environment_team_authorization_dispatch_isolated_and_revocable(environment_console, monkeypatch):
+    client, store = environment_console()
+    snapshot, headers = create(client)
+    _, other = create(client)
+    assert snapshot['model']['server_available'] is True
+    assert snapshot['model']['configured'] is False
+    assert launch(client, headers, use_model=True).status_code == 409
+    assert authorize_team(client, headers, 'wrong-access-code').status_code == 403
+    assert authorize_team(client, headers, '错误的访问代码-abcdef0123456789').status_code == 403
+    granted = authorize_team(client, headers)
+    assert granted.status_code == 200
+    metadata = granted.json()['model']
+    assert metadata['configured'] is True and metadata['source'] == 'render_environment'
+    assert metadata['model'] == 'claude-sonnet-4-6'
+    assert metadata['key_expires_at']
+    assert store.sessions[snapshot['token']].key is None
+    assert client.get('/api/console/session', headers=other).json()['model']['configured'] is False
+    assert launch(client, other, use_model=True).status_code == 409
+    calls = []
+    def fake(raw, scenario, top_n, cfg):
+        calls.append(dict(cfg))
+        return {'actions': [], 'summary': 'test', 'nothing_is_sent_automatically': True}
+    monkeypatch.setattr(console, 'run_agent', fake)
+    response = launch(client, headers, use_model=True)
+    assert response.status_code == 202
+    finished = wait(client, headers, response.json()['id'])
+    assert finished['status'] == 'succeeded'
+    assert calls[0]['api_key'] == 'sk-ant-environment-private-key'
+    assert calls[0]['base_url'] == 'https://api.anthropic.com/v1/'
+    assert calls[0]['model'] == 'claude-sonnet-4-6'
+    for secret in ('sk-ant-environment-private-key', 'team-access-private-code-2026'):
+        assert secret not in granted.text + json.dumps(finished)
+    cleared = client.delete('/api/console/agent/config', headers=headers).json()['model']
+    assert cleared['configured'] is False and cleared['source'] == 'none'
+    assert cleared['server_available'] is True
+    assert launch(client, headers, use_model=True).status_code == 409
+    assert authorize_team(client, headers).status_code == 200
+    store.sessions[snapshot['token']].key_expires = 0
+    expired = client.get('/api/console/session', headers=headers).json()['model']
+    assert expired['configured'] is False and expired['source'] == 'none'
+    assert launch(client, headers, use_model=True).status_code == 409
+
+
+def test_team_access_attempt_limit_applies_across_sessions(environment_console):
+    client, _ = environment_console()
+    _, headers = create(client)
+    _, another = create(client)
+    responses = [authorize_team(client, headers if i % 2 else another, f'wrong-access-code-{i}') for i in range(12)]
+    assert responses[0].status_code == 403
+    assert all(r.status_code in (403, 429) for r in responses)
+    assert any(r.status_code == 429 for r in responses)
+    # A fresh session on the same actual peer cannot reset the attempt budget.
+    _, fresh = create(client)
+    assert authorize_team(client, fresh).status_code == 429
+    assert client.get('/api/console/session', headers=fresh).json()['model']['configured'] is False
+
+
+@pytest.mark.parametrize('payload', [
+    {'access_code': {'secret': 'team-access-private-code-2026'}},
+    {'access_code': 'team-access-private-code-2026', 'api_key': 'sk-ant-environment-private-key'},
+    {'access_code': 'team-access-private-code-2026' * 100},
+])
+def test_team_validation_never_echoes_secrets(environment_console, payload):
+    client, _ = environment_console()
+    _, headers = create(client)
+    response = client.put('/api/console/agent/team', json=payload, headers=headers)
+    assert response.status_code == 422
+    assert 'private-code' not in response.text and 'private-key' not in response.text
+    malformed = client.put('/api/console/agent/team', content='{"access_code":"team-access-private-code-2026",', headers={**headers, 'Content-Type': 'application/json'})
+    assert malformed.status_code == 422 and 'private-code' not in malformed.text
+
+
+def test_environment_team_configuration_cannot_change_during_active_plan(environment_console, monkeypatch):
+    client, _ = environment_console()
+    _, headers = create(client)
+    entered, release = Event(), Event()
+    def fake(*args, **kwargs):
+        entered.set()
+        assert release.wait(3)
+        return {'actions': [], 'summary': 'test', 'nothing_is_sent_automatically': True}
+    monkeypatch.setattr(console, 'run_agent', fake)
+    try:
+        job = launch(client, headers)
+        assert job.status_code == 202 and entered.wait(2)
+        assert authorize_team(client, headers).status_code == 409
+    finally:
+        release.set()
+    wait(client, headers, job.json()['id'])
+
+
+def test_unicode_team_access_code_compares_safely(environment_console):
+    code = '团队访问密钥-abcdef0123456789'
+    client, _ = environment_console(CONSOLE_TEAM_ACCESS_CODE=code)
+    snapshot, headers = create(client)
+    assert snapshot['model']['server_available'] is True
+    response = authorize_team(client, headers, code)
+    assert response.status_code == 200
+    assert response.json()['model']['configured'] is True
+    assert code not in response.text
+
+
+def test_personal_key_can_override_team_auth_without_exposing_environment(environment_console, monkeypatch):
+    client, store = environment_console()
+    snapshot, headers = create(client)
+    assert authorize_team(client, headers).status_code == 200
+    personal_key = 'sk-ant-personal-private-override-key'
+    response = client.put('/api/console/agent/config', json={'api_key': personal_key, 'model': 'claude-opus-4-6'}, headers=headers)
+    assert response.status_code == 200
+    metadata = response.json()['model']
+    assert metadata['source'] == 'session' and metadata['configured'] is True
+    assert metadata['model'] == 'claude-opus-4-6' and metadata['server_available'] is True
+    seen = []
+    def fake(raw, scenario, top_n, cfg):
+        seen.append(dict(cfg))
+        return {'actions': [], 'summary': 'test', 'nothing_is_sent_automatically': True}
+    monkeypatch.setattr(console, 'run_agent', fake)
+    job = launch(client, headers, use_model=True)
+    finished = wait(client, headers, job.json()['id'])
+    assert seen[0]['api_key'] == personal_key and seen[0]['model'] == 'claude-opus-4-6'
+    assert store.sessions[snapshot['token']].key.get_secret_value() == personal_key
+    assert personal_key not in response.text + json.dumps(finished)
+    assert authorize_team(client, headers).status_code == 200
+    assert store.sessions[snapshot['token']].key is None
