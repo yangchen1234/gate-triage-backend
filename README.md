@@ -2,6 +2,8 @@
 
 Ports & Logistics hackathon 后端。当船司、地磅、海关和冷藏数据冲突时，给出处理建议并重排队列。
 
+线上接口文档：<https://gate-triage-backend.onrender.com/docs>。Base URL：`https://gate-triage-backend.onrender.com`。前端 JavaScript、curl 和场景按钮示例见 [docs/api-usage.md](docs/api-usage.md)。
+
 ## 本地启动
 
 需要 Python 3.12：
@@ -75,7 +77,9 @@ curl http://localhost:8000/health
 
 ## 部署
 
-仓库包含 `Dockerfile` 和 `render.yaml`。Render Blueprint 显式指定免费套餐；创建服务并连接此仓库后，平台可通过 Docker 构建，容器监听 `0.0.0.0:$PORT`，健康检查使用 `/health`。Railway 可在 Dashboard 中连接仓库并使用 Dockerfile 构建，设置健康检查 `/health`、副本数 1 并生成域名。本次仅交付部署配置，尚未创建线上服务。
+线上服务已部署到 Render 免费实例：`https://gate-triage-backend.onrender.com`，实际 HTTP 接口、四种场景、费用公式、浏览器 CORS 和场景恢复验证通过。当前使用公开仓库 URL 部署；代码更新后，在 Render 的 Manual Deploy 菜单中部署最新提交。
+
+仓库包含 `Dockerfile` 和 `render.yaml`。Render Blueprint 显式指定免费套餐，容器监听 `0.0.0.0:$PORT`，健康检查使用 `/health`。Railway 也可在 Dashboard 中连接仓库并使用 Dockerfile 构建，设置健康检查 `/health`、副本数 1 并生成域名。
 
 Render 免费服务闲置后会休眠，演示前先访问 `/health` 唤醒。[免费服务说明](https://render.com/docs/free)。Railway 的旧 `railway.json` 配置格式已弃用，这里使用 Dashboard 部署流程。[Railway 配置说明](https://docs.railway.com/config-as-code/reference)。
 

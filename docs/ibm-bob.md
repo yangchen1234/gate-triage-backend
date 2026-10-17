@@ -23,7 +23,9 @@ Codex 审查后修复了以下问题，并补充 `tests/test_smoke_api.py`：
 - `python -m pytest -q`：95 项通过。
 - `python scripts/smoke_api.py http://127.0.0.1:8000`：真实本地 HTTP 验证通过；四种场景全部通过，开始时的默认场景成功恢复。
 - 当前只有 5 条虚构样例，测试输出的 savings 为 0，符合容量公式。
-- 尚未对真实线上部署或团队云端 LLM 进行验证。
+- `python scripts/smoke_api.py https://gate-triage-backend.onrender.com`：Render 线上真实 HTTP 验证通过，四种场景与原场景恢复均通过。
+- 另行验证线上 `/docs`、OpenAPI、浏览器 CORS、422 参数校验和 404 未知柜子。
+- 团队云端 LLM 尚未配置和验证。
 
 ## Devpost 可用的贡献说明
 
