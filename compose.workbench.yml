@@ -1,0 +1,41 @@
+name: gate-triage-workbench
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: gate_triage
+      POSTGRES_PASSWORD: ${WORKBENCH_DB_PASSWORD:-gate_triage_local}
+      POSTGRES_DB: gate_triage
+    ports:
+      - "127.0.0.1:54329:5432"
+    volumes:
+      - workbench_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gate_triage -d gate_triage"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  app:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.workbench
+    environment:
+      WORKBENCH_DATABASE_URL: postgresql+psycopg://gate_triage:${WORKBENCH_DB_PASSWORD:-gate_triage_local}@db:5432/gate_triage
+      WORKBENCH_ALLOW_LIVE: "false"
+      T49_API_KEY: ${T49_API_KEY:-}
+      T49_WEBHOOK_SECRET: ${T49_WEBHOOK_SECRET:-}
+      T49_WEBHOOK_CONNECTION: ${T49_WEBHOOK_CONNECTION:-default}
+    ports:
+      - "127.0.0.1:8088:8088"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8088/api/v1/health/ready')"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+volumes:
+  workbench_postgres:

@@ -1,0 +1,469 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:gate-triage:simulation-1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "simulation-1"
+    },
+    "scenario_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "start_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "horizon_minutes": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "synthetic"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "kind",
+        "description",
+        "source_refs"
+      ]
+    },
+    "containers_fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "mode": {
+          "const": "synthetic"
+        },
+        "overlay_path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "overlay_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "mode",
+        "overlay_path",
+        "overlay_sha256"
+      ]
+    },
+    "planning": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "lookahead_minutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "replan_minutes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "freeze_minutes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "lookahead_minutes",
+        "replan_minutes",
+        "freeze_minutes"
+      ]
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "gate_lane",
+              "scale",
+              "crew",
+              "reefer_technician"
+            ]
+          },
+          "capacity": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "gate": {
+            "enum": [
+              "East",
+              "West",
+              "Any"
+            ]
+          },
+          "provenance": {
+            "const": "synthetic"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "capacity",
+          "gate",
+          "provenance"
+        ]
+      }
+    },
+    "duration_models": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "distribution": {
+            "enum": [
+              "constant",
+              "triangular"
+            ]
+          },
+          "minutes": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "required": [
+          "distribution",
+          "minutes"
+        ]
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "const": "resource.availability"
+              },
+              "published_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "observed_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "applies_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "provenance": {
+                "const": "synthetic"
+              },
+              "resource_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "state": {
+                "enum": [
+                  "closed",
+                  "restricted",
+                  "open"
+                ]
+              },
+              "capacity": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "event_id",
+              "type",
+              "published_at_min",
+              "observed_at_min",
+              "applies_at_min",
+              "provenance",
+              "resource_ids",
+              "state",
+              "capacity"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "const": "provider.connectivity"
+              },
+              "published_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "observed_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "applies_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "provenance": {
+                "const": "synthetic"
+              },
+              "provider_id": {
+                "const": "terminal49_simulated"
+              },
+              "scope": {
+                "type": "string",
+                "minLength": 1
+              },
+              "state": {
+                "enum": [
+                  "offline",
+                  "partial",
+                  "online"
+                ]
+              }
+            },
+            "required": [
+              "event_id",
+              "type",
+              "published_at_min",
+              "observed_at_min",
+              "applies_at_min",
+              "provenance",
+              "provider_id",
+              "scope",
+              "state"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "const": "evidence.update"
+              },
+              "published_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "observed_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "applies_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "provenance": {
+                "const": "synthetic"
+              },
+              "container_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "namespace": {
+                "enum": [
+                  "provider",
+                  "operator"
+                ]
+              },
+              "evidence_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "patch": {
+                "type": "object",
+                "minProperties": 1
+              }
+            },
+            "required": [
+              "event_id",
+              "type",
+              "published_at_min",
+              "observed_at_min",
+              "applies_at_min",
+              "provenance",
+              "container_id",
+              "namespace",
+              "evidence_id",
+              "patch"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "const": "demand.multiplier"
+              },
+              "published_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "observed_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "applies_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "provenance": {
+                "const": "synthetic"
+              },
+              "multiplier": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "scope": {
+                "const": "unobserved_fixture_arrivals"
+              }
+            },
+            "required": [
+              "event_id",
+              "type",
+              "published_at_min",
+              "observed_at_min",
+              "applies_at_min",
+              "provenance",
+              "multiplier",
+              "scope"
+            ]
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "event_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "type": {
+                "const": "warning.received"
+              },
+              "published_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "observed_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "applies_at_min": {
+                "type": "number",
+                "minimum": 0
+              },
+              "provenance": {
+                "const": "synthetic"
+              },
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "message": {
+                "type": "string",
+                "minLength": 1
+              },
+              "action": {
+                "enum": [
+                  "attention_only",
+                  "record_policy_only"
+                ]
+              }
+            },
+            "required": [
+              "event_id",
+              "type",
+              "published_at_min",
+              "observed_at_min",
+              "applies_at_min",
+              "provenance",
+              "code",
+              "message",
+              "action"
+            ]
+          }
+        ]
+      }
+    },
+    "expected_invariants": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "scenario_id",
+    "seed",
+    "start_at",
+    "horizon_minutes",
+    "provenance",
+    "containers_fixture",
+    "planning",
+    "resources",
+    "duration_models",
+    "events",
+    "expected_invariants"
+  ]
+}

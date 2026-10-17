@@ -1,0 +1,53 @@
+{
+  "schema_version": "simulation-1",
+  "scenario_id": "equal_service_control",
+  "seed": 17,
+  "start_at": "2026-10-17T09:00:00-07:00",
+  "horizon_minutes": 240,
+  "provenance": {
+    "kind": "synthetic",
+    "description": "Compressed hypothetical exercise; historical sources explain background only, never resource counts or timings.",
+    "source_refs": []
+  },
+  "containers_fixture": {
+    "path": "fixtures/t49-equal-service-100.json",
+    "sha256": "cff7472406155a1ae7e71a146e6871c22b0231e14d575bafef8836d551c7a8af",
+    "mode": "synthetic",
+    "overlay_path": "fixtures/t49-equal-service-100.operator-overlay.json",
+    "overlay_sha256": "f465b3e06534cfa7e7885aad63efef382fd014af414fd8aee4f7048065dbd921"
+  },
+  "planning": {
+    "lookahead_minutes": 60,
+    "replan_minutes": 5,
+    "freeze_minutes": 5
+  },
+  "resources": [
+    {
+      "id": "east-lane-1",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "East",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "west-lane-1",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "West",
+      "provenance": "synthetic"
+    }
+  ],
+  "duration_models": {
+    "gate_handoff": {
+      "distribution": "constant",
+      "minutes": [
+        5
+      ]
+    }
+  },
+  "events": [],
+  "expected_invariants": [
+    "100 arrivals at time zero, two equivalent lanes, deterministic five-minute jobs.",
+    "Every work-conserving feasible policy completes min(100, 2*floor(240/5)) = 96; four remain right-censored."
+  ]
+}

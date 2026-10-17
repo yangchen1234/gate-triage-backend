@@ -1,0 +1,143 @@
+{
+  "schema_version": "simulation-1",
+  "scenario_id": "long_dwell_backlog_2021",
+  "seed": 17,
+  "start_at": "2026-10-17T09:00:00-07:00",
+  "horizon_minutes": 240,
+  "provenance": {
+    "kind": "synthetic",
+    "description": "Compressed hypothetical exercise; historical sources explain background only, never resource counts or timings.",
+    "source_refs": [
+      "pola_backlog_2021",
+      "pola_fee_never_activated"
+    ]
+  },
+  "containers_fixture": {
+    "path": "fixtures/t49-backlog-100.json",
+    "sha256": "9e82e7d6805a0c91d501762cdcde1ad03f2d012d7954bd8e0f5abddf8e60a7d3",
+    "mode": "synthetic",
+    "overlay_path": "fixtures/t49-backlog-100.operator-overlay.json",
+    "overlay_sha256": "a19bc2c6e80ca9963f0546f1b6ff4ee374b8a5487300d41b58abe10195ed8104"
+  },
+  "planning": {
+    "lookahead_minutes": 60,
+    "replan_minutes": 5,
+    "freeze_minutes": 5
+  },
+  "resources": [
+    {
+      "id": "east-lane-1",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "East",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "east-lane-2",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "East",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "west-lane-1",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "West",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "west-lane-2",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "West",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "scale-1",
+      "kind": "scale",
+      "capacity": 1,
+      "gate": "Any",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "yard-crew",
+      "kind": "crew",
+      "capacity": 2,
+      "gate": "Any",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "reefer-tech",
+      "kind": "reefer_technician",
+      "capacity": 1,
+      "gate": "Any",
+      "provenance": "synthetic"
+    }
+  ],
+  "duration_models": {
+    "gate_handoff": {
+      "distribution": "triangular",
+      "minutes": [
+        3,
+        5,
+        9
+      ]
+    },
+    "weight_check": {
+      "distribution": "triangular",
+      "minutes": [
+        6,
+        10,
+        16
+      ]
+    },
+    "reefer_check": {
+      "distribution": "triangular",
+      "minutes": [
+        5,
+        8,
+        14
+      ]
+    }
+  },
+  "events": [
+    {
+      "event_id": "long_dwell_backlog_2021-1",
+      "type": "demand.multiplier",
+      "published_at_min": 10,
+      "observed_at_min": 10,
+      "applies_at_min": 10,
+      "provenance": "synthetic",
+      "multiplier": 3,
+      "scope": "unobserved_fixture_arrivals"
+    },
+    {
+      "event_id": "long_dwell_backlog_2021-2",
+      "type": "demand.multiplier",
+      "published_at_min": 60,
+      "observed_at_min": 60,
+      "applies_at_min": 60,
+      "provenance": "synthetic",
+      "multiplier": 1,
+      "scope": "unobserved_fixture_arrivals"
+    },
+    {
+      "event_id": "long_dwell_backlog_2021-3",
+      "type": "warning.received",
+      "published_at_min": 20,
+      "observed_at_min": 20,
+      "applies_at_min": 20,
+      "provenance": "synthetic",
+      "code": "historical_fee_never_activated",
+      "message": "Record announcement background only; additional historical port fee remains zero.",
+      "action": "record_policy_only"
+    }
+  ],
+  "expected_invariants": [
+    "Known holds remain blocking through outages and road recovery.",
+    "Verification never implies clearance or cargo quality acceptance.",
+    "Only valid completed gate handoffs count as throughput.",
+    "No future observations are exposed to policies."
+  ]
+}

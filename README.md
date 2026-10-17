@@ -1,5 +1,7 @@
 # Gate Triage Backend
 
+> **Independent full-stack workbench:** see [README-workbench.md](README-workbench.md) for the PostgreSQL-backed web demo, real-time simulation, CP-SAT scheduling and strategy comparisons on `codex/fullstack-simulation-demo`. The legacy API below and the team's hosted deployment remain separate.
+
 Gate Triage is a Ports & Logistics hackathon prototype for terminal planners. When carrier declarations, scale readings, customs records and reefer sensors disagree, it ranks containers and recommends `release`, `slow`, `inspect` or `reroute` actions for human review. Scenario switches show how the queue changes when lanes close, customs systems go offline or Zone B loses power.
 
 - **Repository:** <https://github.com/yangchen1234/gate-triage-backend>

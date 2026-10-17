@@ -11,6 +11,9 @@ htmlcov/
 *.log
 .idea/
 .vscode/
+node_modules/
+.local/
+*.tsbuildinfo
 dist/
 build/
 *.egg-info/

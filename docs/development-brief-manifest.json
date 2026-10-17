@@ -1,0 +1,163 @@
+{
+  "artifact": "Gate Triage development specification",
+  "version": "1.1",
+  "created_date": "2026-10-17",
+  "scope": "Design contracts and synthetic fixtures. Runnable implementation source is in the repository's independent branch.",
+  "files": [
+    {
+      "path": "README-workbench.md",
+      "sha256": "ba1f4201d9ffc8b40e3bd2907b8ffeed2b529393d66177d57da2538b8ef0fd64",
+      "bytes": 5888
+    },
+    {
+      "path": "data/containers.json",
+      "sha256": "6a88bb8b27cccd5b6df2bbce7957483d2cadf325c4df01ec96767780bde533d3",
+      "bytes": 77015
+    },
+    {
+      "path": "docs/START_HERE.zh-CN.md",
+      "sha256": "1615a369bdc39919cd47f2040500ea7800733403289e8f7e34947ca22bb8728e",
+      "bytes": 4284
+    },
+    {
+      "path": "docs/demo-runbook.zh-CN.md",
+      "sha256": "433c32c7eb6a45ce2e8b125022e820fb018f9d1587d2eb9e4c0a6e9d022de601",
+      "bytes": 3320
+    },
+    {
+      "path": "docs/gate-triage-technical-specification.zh-CN.html",
+      "sha256": "7edcb780ada7ffa51385a44e2454a6dd176a1fbf09d79ac58e0a3dffd73ddb94",
+      "bytes": 136515
+    },
+    {
+      "path": "docs/gate-triage-technical-specification.zh-CN.md",
+      "sha256": "2fdbb0faa030cb10acd9a93b105b6e98c0a8860f4c135370ca3478680a9ba5fb",
+      "bytes": 108373
+    },
+    {
+      "path": "docs/realtime-decision-contract.zh-CN.md",
+      "sha256": "1e54f8c5e330b1d9f6c9e6ad6e771f5cd392d3d9d77b35e73779a808b83832ed",
+      "bytes": 12177
+    },
+    {
+      "path": "docs/reference-pack/README.md",
+      "sha256": "5e924109f72bab46b5add3677c7be8237ee862fae823558f145d7bda5200007d",
+      "bytes": 5349
+    },
+    {
+      "path": "docs/reference-pack/build_reference_pack.py",
+      "sha256": "07395d36f5d3914d661622faf48e926651d6978956568524331fa10ee9ddb0a8",
+      "bytes": 20139
+    },
+    {
+      "path": "docs/reference-pack/fixtures/source-record-mapping.json",
+      "sha256": "7cb49380e593506a5fc4645bd4a487074b2ed3f668c4323819f3b712bf24832d",
+      "bytes": 111316
+    },
+    {
+      "path": "docs/reference-pack/fixtures/t49-backlog-100.json",
+      "sha256": "9e82e7d6805a0c91d501762cdcde1ad03f2d012d7954bd8e0f5abddf8e60a7d3",
+      "bytes": 100737
+    },
+    {
+      "path": "docs/reference-pack/fixtures/t49-backlog-100.operator-overlay.json",
+      "sha256": "a19bc2c6e80ca9963f0546f1b6ff4ee374b8a5487300d41b58abe10195ed8104",
+      "bytes": 147520
+    },
+    {
+      "path": "docs/reference-pack/fixtures/t49-cohort-100.json",
+      "sha256": "497b7631326017a02250d854e80b3f8ad4fa088aae62582897a489b71d6da7b6",
+      "bytes": 100737
+    },
+    {
+      "path": "docs/reference-pack/fixtures/t49-cohort-100.operator-overlay.json",
+      "sha256": "a19bc2c6e80ca9963f0546f1b6ff4ee374b8a5487300d41b58abe10195ed8104",
+      "bytes": 147520
+    },
+    {
+      "path": "docs/reference-pack/fixtures/t49-equal-service-100.json",
+      "sha256": "cff7472406155a1ae7e71a146e6871c22b0231e14d575bafef8836d551c7a8af",
+      "bytes": 98107
+    },
+    {
+      "path": "docs/reference-pack/fixtures/t49-equal-service-100.operator-overlay.json",
+      "sha256": "f465b3e06534cfa7e7885aad63efef382fd014af414fd8aee4f7048065dbd921",
+      "bytes": 96811
+    },
+    {
+      "path": "docs/reference-pack/scenario.schema.json",
+      "sha256": "8542d2828212633e034276a5b11c39e084bd540b8e918963555dd575d0703bbc",
+      "bytes": 11364
+    },
+    {
+      "path": "docs/reference-pack/scenarios/battery_truck_access_2024.json",
+      "sha256": "71b71294b88fdaddfb956f05c160b0cf6f60e9d4d9ff1d4cbcc8b73e0dbd56d8",
+      "bytes": 5091
+    },
+    {
+      "path": "docs/reference-pack/scenarios/equal_service_control.json",
+      "sha256": "2682ca47b81d162567ab3917be89c5cf5d0a0321f722262dce84e30fb5728666",
+      "bytes": 1502
+    },
+    {
+      "path": "docs/reference-pack/scenarios/long_dwell_backlog_2021.json",
+      "sha256": "b67730deac52b427c297e9505c44266976d8741913cbcef5419819d67c6b8a85",
+      "bytes": 3560
+    },
+    {
+      "path": "docs/reference-pack/scenarios/normal_operations.json",
+      "sha256": "bca8c89924dfd1724f9ddf096e0c7af9ceb84ae0a12563ec2339f146f18657cd",
+      "bytes": 2518
+    },
+    {
+      "path": "docs/reference-pack/scenarios/terminal_data_disruption_2017.json",
+      "sha256": "efd87472cee66987ffeebe82aa352a2bed9eab406a0fa564737724434c891f8a",
+      "bytes": 5981
+    },
+    {
+      "path": "docs/reference-pack/scenarios/weather_warning_no_closure_2023.json",
+      "sha256": "34eba73a5dcc2035921277747c3e1751b9b07bdcfbe1e7f95c18c5bea8eb1d74",
+      "bytes": 2962
+    },
+    {
+      "path": "docs/reference-pack/source-manifest.json",
+      "sha256": "74a63553689cec0183c568f12be431f273dfae07eb5dbbe09f38cb954ec52516",
+      "bytes": 4118
+    },
+    {
+      "path": "docs/reference-pack/validate_reference_pack.py",
+      "sha256": "f4d36ac2a8bdab590700a9fc96bcf965f730991501b8d1085b87450d40870876",
+      "bytes": 8450
+    },
+    {
+      "path": "docs/screenshots/coordination-request.png",
+      "sha256": "027acca8869391ddd94af3ca1ca6f15e66e9ac5c9a0d7e16388cde1ce1034f07",
+      "bytes": 69039
+    },
+    {
+      "path": "docs/screenshots/workbench.png",
+      "sha256": "4a9aa54f1fe565d16791d6171eea6efbdd5ad3461bd15eeb3eaeaece93fb5687",
+      "bytes": 129055
+    },
+    {
+      "path": "docs/spec-tools-requirements.txt",
+      "sha256": "72916db5612b523ff62d013001fe00943c13833c0f79a5fd67e5a4d81d9eb647",
+      "bytes": 36
+    },
+    {
+      "path": "docs/workbench-verification.md",
+      "sha256": "22aa170d5a64161b5e2f9cf9ce1d9d3805d7b0267f2208331b159819091b365c",
+      "bytes": 7121
+    },
+    {
+      "path": "scripts/package_development_brief.py",
+      "sha256": "b2a05027d259e18cb172f79c43080df8afec74b1b032a787d39956d6d69f2acc",
+      "bytes": 1789
+    },
+    {
+      "path": "scripts/render_technical_spec.py",
+      "sha256": "d07ecf0ead3decd36c5a309b7d19e9e104d40b15607abcd7ffe1357b64295e88",
+      "bytes": 5389
+    }
+  ]
+}

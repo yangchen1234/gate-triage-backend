@@ -1,0 +1,3763 @@
+{
+  "input_path": "data/containers.json",
+  "input_sha256": "6a88bb8b27cccd5b6df2bbce7957483d2cadf325c4df01ec96767780bde533d3",
+  "note": "Byte source unchanged. Original records copied here; collection attributes and overlays are separate synthetic transformations.",
+  "records": [
+    {
+      "fixture_resource_id": "3b950c11-e331-5e0d-9576-1c36ab6f7831",
+      "container_number": "PCLU3500715",
+      "original_index": 0,
+      "original_record": {
+        "container_id": "PCLU3500715",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-16T03:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 12864,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 12316
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.0,
+            "setpoint_c": -18.0,
+            "last_ping_min": 233
+          }
+        },
+        "_conflict": "reefer_silent"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "13989239-c624-5fad-90fc-6031842b088a",
+      "container_number": "MSCU8038374",
+      "original_index": 1,
+      "original_record": {
+        "container_id": "MSCU8038374",
+        "carrier_code": "MSCU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-13T16:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 19359,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 19164
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "9c1bb0a3-47a5-5098-95ad-7017a8e08e77",
+      "container_number": "OOLU4318855",
+      "original_index": 2,
+      "original_record": {
+        "container_id": "OOLU4318855",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-13T07:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 593,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 26817,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 27398
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 2
+          },
+          "reefer": {
+            "temp_c": 1.9,
+            "setpoint_c": 2.0,
+            "last_ping_min": 16
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "96a5d7ba-132c-52cc-b0bd-b6560939cae4",
+      "container_number": "TRXU5200476",
+      "original_index": 3,
+      "original_record": {
+        "container_id": "TRXU5200476",
+        "carrier_code": "TRXU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-12T16:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 640,
+        "demurrage_usd_per_day": 693,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25032,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 25189
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.7,
+            "setpoint_c": -18.0,
+            "last_ping_min": 15
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "ee78f224-8515-513d-bbdf-e8cca500c56c",
+      "container_number": "TRXU6481437",
+      "original_index": 4,
+      "original_record": {
+        "container_id": "TRXU6481437",
+        "carrier_code": "TRXU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "C",
+        "arrived_at": "2026-10-12T18:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 13396,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 13291
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.5,
+            "setpoint_c": -18.0,
+            "last_ping_min": 4
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "273917a8-0026-5dbf-b579-3f8ee0e1a17d",
+      "container_number": "OOLU5398338",
+      "original_index": 5,
+      "original_record": {
+        "container_id": "OOLU5398338",
+        "carrier_code": "OOLU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "C",
+        "arrived_at": "2026-10-09T05:00:00",
+        "free_days_left": -4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 20571,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 20665
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "505b1b62-5f34-555e-b841-e5e1f2910e33",
+      "container_number": "PCLU7982241",
+      "original_index": 6,
+      "original_record": {
+        "container_id": "PCLU7982241",
+        "carrier_code": "PCLU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "C",
+        "arrived_at": "2026-10-14T14:00:00",
+        "free_days_left": 2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 17733,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 16971
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 1
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "10b63cbe-ae6c-5b96-8ed4-4db3691a62a8",
+      "container_number": "TRXU2903561",
+      "original_index": 7,
+      "original_record": {
+        "container_id": "TRXU2903561",
+        "carrier_code": "TRXU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-06T03:00:00",
+        "free_days_left": -9,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 590,
+        "demurrage_usd_per_day": 695,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 19941,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 19841
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 2.2,
+            "setpoint_c": 2.0,
+            "last_ping_min": 4
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "5fecb68a-ef4e-51a2-a0de-bf289bd260df",
+      "container_number": "MAEU2044645",
+      "original_index": 8,
+      "original_record": {
+        "container_id": "MAEU2044645",
+        "carrier_code": "MAEU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-06T04:00:00",
+        "free_days_left": -9,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 645,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 23481,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 24551
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.0,
+            "setpoint_c": -18.0,
+            "last_ping_min": 19
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "01530647-9d19-560b-9f0e-cf04a0c03a9f",
+      "container_number": "TRXU2944841",
+      "original_index": 9,
+      "original_record": {
+        "container_id": "TRXU2944841",
+        "carrier_code": "TRXU",
+        "cargo_type": "hazmat",
+        "consignee_type": "unknown",
+        "zone": "B",
+        "arrived_at": "2026-10-06T20:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 517,
+        "demurrage_usd_per_day": 622,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 20450,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 21444
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 2
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "a4c464f9-6a30-59e8-8841-fdf1b316001d",
+      "container_number": "ONEU5963914",
+      "original_index": 10,
+      "original_record": {
+        "container_id": "ONEU5963914",
+        "carrier_code": "ONEU",
+        "cargo_type": "hazmat",
+        "consignee_type": "retail",
+        "zone": "C",
+        "arrived_at": "2026-10-10T05:00:00",
+        "free_days_left": -3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 375,
+        "demurrage_usd_per_day": 428,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 24313,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 24605
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "0d935344-5d5a-53c2-9985-fb49cdcf6799",
+      "container_number": "TRXU7731902",
+      "original_index": 11,
+      "original_record": {
+        "container_id": "TRXU7731902",
+        "carrier_code": "TRXU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "hospital",
+        "zone": "B",
+        "arrived_at": "2026-10-14T01:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 15800,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 16100
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 5.8,
+            "setpoint_c": 2.0,
+            "last_ping_min": 8
+          }
+        },
+        "_conflict": "HERO_pharma_reefer_warming"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "615a382a-d6d2-594f-9686-5760e90d1806",
+      "container_number": "OOLU7542890",
+      "original_index": 12,
+      "original_record": {
+        "container_id": "OOLU7542890",
+        "carrier_code": "OOLU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-10T08:00:00",
+        "free_days_left": -3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25547,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 24464
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "e9282c4a-0c6b-5407-91b6-ab041abcc6f6",
+      "container_number": "MAEU5842082",
+      "original_index": 13,
+      "original_record": {
+        "container_id": "MAEU5842082",
+        "carrier_code": "MAEU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-13T04:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 16138,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 16882
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.5,
+            "setpoint_c": -18.0,
+            "last_ping_min": 21
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "91df5202-0286-51d6-ae41-807e6dc49789",
+      "container_number": "MSCU9897858",
+      "original_index": 14,
+      "original_record": {
+        "container_id": "MSCU9897858",
+        "carrier_code": "MSCU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-08T02:00:00",
+        "free_days_left": -5,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 398,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 27640,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 28635
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "1bfa9918-af97-53eb-a488-611e7186500e",
+      "container_number": "OOLU1873851",
+      "original_index": 15,
+      "original_record": {
+        "container_id": "OOLU1873851",
+        "carrier_code": "OOLU",
+        "cargo_type": "hazmat",
+        "consignee_type": "unknown",
+        "zone": "B",
+        "arrived_at": "2026-10-11T00:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 405,
+        "demurrage_usd_per_day": 458,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 22487,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 23059
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 3
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "0b8bdcc2-9196-5aa8-aba1-a8816fb49316",
+      "container_number": "OOLU3589751",
+      "original_index": 16,
+      "original_record": {
+        "container_id": "OOLU3589751",
+        "carrier_code": "OOLU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "A",
+        "arrived_at": "2026-10-10T08:00:00",
+        "free_days_left": -3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4036,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 3949
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "b04d084c-467d-5ed5-8451-e3159ddbd506",
+      "container_number": "TRXU1649691",
+      "original_index": 17,
+      "original_record": {
+        "container_id": "TRXU1649691",
+        "carrier_code": "TRXU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "hospital",
+        "zone": "B",
+        "arrived_at": "2026-10-06T09:00:00",
+        "free_days_left": -8,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 645,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 24896,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 25491
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 2.5,
+            "setpoint_c": 2.0,
+            "last_ping_min": 5
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "fa881745-1bda-5267-a531-c191c2bd3e25",
+      "container_number": "TRXU2833230",
+      "original_index": 18,
+      "original_record": {
+        "container_id": "TRXU2833230",
+        "carrier_code": "TRXU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-16T20:00:00",
+        "free_days_left": 4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 15571,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 15224
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "19a4fd43-fdc6-529b-b6cb-d1b6106fe388",
+      "container_number": "MSCU7654757",
+      "original_index": 19,
+      "original_record": {
+        "container_id": "MSCU7654757",
+        "carrier_code": "MSCU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-12T14:00:00",
+        "free_days_left": 0,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4228,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 4155
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "4c93aedc-7a9a-5650-93ac-1af603d25272",
+      "container_number": "MAEU9910817",
+      "original_index": 20,
+      "original_record": {
+        "container_id": "MAEU9910817",
+        "carrier_code": "MAEU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-16T09:00:00",
+        "free_days_left": 2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 590,
+        "demurrage_usd_per_day": 643,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 28447,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 29766
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.7,
+            "setpoint_c": -18.0,
+            "last_ping_min": 18
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "44be04a4-810d-54c7-9a38-729eb5f954ea",
+      "container_number": "TRXU6503032",
+      "original_index": 21,
+      "original_record": {
+        "container_id": "TRXU6503032",
+        "carrier_code": "TRXU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-07T01:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 15505,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 15550
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "e6522a3f-a7c0-540d-bc40-ce35f5b7ee50",
+      "container_number": "MAEU9683481",
+      "original_index": 22,
+      "original_record": {
+        "container_id": "MAEU9683481",
+        "carrier_code": "MAEU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-14T05:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 640,
+        "demurrage_usd_per_day": 693,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 22546,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 22214
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -13.3,
+            "setpoint_c": -18.0,
+            "last_ping_min": 11
+          }
+        },
+        "_conflict": "customs_cleared_reefer_warming"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "f83d6d26-9590-53a6-b919-3ebafbe4bd07",
+      "container_number": "ONEU4020853",
+      "original_index": 23,
+      "original_record": {
+        "container_id": "ONEU4020853",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-11T04:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 23660,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 24282
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "c611d119-cfd4-5516-ba05-ff058aa5724b",
+      "container_number": "MSCU7120868",
+      "original_index": 24,
+      "original_record": {
+        "container_id": "MSCU7120868",
+        "carrier_code": "MSCU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-13T06:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 593,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 20180,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 19467
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.0,
+            "setpoint_c": -18.0,
+            "last_ping_min": 16
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "7c820056-5be7-5c00-bd54-cbc7d7dc1050",
+      "container_number": "ONEU9398441",
+      "original_index": 25,
+      "original_record": {
+        "container_id": "ONEU9398441",
+        "carrier_code": "ONEU",
+        "cargo_type": "hazmat",
+        "consignee_type": "unknown",
+        "zone": "A",
+        "arrived_at": "2026-10-10T08:00:00",
+        "free_days_left": -3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 450,
+        "demurrage_usd_per_day": 503,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 17827,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 17182
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "629b5279-1ada-53ff-a076-9b1ea57029e9",
+      "container_number": "PCLU8194570",
+      "original_index": 26,
+      "original_record": {
+        "container_id": "PCLU8194570",
+        "carrier_code": "PCLU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-12T08:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 15642,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 24830
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "weight_mismatch"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "76e716f2-6c75-5c1c-ad35-6396e221249e",
+      "container_number": "TRXU3472189",
+      "original_index": 27,
+      "original_record": {
+        "container_id": "TRXU3472189",
+        "carrier_code": "TRXU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-13T11:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 14774,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 15060
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "e2fedb0e-f381-58e6-9fce-2f3a2863271f",
+      "container_number": "MSCU5394880",
+      "original_index": 28,
+      "original_record": {
+        "container_id": "MSCU5394880",
+        "carrier_code": "MSCU",
+        "cargo_type": "hazmat",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-13T07:00:00",
+        "free_days_left": 0,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 375,
+        "demurrage_usd_per_day": 428,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25448,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 25879
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "0ee96226-6b2f-5f91-8793-3c259628a787",
+      "container_number": "PCLU5118725",
+      "original_index": 29,
+      "original_record": {
+        "container_id": "PCLU5118725",
+        "carrier_code": "PCLU",
+        "cargo_type": "general",
+        "consignee_type": "unknown",
+        "zone": "A",
+        "arrived_at": "2026-10-10T09:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 27483,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 27232
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "367815a8-e7e7-5aff-b476-dab9720f7932",
+      "container_number": "TRXU9094999",
+      "original_index": 30,
+      "original_record": {
+        "container_id": "TRXU9094999",
+        "carrier_code": "TRXU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "B",
+        "arrived_at": "2026-10-05T23:00:00",
+        "free_days_left": -7,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 3938,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 3935
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "b9bd095a-33d2-5eb3-8107-28b7bbfdcb5e",
+      "container_number": "TRXU5821419",
+      "original_index": 31,
+      "original_record": {
+        "container_id": "TRXU5821419",
+        "carrier_code": "TRXU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "A",
+        "arrived_at": "2026-10-09T07:00:00",
+        "free_days_left": -4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4174,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 4126
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "7e91a368-b03b-5a82-8495-ff0d0d8a5b7c",
+      "container_number": "OOLU5453786",
+      "original_index": 32,
+      "original_record": {
+        "container_id": "OOLU5453786",
+        "carrier_code": "OOLU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-16T00:00:00",
+        "free_days_left": 3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 12489,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 12904
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "0cfb6e76-6b3d-5249-b16a-d0d018e2ecf4",
+      "container_number": "PCLU5374922",
+      "original_index": 33,
+      "original_record": {
+        "container_id": "PCLU5374922",
+        "carrier_code": "PCLU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-06T14:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25904,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 25737
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "d73a1cf3-faaa-5c28-8a3b-43491a67a21d",
+      "container_number": "TRXU7783308",
+      "original_index": 34,
+      "original_record": {
+        "container_id": "TRXU7783308",
+        "carrier_code": "TRXU",
+        "cargo_type": "hazmat",
+        "consignee_type": "retail",
+        "zone": "C",
+        "arrived_at": "2026-10-05T14:00:00",
+        "free_days_left": -7,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 465,
+        "demurrage_usd_per_day": 570,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 27818,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 27998
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "intensive",
+            "est_days_to_clear": 6
+          },
+          "reefer": null
+        },
+        "_conflict": "hazmat_intensive_overdue"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "8f2087ad-03fa-5c67-bc43-9790bd954907",
+      "container_number": "PCLU7728339",
+      "original_index": 35,
+      "original_record": {
+        "container_id": "PCLU7728339",
+        "carrier_code": "PCLU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-14T03:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 14915,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 15056
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "d564d21b-ba9c-508d-acc9-7c6083fa182f",
+      "container_number": "ONEU6304573",
+      "original_index": 36,
+      "original_record": {
+        "container_id": "ONEU6304573",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-11T04:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 21058,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 20703
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "e7f539a5-8cc4-5f35-aa8a-2fdf5259714b",
+      "container_number": "TRXU8118722",
+      "original_index": 37,
+      "original_record": {
+        "container_id": "TRXU8118722",
+        "carrier_code": "TRXU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-09T21:00:00",
+        "free_days_left": -3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 3898,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 3717
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "63926e51-5447-5545-8098-6dbbd6b1ed33",
+      "container_number": "PCLU9518424",
+      "original_index": 38,
+      "original_record": {
+        "container_id": "PCLU9518424",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-13T13:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 593,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25463,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 24569
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.1,
+            "setpoint_c": -18.0,
+            "last_ping_min": 15
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "81bccf77-1b7d-5fda-b186-c74f83ea4115",
+      "container_number": "MAEU6363836",
+      "original_index": 39,
+      "original_record": {
+        "container_id": "MAEU6363836",
+        "carrier_code": "MAEU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-15T10:00:00",
+        "free_days_left": 3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25847,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 26413
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "f2c041e9-1681-5a42-a994-b0bc46c96c40",
+      "container_number": "MSCU2259379",
+      "original_index": 40,
+      "original_record": {
+        "container_id": "MSCU2259379",
+        "carrier_code": "MSCU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-07T02:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 18365,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 18808
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 1
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "fc7d6444-ac9b-5947-9391-b8dd9ff66c97",
+      "container_number": "MAEU6338112",
+      "original_index": 41,
+      "original_record": {
+        "container_id": "MAEU6338112",
+        "carrier_code": "MAEU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-11T01:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4113,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 3972
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "ce4fe563-c955-55a5-9f9b-4020bd988b99",
+      "container_number": "OOLU1093026",
+      "original_index": 42,
+      "original_record": {
+        "container_id": "OOLU1093026",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-09T19:00:00",
+        "free_days_left": -5,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 593,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 14700,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 14386
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 2.0,
+            "setpoint_c": 2.0,
+            "last_ping_min": 14
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "16fac1a7-fc33-54f1-998b-021a8d799211",
+      "container_number": "ONEU9952696",
+      "original_index": 43,
+      "original_record": {
+        "container_id": "ONEU9952696",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-07T06:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25904,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 25024
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "5041f09c-710c-5b3a-b6f0-59bd613fbda2",
+      "container_number": "TRXU5666692",
+      "original_index": 44,
+      "original_record": {
+        "container_id": "TRXU5666692",
+        "carrier_code": "TRXU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-07T00:00:00",
+        "free_days_left": -8,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 595,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 13012,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 12679
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.3,
+            "setpoint_c": -18.0,
+            "last_ping_min": 18
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "fc42bb1f-0580-5835-8c25-cebe82384333",
+      "container_number": "MAEU3036059",
+      "original_index": 45,
+      "original_record": {
+        "container_id": "MAEU3036059",
+        "carrier_code": "MAEU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-10T07:00:00",
+        "free_days_left": -3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 29138,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 28972
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "7526175b-cf2d-58e9-ae92-45cde8cadfaa",
+      "container_number": "MAEU3760597",
+      "original_index": 46,
+      "original_record": {
+        "container_id": "MAEU3760597",
+        "carrier_code": "MAEU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-11T16:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 29680,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 29675
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "60666cce-effc-5b77-b8e1-89d446121393",
+      "container_number": "PCLU5098412",
+      "original_index": 47,
+      "original_record": {
+        "container_id": "PCLU5098412",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-15T15:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 593,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 15284,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 15276
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 1.7,
+            "setpoint_c": 2.0,
+            "last_ping_min": 13
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "7b581bdd-8749-5a19-b7db-5cf6b1398db4",
+      "container_number": "TRXU9333700",
+      "original_index": 48,
+      "original_record": {
+        "container_id": "TRXU9333700",
+        "carrier_code": "TRXU",
+        "cargo_type": "hazmat",
+        "consignee_type": "unknown",
+        "zone": "B",
+        "arrived_at": "2026-10-16T14:00:00",
+        "free_days_left": 4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 450,
+        "demurrage_usd_per_day": 503,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 21578,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 20994
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "1f33d9d4-0c8f-5063-a208-397f8113c59b",
+      "container_number": "ONEU4524499",
+      "original_index": 49,
+      "original_record": {
+        "container_id": "ONEU4524499",
+        "carrier_code": "ONEU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "retail",
+        "zone": "C",
+        "arrived_at": "2026-10-11T04:00:00",
+        "free_days_left": -4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 16528,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 16852
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 2.7,
+            "setpoint_c": 2.0,
+            "last_ping_min": 3
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "19eb2cc6-526c-519d-a702-9ce1f7158729",
+      "container_number": "MSCU9479356",
+      "original_index": 50,
+      "original_record": {
+        "container_id": "MSCU9479356",
+        "carrier_code": "MSCU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-12T23:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 593,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 17464,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 17093
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.2,
+            "setpoint_c": -18.0,
+            "last_ping_min": 22
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "8792a7b7-1fde-5c18-947b-d15ac34fdbc6",
+      "container_number": "ONEU7328534",
+      "original_index": 51,
+      "original_record": {
+        "container_id": "ONEU7328534",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "unknown",
+        "zone": "B",
+        "arrived_at": "2026-10-14T09:00:00",
+        "free_days_left": 2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 3932,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 22078
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "empty_but_heavy"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "fc84ca5f-3bfc-54d8-8847-0fa19309873a",
+      "container_number": "OOLU7667458",
+      "original_index": 52,
+      "original_record": {
+        "container_id": "OOLU7667458",
+        "carrier_code": "OOLU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-12T05:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4049,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 4062
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 3
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "2de7fb01-8d96-58f6-8cd2-55f3ab111cbf",
+      "container_number": "MSCU9363326",
+      "original_index": 53,
+      "original_record": {
+        "container_id": "MSCU9363326",
+        "carrier_code": "MSCU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-17T02:00:00",
+        "free_days_left": 4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 3898,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 3891
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "2d3b379c-7d40-5148-bdf0-0b7618cc3449",
+      "container_number": "PCLU5130808",
+      "original_index": 54,
+      "original_record": {
+        "container_id": "PCLU5130808",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "hospital",
+        "zone": "C",
+        "arrived_at": "2026-10-15T13:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 18405,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 18089
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 1.8,
+            "setpoint_c": 2.0,
+            "last_ping_min": 5
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "f3567c59-523b-578b-9388-2f016738b260",
+      "container_number": "PCLU2642635",
+      "original_index": 55,
+      "original_record": {
+        "container_id": "PCLU2642635",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-11T03:00:00",
+        "free_days_left": -4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 590,
+        "demurrage_usd_per_day": 643,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 16530,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 16593
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.4,
+            "setpoint_c": -18.0,
+            "last_ping_min": 4
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "9c999529-5fdb-5b9b-9186-e6c3cfdbf175",
+      "container_number": "OOLU9468772",
+      "original_index": 56,
+      "original_record": {
+        "container_id": "OOLU9468772",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-08T13:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 590,
+        "demurrage_usd_per_day": 695,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 30727,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 29404
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.3,
+            "setpoint_c": -18.0,
+            "last_ping_min": 21
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "5bd7f57f-3667-59bd-9dd5-6839d6aec471",
+      "container_number": "OOLU5682940",
+      "original_index": 57,
+      "original_record": {
+        "container_id": "OOLU5682940",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-14T01:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 22352,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 22000
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.0,
+            "setpoint_c": -18.0,
+            "last_ping_min": 10
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "4fe1efea-5b8d-553d-b2fd-71bb44630768",
+      "container_number": "OOLU9722815",
+      "original_index": 58,
+      "original_record": {
+        "container_id": "OOLU9722815",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-10T13:00:00",
+        "free_days_left": -4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 22022,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 22278
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 1
+          },
+          "reefer": {
+            "temp_c": -17.8,
+            "setpoint_c": -18.0,
+            "last_ping_min": 10
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "9a3a768f-0c75-5c60-b228-5561e13ba59a",
+      "container_number": "OOLU6098175",
+      "original_index": 59,
+      "original_record": {
+        "container_id": "OOLU6098175",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-06T09:00:00",
+        "free_days_left": -8,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 645,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 24705,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 24423
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.1,
+            "setpoint_c": -18.0,
+            "last_ping_min": 19
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "8f061dc7-d9fb-5018-b822-ed91c2516f22",
+      "container_number": "TRXU5960271",
+      "original_index": 60,
+      "original_record": {
+        "container_id": "TRXU5960271",
+        "carrier_code": "TRXU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-11T18:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 8773,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 14536
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "weight_mismatch"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "56662d58-8d2f-5c4d-a043-96a16c87bfab",
+      "container_number": "ONEU3219824",
+      "original_index": 61,
+      "original_record": {
+        "container_id": "ONEU3219824",
+        "carrier_code": "ONEU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-14T00:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4009,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 3943
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "f9a6cfa4-fdcd-57c6-8b72-22f866852302",
+      "container_number": "ONEU6902401",
+      "original_index": 62,
+      "original_record": {
+        "container_id": "ONEU6902401",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-11T19:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 30856,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 29397
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "ff0ae6eb-9a43-566b-8331-e4948703d6fb",
+      "container_number": "PCLU1157662",
+      "original_index": 63,
+      "original_record": {
+        "container_id": "PCLU1157662",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-17T19:00:00",
+        "free_days_left": 3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 590,
+        "demurrage_usd_per_day": 643,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 19358,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 19891
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.0,
+            "setpoint_c": -18.0,
+            "last_ping_min": 220
+          }
+        },
+        "_conflict": "reefer_silent"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "257f9f4f-f02a-526c-ae67-1633fbead6f7",
+      "container_number": "PCLU8106470",
+      "original_index": 64,
+      "original_record": {
+        "container_id": "PCLU8106470",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-14T12:00:00",
+        "free_days_left": 0,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 3686,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 3804
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 2
+          },
+          "reefer": {
+            "temp_c": -18.0,
+            "setpoint_c": -18.0,
+            "last_ping_min": 118
+          }
+        },
+        "_conflict": "reefer_silent"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "b4d12a7c-ee4d-590a-807e-3bf829ab72e0",
+      "container_number": "PCLU2422633",
+      "original_index": 65,
+      "original_record": {
+        "container_id": "PCLU2422633",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-09T18:00:00",
+        "free_days_left": -5,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 640,
+        "demurrage_usd_per_day": 693,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 22955,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 22559
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.8,
+            "setpoint_c": -18.0,
+            "last_ping_min": 25
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "608ba9a9-fe40-5fac-844a-4161e1b3c48d",
+      "container_number": "OOLU5476583",
+      "original_index": 66,
+      "original_record": {
+        "container_id": "OOLU5476583",
+        "carrier_code": "OOLU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-06T09:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 11898,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 12376
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "e93bb739-de5a-5892-b229-eaf86f9a5072",
+      "container_number": "MSCU2065818",
+      "original_index": 67,
+      "original_record": {
+        "container_id": "MSCU2065818",
+        "carrier_code": "MSCU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-07T03:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 17504,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 17008
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "3594f8eb-b448-57e7-b341-f9ff47614472",
+      "container_number": "PCLU1689025",
+      "original_index": 68,
+      "original_record": {
+        "container_id": "PCLU1689025",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-15T10:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 590,
+        "demurrage_usd_per_day": 643,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 20656,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 19957
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.7,
+            "setpoint_c": -18.0,
+            "last_ping_min": 5
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "4c6799bb-e456-56ef-98df-f9da98d40e77",
+      "container_number": "TRXU5081983",
+      "original_index": 69,
+      "original_record": {
+        "container_id": "TRXU5081983",
+        "carrier_code": "TRXU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-09T01:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 640,
+        "demurrage_usd_per_day": 745,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 28417,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 28009
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 2
+          },
+          "reefer": {
+            "temp_c": -17.9,
+            "setpoint_c": -18.0,
+            "last_ping_min": 2
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "45c31706-81ef-5d8f-86e8-7a61208d0c68",
+      "container_number": "OOLU6569946",
+      "original_index": 70,
+      "original_record": {
+        "container_id": "OOLU6569946",
+        "carrier_code": "OOLU",
+        "cargo_type": "hazmat",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-05T21:00:00",
+        "free_days_left": -7,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 431,
+        "demurrage_usd_per_day": 536,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 16349,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 16984
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "intensive",
+            "est_days_to_clear": 6
+          },
+          "reefer": null
+        },
+        "_conflict": "hazmat_intensive_overdue"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "82da992e-86a2-546b-befc-01dc58866087",
+      "container_number": "OOLU2921542",
+      "original_index": 71,
+      "original_record": {
+        "container_id": "OOLU2921542",
+        "carrier_code": "OOLU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "A",
+        "arrived_at": "2026-10-12T03:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4115,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 4072
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "d3063d3d-8ef4-5c4e-9051-fe388c40f7e2",
+      "container_number": "OOLU5364698",
+      "original_index": 72,
+      "original_record": {
+        "container_id": "OOLU5364698",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-16T20:00:00",
+        "free_days_left": 2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 28274,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 29502
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.9,
+            "setpoint_c": -18.0,
+            "last_ping_min": 16
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "32cd7ceb-83d8-52db-b4e8-c8b5aaf67cc2",
+      "container_number": "ONEU9667566",
+      "original_index": 73,
+      "original_record": {
+        "container_id": "ONEU9667566",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-07T10:00:00",
+        "free_days_left": -5,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 398,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 21967,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 21163
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "d8b2e473-3b31-5e19-859b-44a1fbab7774",
+      "container_number": "PCLU3342608",
+      "original_index": 74,
+      "original_record": {
+        "container_id": "PCLU3342608",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-13T12:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 640,
+        "demurrage_usd_per_day": 693,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 22078,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 22311
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 2.7,
+            "setpoint_c": 2.0,
+            "last_ping_min": 16
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "238e199f-81b2-5889-a1bf-f50324802e6d",
+      "container_number": "MSCU7067228",
+      "original_index": 75,
+      "original_record": {
+        "container_id": "MSCU7067228",
+        "carrier_code": "MSCU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-08T00:00:00",
+        "free_days_left": -7,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 595,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 23804,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 23270
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "manifest",
+            "est_days_to_clear": 3
+          },
+          "reefer": {
+            "temp_c": -17.8,
+            "setpoint_c": -18.0,
+            "last_ping_min": 14
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "f1f797f4-8169-583b-a1d9-3b6bd21020d2",
+      "container_number": "ONEU5531230",
+      "original_index": 76,
+      "original_record": {
+        "container_id": "ONEU5531230",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-11T03:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 17410,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 17013
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "48edd076-6d61-58ce-9e9a-30396d9213f4",
+      "container_number": "TRXU6266630",
+      "original_index": 77,
+      "original_record": {
+        "container_id": "TRXU6266630",
+        "carrier_code": "TRXU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "C",
+        "arrived_at": "2026-10-11T06:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25008,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 23934
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "c5c2e360-6f2b-5aef-b5ec-858eff28b37e",
+      "container_number": "PCLU1205779",
+      "original_index": 78,
+      "original_record": {
+        "container_id": "PCLU1205779",
+        "carrier_code": "PCLU",
+        "cargo_type": "reefer_pharma",
+        "consignee_type": "hospital",
+        "zone": "C",
+        "arrived_at": "2026-10-17T07:00:00",
+        "free_days_left": 2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 590,
+        "demurrage_usd_per_day": 643,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 21402,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 20988
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": 1.7,
+            "setpoint_c": 2.0,
+            "last_ping_min": 17
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "f39f5fe8-bb54-5edd-9435-e66a24e2d7ce",
+      "container_number": "MAEU3741438",
+      "original_index": 79,
+      "original_record": {
+        "container_id": "MAEU3741438",
+        "carrier_code": "MAEU",
+        "cargo_type": "hazmat",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-06T06:00:00",
+        "free_days_left": -7,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 517,
+        "demurrage_usd_per_day": 622,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 13867,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 14339
+          },
+          "customs": {
+            "hold": true,
+            "hold_type": "intensive",
+            "est_days_to_clear": 7
+          },
+          "reefer": null
+        },
+        "_conflict": "hazmat_intensive_overdue"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "8d100d96-97fc-5808-a6a4-883a96df8cb0",
+      "container_number": "MSCU9132114",
+      "original_index": 80,
+      "original_record": {
+        "container_id": "MSCU9132114",
+        "carrier_code": "MSCU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-09T04:00:00",
+        "free_days_left": -4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 21637,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 20750
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "92b7a328-b174-5fe2-a4b4-bc754791d4f4",
+      "container_number": "OOLU3253031",
+      "original_index": 81,
+      "original_record": {
+        "container_id": "OOLU3253031",
+        "carrier_code": "OOLU",
+        "cargo_type": "hazmat",
+        "consignee_type": "unknown",
+        "zone": "B",
+        "arrived_at": "2026-10-16T11:00:00",
+        "free_days_left": 4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 450,
+        "demurrage_usd_per_day": 503,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 28743,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 29332
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "5b346394-e6b8-5f9e-9fc7-52fc7d447314",
+      "container_number": "ONEU9990305",
+      "original_index": 82,
+      "original_record": {
+        "container_id": "ONEU9990305",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-11T01:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 3806,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 25607
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "empty_but_heavy"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "fa32d054-aaf9-5339-ab35-c30e5d0a40b6",
+      "container_number": "OOLU1771600",
+      "original_index": 83,
+      "original_record": {
+        "container_id": "OOLU1771600",
+        "carrier_code": "OOLU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-10T03:00:00",
+        "free_days_left": -3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 15589,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 15293
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "f8b60409-9795-564a-a836-88fe1c094798",
+      "container_number": "OOLU2321324",
+      "original_index": 84,
+      "original_record": {
+        "container_id": "OOLU2321324",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-15T04:00:00",
+        "free_days_left": 0,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 593,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 15256,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 15665
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -10.8,
+            "setpoint_c": -18.0,
+            "last_ping_min": 3
+          }
+        },
+        "_conflict": "customs_cleared_reefer_warming"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "eb517802-d7a5-565e-ae84-22ffc599cebe",
+      "container_number": "OOLU2754894",
+      "original_index": 85,
+      "original_record": {
+        "container_id": "OOLU2754894",
+        "carrier_code": "OOLU",
+        "cargo_type": "empty",
+        "consignee_type": "unknown",
+        "zone": "A",
+        "arrived_at": "2026-10-15T17:00:00",
+        "free_days_left": 3,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4112,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 4176
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "17917a42-7c57-504e-ae1f-e9969d6484eb",
+      "container_number": "MAEU4010529",
+      "original_index": 86,
+      "original_record": {
+        "container_id": "MAEU4010529",
+        "carrier_code": "MAEU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-12T09:00:00",
+        "free_days_left": -2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 590,
+        "demurrage_usd_per_day": 643,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 29204,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 27866
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.4,
+            "setpoint_c": -18.0,
+            "last_ping_min": 11
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "18c7e3e9-4306-5241-9bea-b2993b1f19b7",
+      "container_number": "PCLU5652512",
+      "original_index": 87,
+      "original_record": {
+        "container_id": "PCLU5652512",
+        "carrier_code": "PCLU",
+        "cargo_type": "general",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-05T17:00:00",
+        "free_days_left": -7,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 17129,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 17215
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "7c2e88c7-4ec5-5a20-93f2-938aa43a360c",
+      "container_number": "TRXU9224219",
+      "original_index": 88,
+      "original_record": {
+        "container_id": "TRXU9224219",
+        "carrier_code": "TRXU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-08T12:00:00",
+        "free_days_left": -4,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 14032,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 14259
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "806c2b5f-3c80-5bad-b8ca-c2baf0ef163a",
+      "container_number": "OOLU9179730",
+      "original_index": 89,
+      "original_record": {
+        "container_id": "OOLU9179730",
+        "carrier_code": "OOLU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-15T12:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 490,
+        "demurrage_usd_per_day": 543,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 26897,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 27227
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -11.4,
+            "setpoint_c": -18.0,
+            "last_ping_min": 7
+          }
+        },
+        "_conflict": "customs_cleared_reefer_warming"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "13742ee5-a838-55e2-9e23-4e12beed4e43",
+      "container_number": "PCLU3320821",
+      "original_index": 90,
+      "original_record": {
+        "container_id": "PCLU3320821",
+        "carrier_code": "PCLU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-07T20:00:00",
+        "free_days_left": -5,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 398,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 25678,
+            "history_mismatches_last10": 4
+          },
+          "scale": {
+            "weight_kg": 26038
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "a96990a0-0a71-5083-88b0-9492aea85805",
+      "container_number": "MSCU9852897",
+      "original_index": 91,
+      "original_record": {
+        "container_id": "MSCU9852897",
+        "carrier_code": "MSCU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "C",
+        "arrived_at": "2026-10-06T17:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 16931,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 16207
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "96c7e9b5-1f1f-554c-a87a-238164170cbb",
+      "container_number": "OOLU2096280",
+      "original_index": 92,
+      "original_record": {
+        "container_id": "OOLU2096280",
+        "carrier_code": "OOLU",
+        "cargo_type": "hazmat",
+        "consignee_type": "unknown",
+        "zone": "B",
+        "arrived_at": "2026-10-15T07:00:00",
+        "free_days_left": 2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 405,
+        "demurrage_usd_per_day": 458,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 24185,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 23164
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "3ec481a5-a17e-57d9-a46f-b0211449a98b",
+      "container_number": "MSCU2919136",
+      "original_index": 93,
+      "original_record": {
+        "container_id": "MSCU2919136",
+        "carrier_code": "MSCU",
+        "cargo_type": "general",
+        "consignee_type": "unknown",
+        "zone": "C",
+        "arrived_at": "2026-10-13T12:00:00",
+        "free_days_left": 1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "empty",
+            "declared_weight_kg": 4051,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 22018
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "empty_but_heavy"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "3acef889-79fc-5df6-8661-fb1a9ed227ff",
+      "container_number": "MAEU3294774",
+      "original_index": 94,
+      "original_record": {
+        "container_id": "MAEU3294774",
+        "carrier_code": "MAEU",
+        "cargo_type": "general",
+        "consignee_type": "grocery",
+        "zone": "C",
+        "arrived_at": "2026-10-07T02:00:00",
+        "free_days_left": -6,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 19407,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 19176
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "c6b12d5a-69aa-5c8e-b081-26eec718fcbf",
+      "container_number": "MAEU4841005",
+      "original_index": 95,
+      "original_record": {
+        "container_id": "MAEU4841005",
+        "carrier_code": "MAEU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-16T14:00:00",
+        "free_days_left": 2,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 593,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 23282,
+            "history_mismatches_last10": 2
+          },
+          "scale": {
+            "weight_kg": 23078
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.5,
+            "setpoint_c": -18.0,
+            "last_ping_min": 24
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "cc6899ab-f7bc-5a2c-ac0a-5a79f94d29e0",
+      "container_number": "TRXU7730428",
+      "original_index": 96,
+      "original_record": {
+        "container_id": "TRXU7730428",
+        "carrier_code": "TRXU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "B",
+        "arrived_at": "2026-10-12T04:00:00",
+        "free_days_left": -1,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 300,
+        "demurrage_usd_per_day": 353,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 9163,
+            "history_mismatches_last10": 6
+          },
+          "scale": {
+            "weight_kg": 14828
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "weight_mismatch"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "cae87fd8-e18f-5d39-bcbe-f9c2547d8c0c",
+      "container_number": "MSCU3970445",
+      "original_index": 97,
+      "original_record": {
+        "container_id": "MSCU3970445",
+        "carrier_code": "MSCU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "B",
+        "arrived_at": "2026-10-07T09:00:00",
+        "free_days_left": -7,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 540,
+        "demurrage_usd_per_day": 645,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 26393,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 25316
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -18.2,
+            "setpoint_c": -18.0,
+            "last_ping_min": 7
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "e9fc7c71-b9a9-5e8a-bf6e-2245be0bdbc5",
+      "container_number": "MSCU9164991",
+      "original_index": 98,
+      "original_record": {
+        "container_id": "MSCU9164991",
+        "carrier_code": "MSCU",
+        "cargo_type": "reefer_food",
+        "consignee_type": "grocery",
+        "zone": "A",
+        "arrived_at": "2026-10-09T23:00:00",
+        "free_days_left": -5,
+        "port_demurrage_usd_per_day": 52.77,
+        "carrier_demurrage_usd_per_day": 640,
+        "demurrage_usd_per_day": 693,
+        "demurrage_tier": 1,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 21096,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 20690
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": {
+            "temp_c": -17.6,
+            "setpoint_c": -18.0,
+            "last_ping_min": 19
+          }
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    },
+    {
+      "fixture_resource_id": "0e1da9df-bbc3-53e2-9961-9cd3ec1252f8",
+      "container_number": "ONEU6647119",
+      "original_index": 99,
+      "original_record": {
+        "container_id": "ONEU6647119",
+        "carrier_code": "ONEU",
+        "cargo_type": "general",
+        "consignee_type": "retail",
+        "zone": "A",
+        "arrived_at": "2026-10-05T19:00:00",
+        "free_days_left": -7,
+        "port_demurrage_usd_per_day": 105.47,
+        "carrier_demurrage_usd_per_day": 345,
+        "demurrage_usd_per_day": 450,
+        "demurrage_tier": 2,
+        "sources": {
+          "carrier": {
+            "declared_status": "laden",
+            "declared_weight_kg": 16955,
+            "history_mismatches_last10": 1
+          },
+          "scale": {
+            "weight_kg": 17231
+          },
+          "customs": {
+            "hold": false,
+            "hold_type": "none",
+            "est_days_to_clear": 0
+          },
+          "reefer": null
+        },
+        "_conflict": "none"
+      },
+      "provenance": "synthetic_source_copy"
+    }
+  ]
+}

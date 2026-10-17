@@ -1,0 +1,122 @@
+{
+  "schema_version": "simulation-1",
+  "scenario_id": "weather_warning_no_closure_2023",
+  "seed": 17,
+  "start_at": "2026-10-17T09:00:00-07:00",
+  "horizon_minutes": 240,
+  "provenance": {
+    "kind": "synthetic",
+    "description": "Compressed hypothetical exercise; historical sources explain background only, never resource counts or timings.",
+    "source_refs": [
+      "pola_hilary_2023"
+    ]
+  },
+  "containers_fixture": {
+    "path": "fixtures/t49-cohort-100.json",
+    "sha256": "497b7631326017a02250d854e80b3f8ad4fa088aae62582897a489b71d6da7b6",
+    "mode": "synthetic",
+    "overlay_path": "fixtures/t49-cohort-100.operator-overlay.json",
+    "overlay_sha256": "a19bc2c6e80ca9963f0546f1b6ff4ee374b8a5487300d41b58abe10195ed8104"
+  },
+  "planning": {
+    "lookahead_minutes": 60,
+    "replan_minutes": 5,
+    "freeze_minutes": 5
+  },
+  "resources": [
+    {
+      "id": "east-lane-1",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "East",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "east-lane-2",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "East",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "west-lane-1",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "West",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "west-lane-2",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "West",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "scale-1",
+      "kind": "scale",
+      "capacity": 1,
+      "gate": "Any",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "yard-crew",
+      "kind": "crew",
+      "capacity": 2,
+      "gate": "Any",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "reefer-tech",
+      "kind": "reefer_technician",
+      "capacity": 1,
+      "gate": "Any",
+      "provenance": "synthetic"
+    }
+  ],
+  "duration_models": {
+    "gate_handoff": {
+      "distribution": "triangular",
+      "minutes": [
+        3,
+        5,
+        9
+      ]
+    },
+    "weight_check": {
+      "distribution": "triangular",
+      "minutes": [
+        6,
+        10,
+        16
+      ]
+    },
+    "reefer_check": {
+      "distribution": "triangular",
+      "minutes": [
+        5,
+        8,
+        14
+      ]
+    }
+  },
+  "events": [
+    {
+      "event_id": "weather_warning_no_closure_2023-1",
+      "type": "warning.received",
+      "published_at_min": 20,
+      "observed_at_min": 20,
+      "applies_at_min": 20,
+      "provenance": "synthetic",
+      "code": "weather_attention",
+      "message": "Synthetic warning received; no closure evidence. Preserve normal resource availability.",
+      "action": "attention_only"
+    }
+  ],
+  "expected_invariants": [
+    "Known holds remain blocking through outages and road recovery.",
+    "Verification never implies clearance or cargo quality acceptance.",
+    "Only valid completed gate handoffs count as throughput.",
+    "No future observations are exposed to policies."
+  ]
+}

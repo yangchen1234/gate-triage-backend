@@ -1,0 +1,7 @@
+-r requirements.txt
+SQLAlchemy==2.1.5
+alembic==1.20.0
+psycopg[binary]==3.3.6
+ortools==9.15.6755
+argon2-cffi==25.1.0
+httpx==0.28.1

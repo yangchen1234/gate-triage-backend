@@ -1,0 +1,83 @@
+{
+  "schema_version": "source-manifest-1",
+  "runtime_external_business_provider": "Terminal49 only",
+  "sources": [
+    {
+      "id": "t49_container",
+      "title": "Terminal49 container fields",
+      "url": "https://terminal49.com/docs/api-docs/api-reference/containers/get-a-container",
+      "supported_background": "Container resource attributes and relationships; no guarantee of all fields for every account.",
+      "runtime_input": false
+    },
+    {
+      "id": "t49_holds",
+      "title": "Terminal49 holds and fees",
+      "url": "https://terminal49.com/docs/api-docs/in-depth-guides/holds-and-fees",
+      "supported_background": "Hold statuses include hold/pending; a cleared hold is removed, not changed to a released status.",
+      "runtime_input": false
+    },
+    {
+      "id": "lafd_battery_2024",
+      "title": "LAFD battery truck incident account",
+      "url": "https://lafd.org/news/lithiumion-batteries-burn-days-after-san-pedro-big-rig-crash",
+      "supported_background": "Records the September 2024 battery truck incident and subsequent clearance. Does not provide this cohort or simulation timings.",
+      "runtime_input": false
+    },
+    {
+      "id": "pola_reopening_2024",
+      "title": "Port of LA road reopening update",
+      "url": "https://portoflosangeles.org/references/2024-news-releases/news_092724_truck_accident",
+      "supported_background": "Reports roads open and expected terminal recovery; expectation is not confirmation of full recovery.",
+      "runtime_input": false
+    },
+    {
+      "id": "one_fee_notice_2024",
+      "title": "ONE customer notice",
+      "url": "https://us.one-line.com/news/us-los-angeles-terminal-truck-incident",
+      "supported_background": "Carrier-specific fee-clock notice; not a universal waiver and not a quantified saving for this cohort.",
+      "runtime_input": false
+    },
+    {
+      "id": "maersk_cyber_2017",
+      "title": "Maersk cyber incident update",
+      "url": "https://investor.maersk.com/news-releases/news-release-details/cyber-attack-update",
+      "supported_background": "June 2017 cyber incident affected systems and operations. Does not establish a Terminal49 outage.",
+      "runtime_input": false
+    },
+    {
+      "id": "torres_cyber_2017",
+      "title": "Torres official statement",
+      "url": "https://torres.house.gov/media-center/press-releases/torres-introduces-port-cybersecurity-legislation-following-cyber-attack",
+      "supported_background": "Official statement discusses the LA terminal disruption; not a complete operating timeline.",
+      "runtime_input": false
+    },
+    {
+      "id": "apm_recovery_2017",
+      "title": "APM recovery update",
+      "url": "https://www.apmterminals.com/en/news/news-releases/2017/cyber-attack-updae-friday",
+      "supported_background": "Describes staged recovery of LA gate services, not proof of full recovery at every terminal.",
+      "runtime_input": false
+    },
+    {
+      "id": "pola_backlog_2021",
+      "title": "Port of LA backlog and proposed fee",
+      "url": "https://portoflosangeles.org/references/2021-news-releases/news_102931_cargofee",
+      "supported_background": "Port announcement described roughly 40% of imports dwelling at least nine days; no historical container list is reproduced here.",
+      "runtime_input": false
+    },
+    {
+      "id": "pola_fee_never_activated",
+      "title": "Port of LA fee program conclusion",
+      "url": "https://portoflosangeles.org/references/2022-news-releases/news_121622_dwell_fee",
+      "supported_background": "The proposed additional container dwell fee was never activated. Its accrued amount is zero in this historical-background scenario.",
+      "runtime_input": false
+    },
+    {
+      "id": "pola_hilary_2023",
+      "title": "Port of LA Hilary update",
+      "url": "https://portoflosangeles.org/references/2023-news-releases/news_081823_hurricane_hilary",
+      "supported_background": "The August 21 update reported normal operations without damage. This is a warning/no-closure control, not a shutdown reconstruction.",
+      "runtime_input": false
+    }
+  ]
+}

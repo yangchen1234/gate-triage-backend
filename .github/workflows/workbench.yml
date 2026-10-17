@@ -1,0 +1,26 @@
+name: Workbench checks
+on:
+  push:
+    branches: [codex/fullstack-simulation-demo]
+  pull_request:
+    paths: ["gate_triage/workbench/**", "apps/web/**", "workbench_main.py", "tests/**", "requirements-workbench.txt"]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "11.25.0"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+          cache-dependency-path: apps/web/pnpm-lock.yaml
+      - run: pip install -r requirements-workbench.txt -r requirements-dev.txt
+      - run: python -m pytest -q
+      - run: pnpm install --frozen-lockfile && pnpm test:session && pnpm build
+        working-directory: apps/web

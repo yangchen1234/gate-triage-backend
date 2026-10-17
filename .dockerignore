@@ -1,8 +1,14 @@
 .git
 .venv
+__pycache__
+tests
+**/node_modules
+**/__pycache__
+**/dist
+.local
 .env
 .env.*
-__pycache__
-.pytest_cache
-tests
 *.log
+.pytest_cache
+docs/*.zip
+docs/*.html
