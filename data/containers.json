@@ -678,7 +678,7 @@
         "last_ping_min": 8
       }
     },
-    "_conflict": "HERO_pharma_reefer_warming",
+    "_conflict": "pharma_reefer_warming",
     "port": "LAX",
     "currency": "USD",
     "port_demurrage_per_day": 52.77,

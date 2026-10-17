@@ -243,7 +243,7 @@ def hero_container(c):
         "reefer": {"temp_c": 7.9, "setpoint_c": 2.0, "last_ping_min": 8},
     }
     set_overdue(c, 0)
-    c["_conflict"] = "HERO_pharma_reefer_warming"
+    c["_conflict"] = "pharma_reefer_warming"
 
 
 def main():
