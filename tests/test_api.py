@@ -3,6 +3,8 @@
 from concurrent.futures import ThreadPoolExecutor
 from copy import deepcopy
 from dataclasses import replace
+from datetime import datetime
+from decimal import Decimal
 import json
 from pathlib import Path
 from threading import Event
@@ -12,7 +14,7 @@ from fastapi.testclient import TestClient
 import pytest
 
 from gate_triage.config import Settings
-from gate_triage.demo_score import score
+from gate_triage.score import score
 from gate_triage.models import DEFAULT_SCENARIO
 from gate_triage.service import QueueService
 from main import create_app
@@ -49,6 +51,21 @@ def assert_ranked(queue):
     assert priorities == sorted(priorities, reverse=True)
 
 
+def assert_raw_fields_preserved(original, actual):
+    """Scoring may enrich source records, but must retain every input field."""
+    for field, value in original.items():
+        if field == "sources":
+            for name, source in value.items():
+                if source is None:
+                    assert actual[field][name] is None
+                else:
+                    for key, raw_value in source.items():
+                        assert actual[field][name][key] == raw_value
+                    assert 0 <= actual[field][name]["trust"] <= 1
+        else:
+            assert actual[field] == value
+
+
 def test_frontend_routes_preserve_raw_fields_and_default_statistics(rows, make_settings):
     rows[0]["partner_extension"] = {"reference": "keep-this-field"}
     settings = make_settings(rows)
@@ -57,12 +74,11 @@ def test_frontend_routes_preserve_raw_fields_and_default_statistics(rows, make_s
         assert response.status_code == 200
         queue = response.json()
         assert_ranked(queue)
-        assert len(queue) == 5
+        assert len(queue) == len(rows) == 100
         by_id = {row["container_id"]: row for row in queue}
         for original in rows:
             actual = by_id[original["container_id"]]
-            for field, value in original.items():
-                assert actual[field] == value
+            assert_raw_fields_preserved(original, actual)
             assert actual["reason"]
             assert all(0 <= actual[field] <= 1 for field in ("priority", "urgency", "conflict_score"))
             detail = client.get(f"/containers/{original['container_id']}")
@@ -74,15 +90,19 @@ def test_frontend_routes_preserve_raw_fields_and_default_statistics(rows, make_s
         assert {action: stats[action] for action in actions} == {
             action: sum(row["action"] == action for row in queue) for action in actions
         }
-        assert sum(stats[action] for action in actions) == 5
+        assert sum(stats[action] for action in actions) == len(rows)
         assert stats["reroute"] == 0
         assert stats["scenario"] == DEFAULT_SCENARIO
-        assert stats["baseline_demurrage_usd_per_day"] == 0
-        assert stats["optimized_demurrage_usd_per_day"] == 0
-        assert stats["savings_usd_per_day"] == 0
+        capacity = DEFAULT_SCENARIO["lanes_open"] * settings.containers_per_lane_per_day
+        fifo = sorted(rows, key=lambda row: datetime.fromisoformat(row["arrived_at"]))
+        baseline = sum(Decimal(str(row["demurrage_usd_per_day"])) for row in fifo[capacity:])
+        optimized = sum(Decimal(str(row["demurrage_usd_per_day"])) for row in queue[capacity:])
+        assert Decimal(str(stats["baseline_demurrage_usd_per_day"])) == baseline
+        assert Decimal(str(stats["optimized_demurrage_usd_per_day"])) == optimized
+        assert Decimal(str(stats["savings_usd_per_day"])) == baseline - optimized
         health = client.get("/health").json()
         assert health["status"] == "ok"
-        assert health["container_count"] == 5
+        assert health["container_count"] == len(rows)
         assert health["llm"] == "template"
         assert health["llm_status"] == "disabled"
         assert health["llm_configured"] is False
@@ -198,7 +218,7 @@ def test_scorer_inputs_and_returned_snapshots_cannot_mutate_cached_sources(rows,
     actual = service.snapshot()
     original_by_id = {row["container_id"]: row for row in rows}
     for row in actual.queue:
-        assert row["sources"] == original_by_id[row["container_id"]]["sources"]
+        assert_raw_fields_preserved(original_by_id[row["container_id"]], row)
     assert actual.scenario == {**DEFAULT_SCENARIO, "lanes_open": 4}
     assert actual.stats["scenario"] == actual.scenario
 

@@ -69,7 +69,7 @@ const updated = await changeScenario(PRESETS.lanesHalf);
 ```bash
 curl https://gate-triage-backend.onrender.com/health
 curl https://gate-triage-backend.onrender.com/containers
-curl https://gate-triage-backend.onrender.com/containers/MSCU1234567
+curl https://gate-triage-backend.onrender.com/containers/TRXU7731902
 curl -X POST https://gate-triage-backend.onrender.com/scenario \
   -H 'Content-Type: application/json' \
   -d '{"lanes_open":4}'
@@ -86,9 +86,11 @@ curl -X POST https://gate-triage-backend.onrender.com/scenario \
 
 ## 当前演示状态
 
-- 只有 5 条虚构样例；车道为 8 或 4 时容量足够，因此三项费用均为 0。完整数据与正式打分等待 Ryan 接入。
+- 仓库已接入 Ryan 的 100 条合成演示数据和 `gate_triage.score:score`；部署后可通过 `/health` 的 `container_count: 100` 和 `scorer` 字段确认线上版本。
+- 使用默认每条车道每天 12 个的容量，Normal 的模拟 savings 为 $770/day，Lanes −50% 为 $4,249/day。Customs down 与 Zone B power out 的独立预设均为 $770/day；它们改变处理建议，但统计公式不额外扣减容量。无需为符合原先预估金额而修改前端或硬编码收益。
 - 费用字段为 `baseline_demurrage_usd_per_day`、`optimized_demurrage_usd_per_day`、`savings_usd_per_day`。
-- 云端 LLM 尚未配置；`/health` 的 `llm` 为 `template`，理由来自临时规则。前端应兼容这个值。
+- 云端 LLM 尚未配置；`/health` 的 `llm` 为 `template`，理由来自 Ryan 的规则引擎。前端应兼容这个值。
+- 海关离线时不会建议 gate release；未被 hold 的冷藏柜仍可建议场内改道至供电区。已知 hold 的柜子保持 `slow / inspect`，断电与 clearance 待确认也会显示在 reason 中。
 - 场景由所有访问者共享，服务重启后恢复默认值。
 - Render 免费实例闲置后会休眠；演示前先访问 `/health`，等待唤醒。
 - 当前使用公开仓库 URL 部署。代码更新后，在 Render 服务的 Manual Deploy 菜单中部署最新提交；不要仅凭 GitHub 提交成功判断线上已经更新。

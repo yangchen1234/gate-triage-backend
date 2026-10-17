@@ -1,0 +1,77 @@
+[
+  {
+    "container_id": "MSCU1234567",
+    "cargo_type": "reefer_pharma",
+    "consignee_type": "hospital",
+    "arrived_at": "2026-10-12T08:00:00Z",
+    "sources": {
+      "carrier": {"declared_status": "empty", "declared_weight_kg": 2200, "trust": 0.6},
+      "scale": {"weight_kg": 18400, "trust": 0.95},
+      "customs": {"hold": true, "hold_type": "exam", "trust": 1.0},
+      "reefer": {"temp_c": 6.5, "setpoint_c": 2.0, "last_ping_min": 12, "trust": 1.0}
+    },
+    "demurrage_usd_per_day": 150,
+    "free_days_left": -2,
+    "zone": "B"
+  },
+  {
+    "container_id": "CMAU7654321",
+    "cargo_type": "reefer_food",
+    "consignee_type": "food_bank",
+    "arrived_at": "2026-10-15T12:00:00Z",
+    "sources": {
+      "carrier": {"declared_status": "loaded", "declared_weight_kg": 21000, "trust": 0.9},
+      "scale": {"weight_kg": 21100, "trust": 0.95},
+      "customs": {"hold": false, "hold_type": null, "trust": 1.0},
+      "reefer": {"temp_c": -17.6, "setpoint_c": -18.0, "last_ping_min": 3, "trust": 0.98}
+    },
+    "demurrage_usd_per_day": 180,
+    "free_days_left": 1,
+    "zone": "B"
+  },
+  {
+    "container_id": "TCLU3456789",
+    "cargo_type": "hazmat",
+    "consignee_type": "manufacturer",
+    "arrived_at": "2026-10-13T16:00:00Z",
+    "sources": {
+      "carrier": {"declared_status": "loaded", "declared_weight_kg": 12000, "trust": 0.75},
+      "scale": {"weight_kg": 16800, "trust": 0.96},
+      "customs": {"hold": false, "hold_type": null, "trust": 1.0},
+      "reefer": null
+    },
+    "demurrage_usd_per_day": 240,
+    "free_days_left": -1,
+    "zone": "A"
+  },
+  {
+    "container_id": "MSKU2468135",
+    "cargo_type": "general",
+    "consignee_type": "retailer",
+    "arrived_at": "2026-10-11T10:00:00Z",
+    "sources": {
+      "carrier": {"declared_status": "loaded", "declared_weight_kg": 14500, "trust": 0.45},
+      "scale": {"weight_kg": 14600, "trust": 0.92},
+      "customs": {"hold": false, "hold_type": null, "trust": 1.0},
+      "reefer": null
+    },
+    "demurrage_usd_per_day": 550,
+    "free_days_left": -4,
+    "zone": "C"
+  },
+  {
+    "container_id": "TEMU1357924",
+    "cargo_type": "empty",
+    "consignee_type": "depot",
+    "arrived_at": "2026-10-10T09:00:00Z",
+    "sources": {
+      "carrier": {"declared_status": "empty", "declared_weight_kg": 2300, "trust": 0.95},
+      "scale": {"weight_kg": 2320, "trust": 0.97},
+      "customs": {"hold": false, "hold_type": null, "trust": 1.0},
+      "reefer": null
+    },
+    "demurrage_usd_per_day": 65,
+    "free_days_left": 2,
+    "zone": "A"
+  }
+]

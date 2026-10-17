@@ -1,12 +1,17 @@
 # Gate Triage Backend
 
-Ports & Logistics hackathon 后端。当船司、地磅、海关和冷藏数据冲突时，给出处理建议并重排队列。
+Gate Triage is a Ports & Logistics hackathon prototype for terminal planners. When carrier declarations, scale readings, customs records and reefer sensors disagree, it ranks containers and recommends `release`, `slow`, `inspect` or `reroute` actions for human review. Scenario switches show how the queue changes when lanes close, customs systems go offline or Zone B loses power.
 
-线上接口文档：<https://gate-triage-backend.onrender.com/docs>。Base URL：`https://gate-triage-backend.onrender.com`。前端 JavaScript、curl 和场景按钮示例见 [docs/api-usage.md](docs/api-usage.md)。
+- **Repository:** <https://github.com/yangchen1234/gate-triage-backend>
+- **Hosted API:** <https://gate-triage-backend.onrender.com>
+- **Interactive API documentation:** <https://gate-triage-backend.onrender.com/docs>
+- **Frontend examples:** [JavaScript and curl guide](docs/api-usage.md)
 
-## 本地启动
+The repository now includes Ryan's scoring engine and **100 synthetic containers**. It does not use live Terminal49 data or execute real port operations. Cloud LLM explanations are optional and are not configured by default. A GitHub update does not update the hosted service until a new Render deployment completes; check `/health` for the running container count and scorer.
 
-需要 Python 3.12：
+## Run locally
+
+Use Python 3.12:
 
 ```bash
 python3 -m venv .venv
@@ -15,91 +20,141 @@ pip install -r requirements-dev.txt
 uvicorn main:app --host 0.0.0.0 --port 8000 --workers 1
 ```
 
-交互接口文档：<http://localhost:8000/docs>。测试：`python -m pytest -q`。
+Open <http://localhost:8000/docs> to try the endpoints. Run the automated tests with:
 
-服务启动后，也可以运行 IBM Bob 编写的真实 HTTP 验证脚本：
+```bash
+python -m pytest -q
+```
+
+With the server running, verify the real HTTP flow using the smoke-test CLI originally implemented by IBM Bob:
 
 ```bash
 python scripts/smoke_api.py http://127.0.0.1:8000
 ```
 
-将地址替换为部署后的 URL，即可检查接口、四种场景和费用公式。脚本会临时改变共享场景，并在结束时恢复原场景；恢复失败也会报错退出。
+The script checks the endpoints, all four scenario presets, queue ordering, action counts and the fee calculation. It temporarily changes the shared scenario and restores the original state afterward. A failed restoration also makes the check fail.
 
-环境变量示例见 `.env.example`。本项目不会自动读取 `.env`；可以在部署平台设置变量，或在本地 shell 中导出后启动。真实 API key 只放本地环境或部署平台的 Secret 中。
+## API contract
 
-## 前端接入
-
-| 方法 | 路径 | 返回 |
+| Method | Path | Response |
 |---|---|---|
-| GET | `/containers` | 按 `priority` 降序排列的直接数组 |
-| GET | `/containers/{container_id}` | 单柜完整对象；不存在时 404 |
-| POST | `/scenario` | 修改场景后重排的直接数组 |
-| GET | `/stats` | 四种 action 数量、baseline / optimized / savings 和当前场景 |
-| GET | `/health` | 服务状态、实际解释模式、数据量和重打分耗时 |
+| `GET` | `/containers` | Container array, sorted by descending `priority` |
+| `GET` | `/containers/{container_id}` | Full container with source evidence and explanations; `404` if missing |
+| `POST` | `/scenario` | Merge scenario fields, rescore and return the new container array |
+| `GET` | `/stats` | Action counts, FIFO and priority-queue fees, savings and current scenario |
+| `GET` | `/health` | Status, scorer, container count, scoring time and explanation mode |
 
-柜子保留前端要求的 `container_id`、`cargo_type`、`consignee_type`、`sources`（含各来源 `trust`）、`demurrage_usd_per_day`、`free_days_left`、`zone`，并增加 FIFO 统计需要的 `arrived_at`。打分字段为 `priority`、`urgency`、`conflict_score`、`action`、`reason`。三个分数在 0–1 之间，非冷藏柜的 `sources.reefer` 为 `null`。
+Container records retain their original data fields, including `container_id`, `cargo_type`, `consignee_type`, `sources`, `demurrage_usd_per_day`, `free_days_left`, `zone` and `arrived_at`. The scorer adds source `trust` values and the fields `priority`, `urgency`, `conflict_score`, `action` and `reason`. Scores range from 0 to 1. Non-refrigerated containers have `sources.reefer: null`.
 
-默认场景：
+The default scenario is:
 
 ```json
 {"lanes_open":8,"customs_online":true,"power_zone_b":true}
 ```
 
-`POST /scenario` 合并当前状态。例如只传 `{"lanes_open":4}` 会保留海关和电力设置。Normal 按钮应发送完整默认场景以重置其他开关。`lanes_open` 接受 0–8 的整数，其余两项必须为 JSON 布尔值。未知字段、显式 `null` 或非法类型返回 422。
+`POST /scenario` accepts partial updates. Sending `{"lanes_open":4}` preserves the current customs and power settings. Send all three default values to reset the scenario. `lanes_open` must be an integer from 0 to 8; the other fields must be JSON booleans. Unknown fields, explicit `null` values and invalid types return `422`. If rescoring fails, the API returns `503` and preserves the previous scenario, queue and statistics.
+
+| Demo preset | `lanes_open` | `customs_online` | `power_zone_b` |
+|---|---:|---|---|
+| Normal | 8 | `true` | `true` |
+| Lanes −50% | 4 | `true` | `true` |
+| Customs down | 8 | `false` | `true` |
+| Zone B power out | 8 | `true` | `false` |
+
+Use complete presets for mutually exclusive buttons, or partial updates for switches that can be combined.
 
 ```bash
+curl http://localhost:8000/health
 curl http://localhost:8000/containers
 curl -X POST http://localhost:8000/scenario \
   -H 'Content-Type: application/json' \
-  -d '{"lanes_open":4,"power_zone_b":false}'
+  -d '{"lanes_open":4,"customs_online":true,"power_zone_b":true}'
 curl http://localhost:8000/stats
-curl http://localhost:8000/health
 ```
 
-重排先返回规则/打分引擎理由；如果接入云端解释函数，后台只为前 20 个柜子更新 `reason`，前端随后刷新 `/containers` 即可获取。云端结果只更新说明文字，不能修改 action 或排名。`rule_reason` 保留原始打分理由。
+Replace `http://localhost:8000` with the hosted API URL for frontend integration. Refresh `/stats` after changing a scenario. See the [frontend guide](docs/api-usage.md) for React and JavaScript examples.
 
-**目前未配置云端 API，`/health` 如实返回 `llm: "template"`。前端需要兼容该值，以及模型超时后的模板回退。** 成功获得云端解释后返回 `llm: "cloud"`。`llm_status` 为 `disabled` / `pending` / `ready` / `fallback`；`llm_configured` 表示是否加载了解释函数。当前没有 Ollama 适配器。
+## Scoring and fee simulation
 
-## 费用模拟的口径
+The default scorer is `gate_triage.score:score`, contributed by Ryan. It distinguishes conflicting source reports from individual warning signals, calculates source trust and urgency, then assigns a priority and advisory action. Normal-day weights emphasize cost and overdue containers; disruption weights emphasize cargo criticality, consignee needs and refrigeration risks.
 
-- 每日处理容量 = `lanes_open × CONTAINERS_PER_LANE_PER_DAY`，默认每条车道 12 个。
-- baseline 按 `arrived_at` 从早到晚处理，累加当天未处理柜子的 `demurrage_usd_per_day`。
-- optimized 按 `priority` 从高到低处理，累加剩余柜子的同一费用。
-- savings = baseline − optimized，允许为零或负数；不预设演示收益。
-- 这是文档指定的排序经济模拟：四类 action 都参与容量计算，不能把这里的“处理”当成海关放行许可。真实作业约束需要与 Ryan 的引擎一起扩展。
-- 费用字段按当前每日计费额直接累加。`free_days_left` 保留给打分和界面，不额外扣减费用。日期相同时保持原始 JSON 顺序；无时区日期按 UTC 解析。
+When customs is offline, the engine waits for clearance verification before recommending gate release. It can still recommend an onsite move to powered storage for an unheld reefer. Known holds remain blocked, and power-loss warnings stay visible even when a hold or conflict takes precedence.
 
-仓库只有 5 条虚构样例。默认 96 个名额或 4 车道的 48 个名额都足以处理这 5 条，因此三项费用均为 **$0**；收到 Ryan 的完整数据后再验证收益规模。场景变化仍会改变排名和建议。
+The `/stats` endpoint compares two queue orders over one day:
 
-## 替换 Ryan 的数据与打分
+- Daily capacity is `lanes_open × CONTAINERS_PER_LANE_PER_DAY`, with 12 containers per lane by default.
+- `baseline_demurrage_usd_per_day` sums the daily fees of containers left after serving the FIFO queue, ordered by `arrived_at`.
+- `optimized_demurrage_usd_per_day` uses descending `priority` instead.
+- `savings_usd_per_day` is baseline minus optimized cost. It may be positive, zero or negative; the priority engine also considers safety and critical cargo.
 
-详见 [docs/integration.md](docs/integration.md)。将真实 JSON 放到指定位置，设置 `CONTAINERS_FILE` 和 `SCORER=模块名:score`。原始数据字段会保留，不需要把 JSON 改造成另一套字段名。
+All four action types participate in this simplified capacity calculation. A simulated processed container is not a customs release authorization. The supplied `demurrage_usd_per_day` value is summed directly; `free_days_left` affects scoring but is not applied as another fee discount. Arrival ties preserve input order, and dates without time zones are interpreted as UTC.
 
-## 部署
+These are synthetic scenario estimates, not measured savings or validated operational forecasts. The calculation does not model every restriction of a real terminal.
 
-线上服务已部署到 Render 免费实例：`https://gate-triage-backend.onrender.com`，实际 HTTP 接口、四种场景、费用公式、浏览器 CORS 和场景恢复验证通过。当前使用公开仓库 URL 部署；代码更新后，在 Render 的 Manual Deploy 菜单中部署最新提交。
+With the current 100-container dataset and default capacity, Normal saves $770/day in the simulation and Lanes −50% saves $4,249/day. The independent Customs down and Zone B power out presets each save $770/day: they change recommendations but do not further reduce lane capacity in this fee model. These values are calculated, not preset targets.
 
-仓库包含 `Dockerfile` 和 `render.yaml`。Render Blueprint 显式指定免费套餐，容器监听 `0.0.0.0:$PORT`，健康检查使用 `/health`。Railway 也可在 Dashboard 中连接仓库并使用 Dockerfile 构建，设置健康检查 `/health`、副本数 1 并生成域名。
+## Configuration and extensions
 
-Render 免费服务闲置后会休眠，演示前先访问 `/health` 唤醒。[免费服务说明](https://render.com/docs/free)。Railway 的旧 `railway.json` 配置格式已弃用，这里使用 Dashboard 部署流程。[Railway 配置说明](https://docs.railway.com/config-as-code/reference)。
+The app reads environment variables at startup. It does **not** automatically load `.env`; export variables in your shell or set them in the deployment platform. See [.env.example](.env.example). Keep API keys in local environment variables or deployment secrets, and never commit them.
 
-队列和场景存于进程内存，**只运行 1 个 worker、1 个实例**。所有使用者共享当前场景，重启/重新部署恢复默认值。需要多个独立演示会话或多实例时，应增加会话标识与共享数据库。
+| Variable | Default | Purpose |
+|---|---|---|
+| `CONTAINERS_FILE` | `data/containers.json` in this repository | JSON array loaded at startup |
+| `SCORER` | `gate_triage.score:score` | Synchronous `score(container, scenario)` callable |
+| `CONTAINERS_PER_LANE_PER_DAY` | `12` | Daily capacity per open lane |
+| `CORS_ORIGINS` | `*` | Comma-separated frontend origins |
+| `CLOUD_REASONER` | Unset | Optional `module:explain_many` callable |
+| `LLM_REASON_LIMIT` | `20` | Number of top-ranked containers to explain, from 1 to 20 |
 
-CORS 默认允许所有来源，凭据关闭；部署时可以通过逗号分隔的 `CORS_ORIGINS` 限制为前端域名。公开演示中的场景接口没有鉴权，访问者可以改变共享场景。
+To replace the dataset, set `CONTAINERS_FILE` and restart the service. Each record needs a unique, non-empty `container_id`, an ISO 8601 `arrived_at` and a non-negative numeric `demurrage_usd_per_day`, plus the fields required by the selected scorer. Preserve the source schema when integrating with the frontend.
 
-## 分享给组员
+A replacement scorer may return only computed fields or a complete container. The API merges the result with the original record, preserving fields the scorer does not return. It must preserve `container_id`, return finite scores between 0 and 1, a supported action and a non-empty reason. GET requests read cached results; scenario updates rescore the dataset atomically.
 
-公开仓库链接可直接发给组员，他们可以查看并 clone。共同推送代码时，在 GitHub 仓库 **Settings → Collaborators → Add people** 邀请其 GitHub 用户名，组员接受后即可推送。
+### Optional cloud explanations
 
-仓库地址：<https://github.com/yangchen1234/gate-triage-backend>
+No cloud provider adapter or credentials are included. To connect the team's API, implement a synchronous `explain_many(containers, scenario)` function and set `CLOUD_REASONER=your_module:explain_many`. The adapter owns authentication, request timeouts, retries and cost limits. It must return `{container_id: explanation}` for every selected container; each explanation must be non-empty and at most 2,000 characters.
+
+The API returns the scorer's explanations immediately, then enriches only the top-ranked containers in the background. Cloud output can change explanation text, but cannot change actions or rankings. The original text is retained as `rule_reason`; stale results from an earlier scenario are discarded. On failure, the API keeps the scoring explanations.
+
+`/health` reports the actual state:
+
+- `llm: "template"` when no cloud explanation is available; `llm: "cloud"` after successful enrichment.
+- `llm_status`: `disabled`, `pending`, `ready` or `fallback`.
+- `llm_configured`: whether an explanation callable was loaded.
+
+Frontend code must support template mode and cloud fallback. There is no built-in Ollama adapter. See the [integration guide](docs/integration.md) for the callable contracts.
+
+## Deployment
+
+The hosted demo runs on Render at <https://gate-triage-backend.onrender.com>. This service was connected using the public repository URL; deploy new commits through the Render service's **Manual Deploy** menu. Confirm the new deployment is live before relying on its data or behavior.
+
+The repository includes a [Dockerfile](Dockerfile) and [Render Blueprint](render.yaml). The Blueprint requests a free instance, listens on `0.0.0.0:$PORT` and uses `/health` for health checks. The same Dockerfile can be used with another compatible hosting platform.
+
+Render's free service may sleep while idle. Open `/health` before the demo and allow time for it to wake up. See [Render's free service documentation](https://render.com/docs/free).
+
+Run **one worker and one instance**. The queue and scenario live in process memory, are shared by all visitors and reset on restart or redeployment. Independent demo sessions or multiple instances require session handling and shared storage.
+
+CORS allows all origins by default, with credentials disabled. Set `CORS_ORIGINS` to restrict access to the frontend's origin. The public demo has no scenario authentication, so visitors can change the shared state.
+
+After deployment, run:
+
+```bash
+python scripts/smoke_api.py https://gate-triage-backend.onrender.com
+```
+
+Run this before recording or presenting: it temporarily changes the shared scenario while exercising the four presets.
+
+## Team workflow
 
 ```bash
 git clone https://github.com/yangchen1234/gate-triage-backend.git
 cd gate-triage-backend
 ```
 
-建议各自使用分支，通过 Pull Request 合并，避免同时修改 `main`。前端可以独立部署，只需要配置后端 base URL。
+The repository is public and can be shared directly with teammates. For push access, invite each teammate through **Settings → Collaborators → Add people**; they must accept the invitation. Use separate branches and pull requests to coordinate changes. The frontend can be deployed separately and configured with the backend base URL.
 
-## AI 开发工具记录
+## Contributions and responsible use
 
-Codex 协助实现 API、临时打分、统计、部署配置和测试。IBM Bob 通过 IDE 实际编写 `scripts/smoke_api.py`，用于部署后的接口和场景验证；随后由 Codex 审查并修复异步说明比较、恢复失败处理等问题。95 项测试和本地真实 HTTP 验证通过。任务、贡献与验证记录见 [docs/ibm-bob.md](docs/ibm-bob.md)。
+Ryan contributed the dataset and current scoring engine. Codex assisted with API implementation, service integration, fee statistics, deployment configuration, testing and documentation. IBM Bob's IDE agent originally implemented `scripts/smoke_api.py`; Codex subsequently reviewed it, corrected asynchronous explanation comparisons and scenario restoration handling, and added regression coverage. The [IBM Bob record](docs/ibm-bob.md) documents that contribution.
+
+Gate Triage provides recommendations and a synthetic simulation for human review. It does not clear customs holds, authorize physical container release or control terminal equipment. Source evidence and rule explanations remain available to support review. Live Terminal49 integration and real operational validation are future work.

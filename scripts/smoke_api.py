@@ -25,9 +25,9 @@ TIMEOUT = 5  # seconds
 
 SCENARIO_PRESETS = [
     ("Normal",             {"lanes_open": 8, "customs_online": True, "power_zone_b": True}),
-    ("Lanes -50%",         {"lanes_open": 4}),
-    ("Customs down",       {"customs_online": False}),
-    ("Zone B power out",   {"power_zone_b": False}),
+    ("Lanes -50%",         {"lanes_open": 4, "customs_online": True, "power_zone_b": True}),
+    ("Customs down",       {"lanes_open": 8, "customs_online": False, "power_zone_b": True}),
+    ("Zone B power out",   {"lanes_open": 8, "customs_online": True, "power_zone_b": False}),
 ]
 
 REQUIRED_STATS_NUMERIC = (

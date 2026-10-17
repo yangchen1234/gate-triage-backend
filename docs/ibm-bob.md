@@ -10,23 +10,24 @@
 
 ## Bob 的产出与后续审查
 
-Bob 实际生成了 `scripts/smoke_api.py`。该脚本是 Bob 的代码贡献，主 API、打分引擎、费用统计和部署配置由 Codex 协助实现。
+Bob 实际生成了 `scripts/smoke_api.py`。该脚本是 Bob 的代码贡献。主 API、费用统计和部署配置由 Codex 协助实现；当前的 100 条合成数据和 `gate_triage/score.py` 评分引擎由 Ryan 提供，Codex 协助接入、审查并补充回归测试。
 
 Codex 审查后修复了以下问题，并补充 `tests/test_smoke_api.py`：
 
 - 比较队列/详情时忽略可能在后台变化的解释文字字段，避免云端理由更新造成误报。
 - 恢复场景失败时返回失败，同时保留首次检查错误。
 - 补充队列字段、优先级、ID 路径编码和 URL 校验，避免打印原始网络异常。
+- 接入 Ryan 数据后，四个场景改为发送完整预设，避免将海关和断电场景无意叠加在车道减半场景上。
 
-## 验证结果
+## 首次部署验证结果（接入 Ryan 数据前）
 
 - `python -m pytest -q`：95 项通过。
 - `python scripts/smoke_api.py http://127.0.0.1:8000`：真实本地 HTTP 验证通过；四种场景全部通过，开始时的默认场景成功恢复。
-- 当前只有 5 条虚构样例，测试输出的 savings 为 0，符合容量公式。
+- 首次部署使用 5 条虚构样例，测试输出的 savings 为 0，符合容量公式。该数据已由 Ryan 的 100 条演示数据替换。
 - `python scripts/smoke_api.py https://gate-triage-backend.onrender.com`：Render 线上真实 HTTP 验证通过，四种场景与原场景恢复均通过。
 - 另行验证线上 `/docs`、OpenAPI、浏览器 CORS、422 参数校验和 404 未知柜子。
 - 团队云端 LLM 尚未配置和验证。
 
 ## Devpost 可用的贡献说明
 
-We used IBM Bob's IDE agent to implement our deployment smoke-test CLI. It exercises the container queue, source-detail, scenario, health and savings endpoints over HTTP, then restores the original scenario. Codex assisted with the backend implementation and subsequent review, corrections and regression tests. We validated the script against our local running service.
+We used IBM Bob's IDE agent to implement our deployment smoke-test CLI. It exercises the container queue, source-detail, scenario, health and savings endpoints over HTTP, then restores the original scenario. Ryan provided the 100-container synthetic dataset and scoring engine. Codex assisted with the backend, integration, subsequent review, corrections and regression tests. We validated the script against our local running service and the initial Render deployment.

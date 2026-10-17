@@ -59,6 +59,19 @@ def test_restore_failure_never_reports_success(monkeypatch, capsys):
     assert "SMOKE TEST PASSED" not in capsys.readouterr().out
 
 
+def test_presets_test_independent_outages_instead_of_accumulating_them(monkeypatch):
+    original, state, posts, _ = fake_api(monkeypatch)
+    smoke.run()
+    assert posts == [
+        {"lanes_open": 8, "customs_online": True, "power_zone_b": True},
+        {"lanes_open": 4, "customs_online": True, "power_zone_b": True},
+        {"lanes_open": 8, "customs_online": False, "power_zone_b": True},
+        {"lanes_open": 8, "customs_online": True, "power_zone_b": False},
+        original,
+    ]
+    assert state == original
+
+
 def test_restore_failure_preserves_original_failure(monkeypatch, capsys):
     fake_api(monkeypatch, restore_fails=True)
 

@@ -2,7 +2,7 @@
 score.py — Gate Triage scoring engine ｜ 打分引擎
 
 Usage ｜ 用法:
-    from score import score, score_all
+    from gate_triage.score import score, score_all
     result = score(container, scenario)
     ranked = score_all(containers, scenario)   # sorted by priority desc ｜ 按 priority 降序
 
@@ -149,6 +149,8 @@ def decide_action(c, scenario, conflict_score, urgency, temp_drift, customs_trus
         return "inspect", "customs offline, hold unverified"    # can't trust the hold flag ｜ 海关宕机，hold 不可信
     if has_reefer and c["zone"] == "B" and not power_b:
         return "reroute", "zone B unpowered"                    # every reefer in B will warm ｜ B 区冷藏柜迟早升温
+    if not scenario.get("customs_online", True):
+        return "slow", "customs offline, clearance unverified"
     if has_reefer and temp_drift > 0.3:
         return "release", "reefer warming"                      # get it out before it spoils ｜ 坏之前赶紧走
     if urgency >= release_threshold:
@@ -158,13 +160,18 @@ def decide_action(c, scenario, conflict_score, urgency, temp_drift, customs_trus
 
 # ---------- 5. Reason ｜ 理由 ----------
 
-def build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carrier_trust):
+def build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carrier_trust, scenario=None):
     """One plain-English line a planner can read. Template for now; LLM polish later.
     一句接线员能看懂的英文。先用模板，之后可让 LLM 润色。"""
     s = c["sources"]
     r = s["reefer"]
+    scenario = scenario or DEFAULT_SCENARIO
     parts = []
 
+    if not scenario.get("customs_online", True):
+        parts.append("customs offline; verify clearance before any gate release")
+    if r is not None and c["zone"] == "B" and not scenario.get("power_zone_b", True):
+        parts.append("zone B unpowered; arrange authorized powered storage")
     if conflict_notes:
         parts.append("; ".join(conflict_notes).capitalize() + f" (carrier trust {carrier_trust:.1f})")
     if r is not None and temp_drift > 0.3:
@@ -172,7 +179,7 @@ def build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carr
     if r is not None and reefer_silent > 0.3:
         parts.append(f"reefer sensor silent {r['last_ping_min']} min")
     if s["customs"]["hold"]:
-        parts.append(f"customs {s['customs']['hold_type'].replace('_', ' ')} hold")
+        parts.append(f"customs {s['customs']['hold_type'].replace('_', ' ')} hold; do not release")
     if c["free_days_left"] < 0:
         parts.append(f"{-c['free_days_left']}d overdue at ${c['demurrage_usd_per_day']}/day")
 
@@ -203,7 +210,7 @@ def score(container, scenario=None):
     # Conflicts rank high too — someone needs to look at them soon
     # 冲突也要排前面，因为需要人赶紧看
     priority = 0.65 * urgency + 0.35 * conflict_score
-    reason = build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carrier_t)
+    reason = build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carrier_t, scenario)
 
     c["sources"]["carrier"]["trust"] = round(carrier_t, 2)
     c["sources"]["scale"]["trust"] = round(scale_t, 2)
@@ -232,8 +239,10 @@ def score_all(containers, scenario=None):
 if __name__ == "__main__":
     import json
     from collections import Counter
+    from pathlib import Path
 
-    data = json.load(open("containers.json"))
+    data_path = Path(__file__).resolve().parents[1] / "data" / "containers.json"
+    data = json.loads(data_path.read_text(encoding="utf-8"))
     HERO = "TRXU7731902"   # demo hero: hospital vaccine reefer, Zone B, warming ｜ demo 主角
 
     scenarios = {

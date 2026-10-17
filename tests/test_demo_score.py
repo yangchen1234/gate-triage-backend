@@ -6,7 +6,9 @@ from gate_triage.demo_score import score
 
 
 DEFAULT = {"lanes_open": 8, "customs_online": True, "power_zone_b": True}
-FIXTURES = json.loads((Path(__file__).resolve().parents[1] / "data" / "containers.json").read_text())
+FIXTURES = json.loads(
+    (Path(__file__).resolve().parent / "fixtures" / "original_demo_containers.json").read_text()
+)
 
 
 def test_fixtures_cover_frontend_cargo_types_and_scorer_does_not_mutate_sources():
