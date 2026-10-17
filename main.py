@@ -60,6 +60,17 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
             background_tasks.add_task(service.enrich_reasons, updated.generation)
         return updated.queue
 
+    @app.get("/plan", summary="Agent: today's action list — blockers worth resolving, with drafted outreach")
+    def plan(top_n: int = 5) -> dict:
+        from gate_triage.agent import run_agent
+        service = app.state.service
+        snapshot = service.snapshot()
+        try:
+            return run_agent(service._raw, snapshot.scenario, top_n=max(1, min(top_n, 10)))
+        except Exception as exc:
+            logger.warning("Agent failed: %s", exc)
+            raise HTTPException(status_code=503, detail="Planner agent unavailable") from None
+
     @app.get("/stats", summary="Action counts and one-day fee simulation")
     def stats() -> dict:
         return app.state.service.snapshot().stats

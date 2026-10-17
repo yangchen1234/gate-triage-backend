@@ -57,21 +57,48 @@ def _client(cfg: dict):
 
 # ---------- Draft templates (fallback) ｜ 模板草稿（兜底） ----------
 
+def _template_draft_zh(action: dict) -> dict:
+    """Chinese templates for SHA ｜ 上海港中文模板"""
+    cid = action["container_id"]
+    cargo = {"reefer_pharma": "冷藏药品", "reefer_food": "冷藏食品", "hazmat": "危险品", "general": "普通货物", "empty": "空箱"}[action["cargo_type"]]
+    fee = f"{action['demurrage_per_day']} 元/天"
+    who = action["who"]
+    b = action["blocker"]
+    if b == "customs_hold":
+        subject = f"申请加急放行 — {cid}"
+        body = (f"海关老师您好：\n\n集装箱 {cid}（{cargo}）目前处于{action['fix'].split('the ')[-1]}状态，每日产生滞箱费 {fee}，货物时效性强。"
+                f"请问需要补充哪些单证可以今日放行？\n\n谢谢，\n闸口调度")
+    elif b == "source_conflict":
+        subject = f"申报重量不符 — {cid}"
+        body = (f"船公司您好：\n\n码头地磅称重与贵司申报的 {cid} 重量不一致。请重新确认申报状态和毛重，以便免开箱放行。"
+                f"当前滞箱费 {fee}。\n\n谢谢，\n闸口调度")
+    elif b == "reefer_silent":
+        subject = f"冷藏箱传感器检查 — {cid}"
+        body = f"冷藏技工：{cid}（{cargo}）已超过 90 分钟未上报温度，请确认供电和传感器状态。货物对温度敏感。"
+    else:
+        subject = f"转移至有电堆场 — {cid}"
+        body = f"堆场调度：B 区断电，请将冷藏箱 {cid}（{cargo}）转移至 A 区有电箱位并确认插电。优先级：高。"
+    return {"to": who, "subject": subject, "body": body, "source": "template", "language": "zh"}
+
+
 def _template_draft(action: dict) -> dict:
+    if action.get("language") == "zh":
+        return _template_draft_zh(action)
     cid = action["container_id"]
     cargo = action["cargo_type"].replace("_", " ")
-    usd = action["unlocks_usd_per_day"]
     who = action["who"]
+    sym = {"USD": "$", "EUR": "€", "CNY": "¥"}.get(action.get("currency", "USD"), "$")
+    fee = f"{sym}{action['demurrage_per_day']}/day"
     if action["blocker"] == "customs_hold":
         subject = f"Request to expedite release — {cid}"
-        body = (f"Hello CBP team,\n\nContainer {cid} ({cargo}) is under a {action['fix'].split('the ')[-1]} at our terminal. "
-                f"It is accruing ${action['demurrage_usd_per_day']}/day in demurrage and is time-sensitive cargo. "
+        body = (f"Hello {who} team,\n\nContainer {cid} ({cargo}) is under a {action['fix'].split('the ')[-1]} at our terminal. "
+                f"It is accruing {fee} in demurrage and is time-sensitive cargo. "
                 f"Could you advise what documentation would allow us to clear it today?\n\nThank you,\nGate Planner")
     elif action["blocker"] == "source_conflict":
         subject = f"Declaration mismatch — {cid}"
         body = (f"Hello,\n\nOur terminal scale reads a different weight than your declaration for {cid}. "
                 f"Please re-confirm the declared status and gross weight so we can release without a physical inspection. "
-                f"Current demurrage: ${action['demurrage_usd_per_day']}/day.\n\nThank you,\nGate Planner")
+                f"Current demurrage: {fee}.\n\nThank you,\nGate Planner")
     elif action["blocker"] == "reefer_silent":
         subject = f"Reefer sensor check — {cid}"
         body = (f"Reefer tech: {cid} ({cargo}) has not reported temperature for over 90 minutes. "
@@ -80,7 +107,7 @@ def _template_draft(action: dict) -> dict:
         subject = f"Move to powered zone — {cid}"
         body = (f"Yard ops: Zone B is unpowered. Please relocate reefer {cid} ({cargo}) to a powered slot in Zone A "
                 f"and confirm plug-in. Priority: high.")
-    return {"to": who, "subject": subject, "body": body, "source": "template"}
+    return {"to": who, "subject": subject, "body": body, "source": "template", "language": "en"}
 
 
 # ---------- Tools the agent can call ｜ agent 可调用的工具 ----------
@@ -120,8 +147,9 @@ def make_tools(containers: list[dict], scenario: dict):
 
 DRAFT_SYSTEM = (
     "You draft short, professional outreach for a port terminal gate planner. "
-    "Use ONLY the facts given. Do not invent container numbers, dollar amounts, dates or regulations. "
-    "Return JSON: {\"subject\": str, \"body\": str}. Body under 120 words. No sign-off beyond 'Gate Planner'."
+    "Use ONLY the facts given. Do not invent container numbers, amounts, dates or regulations. "
+    "Write in the language specified by `language` (en = English, zh = Simplified Chinese). "
+    "Return JSON: {\"subject\": str, \"body\": str}. Body under 120 words. Sign off as 'Gate Planner' (or '闸口调度' in Chinese)."
 )
 
 
@@ -136,8 +164,11 @@ def draft_outreach(action: dict, cfg: dict | None) -> dict:
         "consignee": action["consignee_type"],
         "blocker": action["blocker"],
         "requested_fix": action["fix"],
-        "demurrage_usd_per_day": action["demurrage_usd_per_day"],
-        "unlocks_usd_per_day": action["unlocks_usd_per_day"],
+        "port": action.get("port"),
+        "language": action.get("language", "en"),
+        "currency": action.get("currency", "USD"),
+        "demurrage_per_day": action["demurrage_per_day"],
+        "unlocks_per_day": action["unlocks_per_day"],
         "current_action": action["before"]["action"],
         "if_fixed": action["after"]["action"],
     }
@@ -150,7 +181,7 @@ def draft_outreach(action: dict, cfg: dict | None) -> dict:
             response_format={"type": "json_object"},
         )
         out = json.loads(resp.choices[0].message.content)
-        return {"to": action["who"], "subject": out["subject"], "body": out["body"], "source": _llm_source(cfg)}
+        return {"to": action["who"], "subject": out["subject"], "body": out["body"], "source": _llm_source(cfg), "language": action.get("language", "en")}
     except Exception as e:  # any failure → template ｜ 任何失败都回退模板
         d = _template_draft(action)
         d["fallback_reason"] = str(e)[:120]
@@ -219,19 +250,25 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
     actions_out = []
     for a in plan["actions"]:
         item = dict(a)
-        item["why"] = whys.get(a["container_id"]) or f"{a['fix']} — unlocks ${a['unlocks_usd_per_day']}/day."
+        sym = {"USD": "$", "EUR": "€", "CNY": "¥"}.get(a.get("currency", "USD"), "$")
+        item["why"] = whys.get(a["container_id"]) or f"{a['fix']} — unlocks {sym}{a['unlocks_per_day']}/day."
         item["draft"] = draft_outreach(a, cfg)
         item["requires_human_approval"] = True
         actions_out.append(item)
 
     if summary is None:
         n = len(actions_out)
-        summary = (f"{n} actions today unlock ${plan['total_unlocked_usd_per_day']}/day "
-                   f"against a gate capacity of {plan['gate_capacity_today']} boxes.")
+        sym = {"USD": "$", "EUR": "€", "CNY": "¥"}.get(plan.get("currency", "USD"), "$")
+        summary = (f"{n} action{'s' if n != 1 else ''} worth making today at {plan.get('port_name', 'the port')}: "
+                   f"unlock {sym}{plan['total_unlocked_per_day']}/day against a gate capacity of {plan['gate_capacity_today']} boxes.")
 
     return {
         "scenario": plan["scenario"],
+        "port": plan.get("port"),
+        "port_name": plan.get("port_name"),
+        "currency": plan.get("currency"),
         "gate_capacity_today": plan["gate_capacity_today"],
+        "total_unlocked_per_day": plan["total_unlocked_per_day"],
         "summary": summary,
         "actions": actions_out,
         "total_unlocked_usd_per_day": plan["total_unlocked_usd_per_day"],

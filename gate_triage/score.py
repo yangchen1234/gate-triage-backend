@@ -15,6 +15,14 @@ Two kinds of signal ｜ 两类信号:
   单源警报        — 一个来源发现问题，其他来源管不到
 """
 from copy import deepcopy
+from datetime import datetime
+
+try:
+    from gate_triage.port_profiles import get_profile, compute_fees
+except ImportError:  # running as a loose script ｜ 作为脚本直接运行时
+    from port_profiles import get_profile, compute_fees
+
+NOW = datetime(2026, 10, 17, 8, 0, 0)   # snapshot time of the dataset ｜ 数据快照时间
 
 DEFAULT_SCENARIO = {"lanes_open": 8, "customs_online": True, "power_zone_b": True}
 
@@ -22,7 +30,12 @@ DEFAULT_SCENARIO = {"lanes_open": 8, "customs_online": True, "power_zone_b": Tru
 CARGO_W = {"reefer_pharma": 1.0, "reefer_food": 0.8, "hazmat": 0.7, "general": 0.4, "empty": 0.1}
 CONSIGNEE_W = {"hospital": 1.0, "grocery": 0.7, "retail": 0.5, "unknown": 0.4}
 
-MAX_DEMURRAGE = 750.0   # upper bound in the dataset, for normalisation ｜ 数据里的上限，用来归一化
+def max_fee(profile):
+    """Upper bound of demurrage at this port, for normalising the cost term. ｜ 该港口滞港费上限，归一化用。"""
+    port_top = profile["port_tiers"][-1][1]
+    reefer_top = profile["carrier_tiers"]["reefer"][-1][1]
+    reefer_top = reefer_top[1] if isinstance(reefer_top, tuple) else reefer_top
+    return float(port_top + reefer_top * 1.5)
 
 
 def clip(x, lo=0.0, hi=1.0):
@@ -118,7 +131,7 @@ def compute_urgency(c, reefer_trust, scenario):
         reefer_silent = clip((r["last_ping_min"] - 30) / 150.0)
 
     overdue = clip(-c["free_days_left"] / 6.0)              # 6 days overdue → 1 ｜ 超期 6 天 → 1
-    cost = clip(c["demurrage_usd_per_day"] / MAX_DEMURRAGE)
+    cost = clip(c["demurrage_per_day"] / max_fee(c["_profile"]))
 
     urgency = (w["cargo"] * CARGO_W[c["cargo_type"]]
                + w["consignee"] * CONSIGNEE_W[c["consignee_type"]]
@@ -137,7 +150,7 @@ def decide_action(c, scenario, conflict_score, urgency, temp_drift, customs_trus
     lanes = scenario.get("lanes_open", 8)
     power_b = scenario.get("power_zone_b", True)
     # With half the lanes, the bar for release goes up ｜ 车道减半，放行门槛提高
-    release_threshold = 0.25 if lanes >= 8 else 0.35
+    release_threshold = 0.25   # capacity, not a threshold, decides who gets out today ｜ 出不出闸由容量决定
     has_reefer = s["reefer"] is not None
     hold = s["customs"]["hold"]
 
@@ -174,7 +187,7 @@ def build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carr
     if s["customs"]["hold"]:
         parts.append(f"customs {s['customs']['hold_type'].replace('_', ' ')} hold")
     if c["free_days_left"] < 0:
-        parts.append(f"{-c['free_days_left']}d overdue at ${c['demurrage_usd_per_day']}/day")
+        parts.append(f"{-c['free_days_left']}d overdue at {c['_profile']['symbol']}{c['demurrage_per_day']}/day")
 
     verb = {
         "inspect": "Hold for inspection",
@@ -195,6 +208,13 @@ def score(container, scenario=None):
     给一个柜子打分。返回副本，加上 trust / priority / action / reason。"""
     scenario = scenario or DEFAULT_SCENARIO
     c = deepcopy(container)
+
+    # Port profile (Twist 2): currency, free time, tariff tiers, agency names all come from here.
+    # Fees are recomputed so the same box can be viewed at any port.
+    # 港口配置（Twist 2）：货币、免费期、费率阶梯、机构名称都从这来。费用重算，同一个柜子可以放到任何港口看。
+    profile = get_profile(scenario.get("port"))
+    c.update(compute_fees(profile, c["cargo_type"], c["arrived_at"], NOW, c["container_id"]))
+    c["_profile"] = profile
 
     carrier_t, scale_t, customs_t, reefer_t = compute_trust(c, scenario)
     conflict_score, conflict_notes = compute_conflicts(c, carrier_t, scale_t)
@@ -228,9 +248,11 @@ def score(container, scenario=None):
             "customs": round(customs_t, 2),
             "reefer": round(reefer_t, 2) if reefer_t is not None else None,
         },
-        "release_threshold": 0.25 if scenario.get("lanes_open", 8) >= 8 else 0.35,
+        "release_threshold": 0.25,
         "weights": dict(WEIGHTS_CRISIS if is_crisis(scenario) else WEIGHTS_NORMAL),
+        "port": profile["code"],
     }
+    c.pop("_profile", None)
     return c
 
 
@@ -252,10 +274,11 @@ def score_all(containers, scenario=None):
 BLOCKERS = {
     # key: (detect, apply_fix, fix_label, who)
     "customs_hold": (
-        lambda c, sc: c["sources"]["customs"]["hold"],
+        # intensive exams are physical and can't be chased — not a candidate ｜ 开箱查验催不动，不列
+        lambda c, sc: c["sources"]["customs"]["hold"] and c["sources"]["customs"]["hold_type"] != "intensive",
         lambda c: c["sources"]["customs"].update({"hold": False, "hold_type": "none", "est_days_to_clear": 0}),
-        "Chase CBP to clear the {hold_type} hold",
-        "CBP",
+        "Chase {customs} to clear the {hold_type}",
+        "customs",
     ),
     "source_conflict": (
         lambda c, sc: c["conflict_score"] >= 0.5,
@@ -264,19 +287,19 @@ BLOCKERS = {
             "declared_weight_kg": c["sources"]["scale"]["weight_kg"],
         }),
         "Ask carrier to re-declare; scale reads {scale_t}t",
-        "Carrier",
+        "carrier",
     ),
     "reefer_silent": (
         lambda c, sc: c["sources"]["reefer"] is not None and c["sources"]["reefer"]["last_ping_min"] > 90,
         lambda c: c["sources"]["reefer"].update({"last_ping_min": 5}),
         "Dispatch reefer tech; sensor silent {ping} min",
-        "Reefer tech",
+        "reefer_tech",
     ),
     "zone_power": (
         lambda c, sc: c["sources"]["reefer"] is not None and c["zone"] == "B" and not sc.get("power_zone_b", True),
         lambda c: c.update({"zone": "A"}),
-        "Move to powered Zone A",
-        "Yard ops",
+        "Move to powered {zone_powered}",
+        "yard",
     ),
 }
 
@@ -320,13 +343,24 @@ def simulate_fix(container, blocker, containers, scenario=None):
     cid = container["container_id"]
     was_out = _out_today(cid, before_q, scenario)
     now_out = _out_today(cid, after_q, scenario)
-    unlocked = container["demurrage_usd_per_day"] if (now_out and not was_out) else 0
+    profile = get_profile(scenario.get("port"))
+    unlocked_local = before["demurrage_per_day"] if (now_out and not was_out) else 0
+    unlocked_usd = before["demurrage_usd_per_day"] if (now_out and not was_out) else 0
 
     r = container["sources"]["reefer"]
+    if profile["language"] == "zh":   # localized action text ｜ 行动文案本地化
+        label = {
+            "customs_hold": "联系{customs}解除{hold_type}",
+            "source_conflict": "请船公司重新申报；地磅实称 {scale_t} 吨",
+            "reefer_silent": "派冷藏技工检查；传感器已 {ping} 分钟未上报",
+            "zone_power": "转移至有电的{zone_powered}",
+        }[blocker]
     fix_text = label.format(
-        hold_type=container["sources"]["customs"]["hold_type"].replace("_", " "),
+        customs=profile["customs_agency"],
+        hold_type=profile["hold_labels"].get(container["sources"]["customs"]["hold_type"], "hold"),
         scale_t=f"{container['sources']['scale']['weight_kg'] / 1000:.1f}",
         ping=r["last_ping_min"] if r else 0,
+        zone_powered=profile["zone_powered"],
     )
     return {
         "container_id": container["container_id"],
@@ -334,11 +368,17 @@ def simulate_fix(container, blocker, containers, scenario=None):
         "consignee_type": container["consignee_type"],
         "blocker": blocker,
         "fix": fix_text,
-        "who": who,
+        "who": profile["who"][who],
+        "who_role": who,
+        "port": profile["code"],
+        "currency": profile["currency"],
+        "language": profile["language"],
         "before": {"action": before["action"], "rank": _rank_of(cid, before_q), "priority": before["priority"], "out_today": was_out},
         "after":  {"action": after["action"],  "rank": _rank_of(cid, after_q),  "priority": after["priority"], "out_today": now_out},
-        "unlocks_usd_per_day": unlocked,
-        "demurrage_usd_per_day": container["demurrage_usd_per_day"],
+        "unlocks_per_day": unlocked_local,
+        "unlocks_usd_per_day": unlocked_usd,
+        "demurrage_per_day": before["demurrage_per_day"],
+        "demurrage_usd_per_day": before["demurrage_usd_per_day"],
     }
 
 
@@ -359,15 +399,17 @@ def next_actions(containers, scenario=None, top_n=5):
     # Primary sort: money unlocked. Tie-break: how far the box climbs, then its own demurrage.
     # 先按解锁金额，再按排名提升，再按自身滞港费。
     candidates.sort(key=lambda a: (
-        a["unlocks_usd_per_day"],
+        a["unlocks_per_day"],
         (a["before"]["rank"] or 999) - (a["after"]["rank"] or 999),
-        a["demurrage_usd_per_day"],
+        a["demurrage_per_day"],
     ), reverse=True)
 
-    # One action per container — don't list the same box twice.
+    # One action per container, and only actions that actually get a box out today.
+    # Under lane shortage this list gets shorter — that is the point: don't chase what won't move.
+    # 每个柜子只列一条，且只列今天真能放出去的。车道减半时清单会变短，这正是意义：别催那些催了也走不了的。
     seen, plan = set(), []
     for a in candidates:
-        if a["container_id"] in seen:
+        if a["container_id"] in seen or a["unlocks_per_day"] <= 0:
             continue
         seen.add(a["container_id"])
         plan.append(a)
@@ -375,10 +417,15 @@ def next_actions(containers, scenario=None, top_n=5):
             break
 
     capacity = scenario.get("lanes_open", 8) * CONTAINERS_PER_LANE_PER_DAY
+    profile = get_profile(scenario.get("port"))
     return {
         "scenario": dict(scenario),
+        "port": profile["code"],
+        "port_name": profile["name"],
+        "currency": profile["currency"],
         "gate_capacity_today": capacity,
         "actions": plan,
+        "total_unlocked_per_day": sum(a["unlocks_per_day"] for a in plan),
         "total_unlocked_usd_per_day": sum(a["unlocks_usd_per_day"] for a in plan),
         "candidates_considered": len(candidates),
     }
