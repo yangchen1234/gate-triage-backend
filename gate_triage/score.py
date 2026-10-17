@@ -75,11 +75,16 @@ def compute_trust(c, scenario):
 
 def compute_conflicts(c, carrier_trust, scale_trust):
     """Returns (conflict_score, [notes]). Only counts cases where two sources contradict each other.
-    返回 (conflict_score, [冲突描述])。只算两个来源互相矛盾的情况。"""
+    Carrier trust sets how much declared-vs-scale gap we tolerate: a carrier with a bad record gets
+    scrutinised at a 20% gap, a reliable one at 30%.
+    返回 (conflict_score, [冲突描述])。只算两个来源互相矛盾的情况。
+    船司信任分决定容忍多大的申报差：信誉差的差 20% 就查，信誉好的差 30% 才查。"""
     s = c["sources"]
     declared = s["carrier"]["declared_status"]
     dw = s["carrier"]["declared_weight_kg"]
     sw = s["scale"]["weight_kg"]
+    gap_threshold = 0.15 + 0.15 * carrier_trust      # trust 1.0 → 30%, trust 0.4 → 21% ｜ 信任越低审得越严
+    del scale_trust                                   # scale is the reference measurement; kept in signature for symmetry ｜ 地磅是基准
     score = 0.0
     notes = []
 
@@ -89,10 +94,10 @@ def compute_conflicts(c, carrier_trust, scale_trust):
         score += 0.7
         notes.append(f"carrier declares empty but scale reads {sw/1000:.1f}t")
 
-    # Declared weight off by more than 30% ｜ 申报重量和地磅差 30% 以上
-    if declared == "laden" and sw > 0 and abs(dw - sw) / sw > 0.30:
+    # Declared weight off by more than the trust-scaled tolerance ｜ 申报重量和地磅差超过（按信任分缩放的）容忍度
+    if declared == "laden" and sw > 0 and abs(dw - sw) / sw > gap_threshold:
         score += 0.5
-        notes.append(f"declared {dw/1000:.1f}t vs scale {sw/1000:.1f}t")
+        notes.append(f"declared {dw/1000:.1f}t vs scale {sw/1000:.1f}t, beyond the {gap_threshold:.0%} tolerance")
 
     return clip(score), notes
 
@@ -149,8 +154,9 @@ def decide_action(c, scenario, conflict_score, urgency, temp_drift, customs_trus
     s = c["sources"]
     lanes = scenario.get("lanes_open", 8)
     power_b = scenario.get("power_zone_b", True)
-    # With half the lanes, the bar for release goes up ｜ 车道减半，放行门槛提高
-    release_threshold = 0.25   # capacity, not a threshold, decides who gets out today ｜ 出不出闸由容量决定
+    # Fixed bar for "eligible to release". Lane count does NOT move it: with fewer lanes, the day's
+    # capacity cut in next_actions / stats decides who actually gets out. ｜ 门槛固定；车道减少时由容量截断决定谁出闸
+    release_threshold = 0.25
     has_reefer = s["reefer"] is not None
     hold = s["customs"]["hold"]
 
@@ -322,13 +328,15 @@ def _out_today(container_id, ranked, scenario):
     return container_id in releases[:capacity]
 
 
-def simulate_fix(container, blocker, containers, scenario=None):
+def simulate_fix(container, blocker, containers, scenario=None, before_q=None):
     """Pretend `blocker` is resolved on this container; re-score the whole queue; report the delta.
-    假设这个柜子的卡点已解决，整队重打分，返回前后差异。"""
+    Pass `before_q` (the already-scored queue) when calling in a loop to avoid re-scoring it each time.
+    假设这个柜子的卡点已解决，整队重打分，返回前后差异。循环调用时传入 before_q 避免重复打分。"""
     scenario = scenario or DEFAULT_SCENARIO
     detect, apply_fix, label, who = BLOCKERS[blocker]
 
-    before_q = score_all(containers, scenario)
+    if before_q is None:
+        before_q = score_all(containers, scenario)
     before = next(c for c in before_q if c["container_id"] == container["container_id"])
 
     fixed = deepcopy(container)
@@ -394,7 +402,7 @@ def next_actions(containers, scenario=None, top_n=5):
         c = by_id[raw["container_id"]]
         for blocker, (detect, *_rest) in BLOCKERS.items():
             if detect(c, scenario):
-                candidates.append(simulate_fix(raw, blocker, containers, scenario))
+                candidates.append(simulate_fix(raw, blocker, containers, scenario, before_q=scored))
 
     # Primary sort: money unlocked. Tie-break: how far the box climbs, then its own demurrage.
     # 先按解锁金额，再按排名提升，再按自身滞港费。
