@@ -139,7 +139,8 @@ def test_status_matches_action_and_localizes():
 
 
 def test_unlocked_dollars_only_count_boxes_already_paying_demurrage():
-    """A box still inside its free time has nothing to unlock, whatever its tariff rate."""
+    """A box with free days to spare has nothing to unlock, whatever its tariff rate.
+    free_days_left == 0 counts: it pays from tomorrow unless it leaves today."""
     from gate_triage.score import next_actions, score_all
     import json, pathlib
     data = json.loads(pathlib.Path("data/containers.json").read_text())
@@ -148,4 +149,4 @@ def test_unlocked_dollars_only_count_boxes_already_paying_demurrage():
         by_id = {c["container_id"]: c for c in score_all(data, scenario)}
         plan = next_actions(data, scenario, top_n=10)
         for a in plan["actions"]:
-            assert by_id[a["container_id"]]["free_days_left"] < 0, a["container_id"]
+            assert by_id[a["container_id"]]["free_days_left"] <= 0, a["container_id"]

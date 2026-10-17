@@ -396,8 +396,10 @@ def simulate_fix(container, blocker, containers, scenario=None, before_q=None):
     was_out = _out_today(cid, before_q, scenario)
     now_out = _out_today(cid, after_q, scenario)
     profile = get_profile(scenario.get("port"))
-    # Only a box already past its free time is paying anything to unlock. ｜ 还在免费期的柜子没在交钱，不算解锁金额
-    paying = before["free_days_left"] < 0
+    # Only a box whose free time is used up has anything to unlock: it is paying now, or starts paying
+    # tomorrow if it does not leave today. A box with free days to spare unlocks $0 whatever its rate.
+    # 免费期用完的柜子才有钱可解锁：要么已在交钱，要么今天不走明天就开始交。还有免费天数的柜子算 $0
+    paying = before["free_days_left"] <= 0
     unlocked_local = before["demurrage_per_day"] if (now_out and not was_out and paying) else 0
     unlocked_usd = before["demurrage_usd_per_day"] if (now_out and not was_out and paying) else 0
 
