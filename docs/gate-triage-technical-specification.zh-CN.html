@@ -31,7 +31,8 @@ main{margin-left:270px;padding:36px 42px 80px;max-width:1570px}.toolbar{display:
 </ul>
 </div>
 </aside><main><div class="toolbar"><span class="tag">技术规范 · 实现状态见验收记录</span><a href="gate-triage-technical-specification.zh-CN.md">Markdown 原稿</a><a href="gate-triage-development-brief.zip">开发文档包</a><button type="button" onclick="window.print()">打印或保存 PDF</button></div><article><h1 id="gate-triage-技术设计与全栈开发规范">Gate Triage 技术设计与全栈开发规范</h1>
-<p>版本：1.1　编写日期：2026 年 10 月 17 日　适用地区：洛杉矶港　文档语言：中文　产品界面：英文。</p>
+<p>版本：1.2　编写日期：2026 年 10 月 17 日　适用地区：洛杉矶港　文档语言：中文　产品界面：英文。</p>
+<p><strong>1.2 新增范围</strong>：<a href="spatial-emergency-and-scale.zh-CN.md">地图、灾害策略与洛杉矶港规模负载补充规范</a>定义真实参考地理、可关闭交互地图、六类灾害的差异化策略、人工接手/恢复、七码头合成大体量数据库和独立规模时钟。该新增范围以补充规范和实际 OpenAPI 为准；不将七日货流误称为真实在场库存，也不把局部精细优化宣传为十余万柜的全局最优排程。<a href="mature-solution-comparison.zh-CN.md">成熟方案比较</a>和<a href="simulation-evaluation.zh-CN.md">仿真评估</a>保存能力依据与真实运行结果。</p>
 <p>实时决策、SSE 推送、服务端模拟数据台、RAG 边界和本地数据库资源要求详见 <a href="realtime-decision-contract.zh-CN.md">实时决策补充规范</a>。本次独立分支开发同时遵循两份规范；实现完成情况以测试记录为准。</p>
 <p>第 1.1 节记录开发前的团队基线，不能作为本分支的最新实现状态。独立应用的启动方法见 <a href="../README-workbench.md">英文运行说明</a>，实际验证与限制见 <a href="workbench-verification.md">验收记录</a>。</p>
 <p>本规范面向负责完整产品开发的工程师或 Codex Work，覆盖产品边界、行业依据、数据合同、后端、前端、约束调度、事件仿真、真实事件参考、部署与验收。目标是交付一个可独立启动、可实际操作、可复现评估的应用。优先指标是有效完成量、等待和中断恢复，费用是辅助指标。</p>

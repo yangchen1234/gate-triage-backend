@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 
 from fastapi import Request
-from sqlalchemy import select
+from sqlalchemy import select, text
 
 from .db import ProviderInbox, get_database
 
@@ -79,7 +79,9 @@ def verify_webhook(raw_body: bytes, signature: str | None, secret: str) -> bool:
         return False
     expected = hmac.new(secret.encode(), raw_body, hashlib.sha256).hexdigest()
     candidate = signature.removeprefix("sha256=")
-    return hmac.compare_digest(expected, candidate)
+    if len(candidate) != 64 or any(character not in "0123456789abcdefABCDEF" for character in candidate):
+        return False
+    return hmac.compare_digest(expected, candidate.lower())
 
 
 def install_webhook(router) -> None:
@@ -109,12 +111,17 @@ def install_webhook(router) -> None:
             raise ApiError(401, "INVALID_SIGNATURE", "The provider signature could not be verified.")
         try:
             payload = json.loads(raw)
-            event_id = str(payload["data"]["id"])
-        except (json.JSONDecodeError, KeyError, TypeError):
+            event_id = payload["data"]["id"]
+            if not isinstance(event_id, str) or not 1 <= len(event_id) <= 160:
+                raise ValueError("Invalid notification ID")
+        except (json.JSONDecodeError, UnicodeDecodeError, KeyError, TypeError, ValueError):
             raise ApiError(422, "SOURCE_SCHEMA_ERROR", "This notification does not contain a valid event ID.")
         body_hash = hashlib.sha256(raw).hexdigest()
         database = get_database()
         with database.write_lock, database.session() as session:
+            if session.bind.dialect.name == "postgresql":
+                lock_id = int.from_bytes(hashlib.sha256(f"provider:{connection}:{event_id}".encode()).digest()[:8], "big", signed=True)
+                session.execute(text("SELECT pg_advisory_xact_lock(:lock_id)"), {"lock_id": lock_id})
             row = session.scalar(select(ProviderInbox).where(ProviderInbox.connection == connection, ProviderInbox.event_id == event_id))
             if row:
                 if row.body_hash != body_hash:

@@ -1,0 +1,209 @@
+{
+  "started_at_utc": "2026-10-17T09:01:21.747029+00:00",
+  "command": [
+    "scripts/benchmark_scale.py",
+    "--output",
+    "evaluation/scale-generator-preflight-2026-10-17"
+  ],
+  "source_hashes_at_start": {
+    "gate_triage/workbench/scale_simulation.py": "e938e8397752854f38e38b955ed3c816989cd53430f18208e5c84ca46f67a49e",
+    "gate_triage/workbench/scale.py": "70eb55c564d817ff88f33482e85a67f5caf40f18f3ddd74d99afe3cb7f8587bd",
+    "gate_triage/workbench/migrations/versions/wb_0003_port_scale.py": "a506a357f04a75f76e62bb9ecf8eace1036391dfb49e890e79cee42f3c8cac5c",
+    "scripts/benchmark_scale.py": "400c8d06363c2b16a8139614fc78e157c3f310538e9ed33b2af5674b0a7d1ad6",
+    "tests/test_scale_simulation.py": "2ed3a103bb33f01086b9c12df0a64594ca1c3255350cbef9abd6c04ecc8c8baa"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "platform": "macOS-15.4.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu_count": 10
+  },
+  "status": "passed",
+  "failures": [],
+  "assumptions": [
+    "All movement rows, timing, terminal assignment, service times, prerequisites and resource slots are synthetic.",
+    "Official Port of Los Angeles 2025 totals calibrate aggregate TEU volume only; records are not historical unique-container counts.",
+    "Assume 65% 40-foot and 35% 20-foot movement records; exact integer TEU totals use 1/2 TEU units and nearest feasible mix.",
+    "Allocate approximately equal movement counts to seven terminals; these are not actual terminal volume shares or capacities.",
+    "Use twelve synthetic independent service slots per terminal, 3–9 minute service, and an explicit synthetic blocked prerequisite fraction.",
+    "Local bounded queue simulation does not claim global CP-SAT optimization of 100,000 records or validated physical port performance.",
+    "Imports abstract vessel-unload arrival then gate-out service; exports abstract gate-in arrival then vessel-load service. These are synthetic phases, not real berth/lift/gate telemetry.",
+    "Cyber source loss changes freshness visibility only; this physical world model continues known permitted work and does not infer new permission or automatic recovery."
+  ],
+  "generator": {
+    "profiles": [
+      {
+        "profile": "la_average_day",
+        "seed": 17,
+        "records": 17002,
+        "teu": 28053,
+        "wall_seconds": 2.3239070830168203,
+        "records_per_second": 7316.127277312895,
+        "python_tracemalloc_peak_bytes": 1885413,
+        "maximum_batch_rows": 1000,
+        "terminal_records": {
+          "terminal-apm": 2429,
+          "terminal-everport": 2429,
+          "terminal-fenix": 2429,
+          "terminal-trapac": 2429,
+          "terminal-yusen": 2429,
+          "terminal-wbct-cs": 2429,
+          "terminal-wbct-latil": 2428
+        },
+        "category_records": {
+          "loaded_import": 8828,
+          "empty_export": 5795,
+          "loaded_export": 2373,
+          "empty_import": 6
+        },
+        "daily_teu": {
+          "0": 28053
+        },
+        "equipment_teu_units": {
+          "1": 5951,
+          "2": 11051
+        },
+        "prerequisite_blocked_records": 626,
+        "ordered_stream_sha256": "4ed0e3fa0c9b19020f2c1d1c5003b256af5cb27012d6286ef1cd1276ae803c97"
+      },
+      {
+        "profile": "la_peak_month_day",
+        "seed": 17,
+        "records": 19938,
+        "teu": 32898,
+        "wall_seconds": 2.7201318750157952,
+        "records_per_second": 7329.791685149171,
+        "python_tracemalloc_peak_bytes": 1885285,
+        "maximum_batch_rows": 1000,
+        "terminal_records": {
+          "terminal-apm": 2849,
+          "terminal-everport": 2849,
+          "terminal-fenix": 2848,
+          "terminal-trapac": 2848,
+          "terminal-yusen": 2848,
+          "terminal-wbct-cs": 2848,
+          "terminal-wbct-latil": 2848
+        },
+        "category_records": {
+          "loaded_import": 10353,
+          "empty_export": 6795,
+          "loaded_export": 2783,
+          "empty_import": 7
+        },
+        "daily_teu": {
+          "0": 32898
+        },
+        "equipment_teu_units": {
+          "2": 12960,
+          "1": 6978
+        },
+        "prerequisite_blocked_records": 810,
+        "ordered_stream_sha256": "7809bb05f50d2db9636862784ec597aef1a0083deff9b2b01606bc02d9449365"
+      },
+      {
+        "profile": "la_seven_day",
+        "seed": 17,
+        "records": 119014,
+        "teu": 196371,
+        "wall_seconds": 18.03965283301659,
+        "records_per_second": 6597.3553427911775,
+        "python_tracemalloc_peak_bytes": 3132941,
+        "maximum_batch_rows": 1000,
+        "terminal_records": {
+          "terminal-apm": 17002,
+          "terminal-everport": 17002,
+          "terminal-fenix": 17002,
+          "terminal-trapac": 17002,
+          "terminal-yusen": 17002,
+          "terminal-wbct-cs": 17002,
+          "terminal-wbct-latil": 17002
+        },
+        "category_records": {
+          "loaded_import": 61796,
+          "empty_export": 40565,
+          "loaded_export": 16611,
+          "empty_import": 42
+        },
+        "daily_teu": {
+          "0": 28053,
+          "1": 28053,
+          "2": 28053,
+          "3": 28053,
+          "4": 28053,
+          "5": 28053,
+          "6": 28053
+        },
+        "equipment_teu_units": {
+          "1": 41657,
+          "2": 77357
+        },
+        "prerequisite_blocked_records": 4577,
+        "ordered_stream_sha256": "f074eda15aeced3eda5ad3cf56357d68834c2d98f458644079558c29c4d49f40",
+        "bounded_window": {
+          "input_rows": 1432,
+          "from_min": 0,
+          "to_min": 120,
+          "metrics": {
+            "completed_movements": 1061,
+            "completed_teu": 1746,
+            "started_movements": 1122,
+            "permanent_blocked": 56,
+            "incident_blocked": 0,
+            "source_verification_waiting": 0,
+            "source_freshness_unknown": 0,
+            "phase_blocked": 0,
+            "arrival_waiting": 0,
+            "queued_observed": 254,
+            "interrupted_movements": 0,
+            "scope": "bounded input and active-service deltas; global counts come from relational state",
+            "policy": "fifo"
+          },
+          "latency": {
+            "n": 20,
+            "mean_ms": 6.377893750322983,
+            "p50_ms": 6.121187470853329,
+            "p95_ms": 7.843910489464179,
+            "min_ms": 5.685042007826269,
+            "max_ms": 8.340957923792303,
+            "samples_ms": [
+              6.134000024758279,
+              5.987791926600039,
+              6.7414999939501286,
+              6.06108398642391,
+              5.992624908685684,
+              5.9434170834720135,
+              6.154207978397608,
+              5.707291071303189,
+              5.685042007826269,
+              5.912458058446646,
+              5.997624946758151,
+              7.817750098183751,
+              6.108374916948378,
+              6.199208088219166,
+              6.309666903689504,
+              6.511416053399444,
+              6.978709017857909,
+              6.886500050313771,
+              6.088249967433512,
+              8.340957923792303
+            ]
+          },
+          "trace_sha256": "a5592404c7a8b0e8a9ac2e6943b07b07e7732267b5eb8d97fbab6b04d67d5f5f",
+          "resource_state_bytes": 9365
+        }
+      }
+    ],
+    "memory_measurement": "tracemalloc peak covers this Python benchmark process; not the HTTP server, PostgreSQL, OS cache or production peak"
+  },
+  "wall_seconds": 23.28339220804628,
+  "source_hashes_at_end": {
+    "gate_triage/workbench/scale_simulation.py": "e938e8397752854f38e38b955ed3c816989cd53430f18208e5c84ca46f67a49e",
+    "gate_triage/workbench/scale.py": "5ff290042d2d26f617f9fda22fbb5bc478d52eeadd3b26ca7b695c13c8d51969",
+    "gate_triage/workbench/migrations/versions/wb_0003_port_scale.py": "a506a357f04a75f76e62bb9ecf8eace1036391dfb49e890e79cee42f3c8cac5c",
+    "scripts/benchmark_scale.py": "400c8d06363c2b16a8139614fc78e157c3f310538e9ed33b2af5674b0a7d1ad6",
+    "tests/test_scale_simulation.py": "2ed3a103bb33f01086b9c12df0a64594ca1c3255350cbef9abd6c04ecc8c8baa"
+  },
+  "source_unchanged_during_measurement": false,
+  "benchmark_process_lifetime_max_rss_bytes": 33243136,
+  "finished_at_utc": "2026-10-17T09:01:45.031070+00:00"
+}

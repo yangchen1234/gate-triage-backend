@@ -12,6 +12,7 @@ import hashlib
 import hmac
 import importlib
 import json
+import math
 import secrets
 import uuid
 from datetime import datetime, timezone
@@ -412,6 +413,7 @@ def execute_command(workspace_id: str, command: dict, token: str | None, if_matc
         if replay:
             return replay
         check_revision(workspace, if_match)
+        validate_command(command)
         if command.get("command") not in {"task", "pause", "step", "seek", "advance", "reset"} and workspace.mode != "SIMULATION":
             raise ApiError(409, "MODE_NOT_ALLOWED", "Operational changes require a simulation workspace.")
         try:
@@ -420,13 +422,22 @@ def execute_command(workspace_id: str, command: dict, token: str | None, if_matc
                 workspace.playback = {**(workspace.playback or {}), "playing": False, "status": "paused", "paused_reason": "operator_paused"}
                 new_state = copy.deepcopy(workspace.state)
             elif name == "reset":
+                incident_records = workspace.state.get("emergency_incidents", {})
+                incidents = incident_records.values() if isinstance(incident_records, dict) else incident_records
+                if any(item.get("status") == "active" and (item.get("effects") or item.get("scale_assessment", {}).get("applicable")) for item in incidents):
+                    raise ApiError(409, "INCIDENT_RECOVERY_REQUIRED", "Resolve active modeled incidents before resetting the precision exercise, or create an independent workspace.")
                 workspace.playback = {**(workspace.playback or {}), "playing": False, "status": "paused", "paused_reason": "run_reset"}
                 new_state = engine().create_state(command.get("scenario_id", workspace.state["scenario_id"]), command.get("seed", workspace.state["seed"]), workspace.mode)
+                for context_key in ("scale_run_id", "scale_clock_min"):
+                    if context_key in workspace.state:
+                        new_state[context_key] = workspace.state[context_key]
             else:
                 if name == "advance" and (type(command.get("minutes")) is not int or not 1 <= command["minutes"] <= 120):
                     raise ValueError("Advance must be 1–120 integer minutes per request")
                 if name == "select_plan":
                     submitted = command.get("plan") or {}
+                    if not isinstance(submitted, dict):
+                        raise ValueError("Plan must be an object")
                     plan_id = command.get("plan_id") or submitted.get("plan_id")
                     stored = session.get(Job, plan_id) if isinstance(plan_id, str) else None
                     if not stored or stored.workspace_id != workspace.id or stored.kind != "plan" or stored.status != "succeeded":
@@ -441,6 +452,73 @@ def execute_command(workspace_id: str, command: dict, token: str | None, if_matc
         result = envelope(workspace_data(workspace), workspace)
         save_receipt(session, scope, idempotency_key, original_command, result, 200)
         return respond(result)
+
+
+def validate_command(command: dict) -> None:
+    """Reject malformed/ignored fields before dispatch or durable JSON writes."""
+    fields = {
+        "advance": {"minutes", "strategy", "profile"}, "pause": set(),
+        "seek": {"minute"}, "reset": {"scenario_id", "seed"},
+        "feed": {"action"}, "select_plan": {"plan", "plan_id"},
+        "incident": {"status", "gate"}, "power": {"enabled"},
+        "customs_connectivity": {"online"}, "evidence": {"container_id", "kind", "values", "published_at_min"},
+        "task": {"task_id", "status", "action", "result_code", "note", "evidence_ids"},
+    }
+    name = command.get("command")
+    if not isinstance(name, str) or name not in fields:
+        raise ApiError(422, "VALIDATION_ERROR", "Choose a supported command name.")
+    if set(command) - fields[name] - {"command"}:
+        raise ApiError(422, "VALIDATION_ERROR", "This command contains unsupported fields.")
+    def finite_json(value):
+        if isinstance(value, float) and not math.isfinite(value):
+            raise ApiError(422, "VALIDATION_ERROR", "Numeric input must be finite.")
+        if isinstance(value, dict):
+            for child in value.values():
+                finite_json(child)
+        elif isinstance(value, list):
+            for child in value:
+                finite_json(child)
+    finite_json(command)
+    if name == "incident":
+        gate = command.get("gate", "east")
+        if not isinstance(gate, str) or gate not in {"east", "East"}:
+            raise ApiError(422, "VALIDATION_ERROR", "This scenario control applies only to the modeled East access corridor.")
+    if name == "advance":
+        strategy, profile = command.get("strategy", "optimized"), command.get("profile", "throughput")
+        if not isinstance(strategy, str) or not isinstance(profile, str) or strategy not in {"optimized", "fifo", "priority"} or profile not in {"throughput", "balanced", "recovery"}:
+            raise ApiError(422, "VALIDATION_ERROR", "Choose a registered strategy and service profile.")
+    if name == "task":
+        if not isinstance(command.get("task_id"), str) or not 1 <= len(command["task_id"]) <= 160:
+            raise ApiError(422, "VALIDATION_ERROR", "Task ID must be a nonempty string.")
+        if "note" in command and (not isinstance(command["note"], str) or len(command["note"]) > 2000):
+            raise ApiError(422, "VALIDATION_ERROR", "Task notes must be text of at most 2000 characters.")
+    if name == "evidence":
+        kind, values = command.get("kind"), command.get("values")
+        if not isinstance(kind, str) or kind not in {"customs", "weight", "reefer", "provider"} or not isinstance(values, dict):
+            raise ApiError(422, "VALIDATION_ERROR", "Evidence needs a registered kind and an object of observations.")
+        if "published_at_min" in command and (type(command["published_at_min"]) is not int or command["published_at_min"] < 0):
+            raise ApiError(422, "VALIDATION_ERROR", "Source business minute must be a nonnegative integer.")
+        if kind in {"customs", "provider"}:
+            for field in ("availability_known", "available_for_pickup"):
+                if field in values and values[field] is not None and type(values[field]) is not bool:
+                    raise ApiError(422, "VALIDATION_ERROR", "Pickup status observations must be booleans or null.")
+            for field in ("holds", "holds_at_pod_terminal"):
+                if field not in values or values[field] is None:
+                    continue
+                holds = values[field]
+                if not isinstance(holds, list) or any(not isinstance(hold, dict) for hold in holds):
+                    raise ApiError(422, "VALIDATION_ERROR", "Reported holds must be an array of objects or null.")
+                for hold in holds:
+                    if any(key in hold and hold[key] is not None and not isinstance(hold[key], str) for key in ("name", "status")):
+                        raise ApiError(422, "VALIDATION_ERROR", "Hold names and statuses must be text or null.")
+        else:
+            numeric_fields = ("temp_c", "setpoint_c") if kind == "reefer" else ("measured_kg", "declared_kg", "tare_kg")
+            for field in numeric_fields:
+                if field in values and type(values[field]) not in {int, float}:
+                    raise ApiError(422, "VALIDATION_ERROR", "Measured values must be finite numbers.")
+            for field in ("identity_verified", "measurement_verified"):
+                if field in values and type(values[field]) is not bool:
+                    raise ApiError(422, "VALIDATION_ERROR", "Verification flags must be booleans.")
 
 
 @router.post("/workspaces/{workspace_id}/commands")
@@ -481,6 +559,8 @@ def enqueue(workspace_id: str, kind: str, payload: dict, token: str | None, if_m
             raise ApiError(409, "MODE_NOT_ALLOWED", "Resource planning and experiments require a simulation workspace.")
         if payload.get("input_revision") not in {None, workspace.revision}:
             raise ApiError(412, "REVISION_CONFLICT", "This plan request references an older workspace version.", True)
+        if payload.get("run_id") is not None and payload["run_id"] not in {workspace.id, workspace.state.get("run_id")}:
+            raise ApiError(404, "RUN_NOT_FOUND", "This run is not in the workspace.")
         active = session.scalar(select(Job).where(Job.workspace_id == workspace_id, Job.kind == kind, Job.status.in_(["queued", "running"])))
         if active:
             raise ApiError(429, "JOB_ALREADY_RUNNING", "A job of this type is already running. Wait for its result.", True)
@@ -530,12 +610,15 @@ def post_export(workspace_id: str, body: ExportCreate, x_workspace_token: str | 
 @router.get("/workspaces/{workspace_id}/plans/{job_id}")
 @router.get("/workspaces/{workspace_id}/experiments/{job_id}")
 @router.get("/workspaces/{workspace_id}/exports/{job_id}")
-def get_job(workspace_id: str, job_id: str, x_workspace_token: str | None = Header(None)):
+def get_job(workspace_id: str, job_id: str, request: Request, x_workspace_token: str | None = Header(None)):
     with get_database().session() as session:
         workspace = authorized_workspace(session, workspace_id, x_workspace_token)
         job = session.get(Job, job_id)
         if job is None or job.workspace_id != workspace_id:
             raise ApiError(404, "JOB_NOT_FOUND", "This result is not in the workspace.")
+        expected_kind = {"plans": "plan", "experiments": "experiment", "exports": "export"}.get(request.url.path.split("/")[-2])
+        if expected_kind and job.kind != expected_kind:
+            raise ApiError(404, "RESULT_NOT_FOUND", "This result has a different resource type.")
         return respond(envelope(job_data(job), workspace))
 
 

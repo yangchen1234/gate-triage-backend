@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { beforeEach, test } from 'node:test';
-import { clearSession, markWorkspaceUnavailable, recentWorkspaces, saveRecentWorkspace, saveSession, savedSession } from '../src/api.ts';
+import { clearSession, markWorkspaceUnavailable, recentWorkspaces, saveRecentWorkspace, saveSession, savedSession, saveWorkspaceView, savedWorkspaceView } from '../src/api.ts';
 
 beforeEach(() => {
   const values = new Map();
@@ -48,4 +48,17 @@ test('an older single-session record is migrated before it is replaced', () => {
   assert.equal(recentWorkspaces().find(item => item.id === 'legacy').token, 'legacy-local-access');
   saveRecentWorkspace('legacy', 'legacy-local-access', { name: 'Recovered legacy rehearsal' });
   assert.equal(recentWorkspaces().length, 2);
+});
+
+
+test('navigation restores only allowed views within the same workspace', () => {
+  saveWorkspaceView('first', 'scale');
+  saveWorkspaceView('second', 'evidence');
+  assert.equal(savedWorkspaceView('first'), 'scale');
+  assert.equal(savedWorkspaceView('second'), 'evidence');
+  assert.equal(savedWorkspaceView('fresh-workspace'), null);
+  localStorage.setItem('gate-triage-view-first', 'unknown-or-removed-view');
+  assert.equal(savedWorkspaceView('first'), null);
+  saveWorkspaceView('second', 'invalid-view');
+  assert.equal(savedWorkspaceView('second'), 'evidence');
 });

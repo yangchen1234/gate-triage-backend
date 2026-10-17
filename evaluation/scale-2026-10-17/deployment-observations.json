@@ -1,0 +1,56 @@
+{
+  "at_utc": "2026-10-17T09:04:10.127666+00:00",
+  "post_run_container_stats": [
+    {
+      "BlockIO": "0B / 0B",
+      "CPUPerc": "6.71%",
+      "Container": "gate-triage-workbench-app-1",
+      "ID": "6886a70b484b",
+      "MemPerc": "2.08%",
+      "MemUsage": "165MiB / 7.748GiB",
+      "Name": "gate-triage-workbench-app-1",
+      "NetIO": "328MB / 308MB",
+      "PIDs": "14"
+    },
+    {
+      "BlockIO": "0B / 2.45GB",
+      "CPUPerc": "0.90%",
+      "Container": "gate-triage-workbench-db-1",
+      "ID": "fd4afd447a1a",
+      "MemPerc": "2.43%",
+      "MemUsage": "192.6MiB / 7.748GiB",
+      "Name": "gate-triage-workbench-db-1",
+      "NetIO": "369MB / 14GB",
+      "PIDs": "11"
+    }
+  ],
+  "measurement_scope": "One post-run Docker stats observation, not peak memory, isolated cohort cost, or production sizing.",
+  "measured_build_container_source_hashes": {
+    "gate_triage/workbench/scale_simulation.py": "e938e8397752854f38e38b955ed3c816989cd53430f18208e5c84ca46f67a49e",
+    "gate_triage/workbench/scale.py": "5ff290042d2d26f617f9fda22fbb5bc478d52eeadd3b26ca7b695c13c8d51969"
+  },
+  "measured_build_host_matched_container_source_at_observation": true,
+  "measured_build_observation_scope": "These source equality observations apply only to the measured build at at_utc. They are not final-workspace or current-container source equality claims.",
+  "post_measurement_patch": {
+    "recorded_at_utc": "2026-10-17T09:07:18.445205+00:00",
+    "reason": "PostgreSQL multi-query GET projections use a REPEATABLE READ snapshot so revision, run summary, page totals and items share one committed view.",
+    "scale_read_paths": [
+      "GET /api/v1/workspaces/{workspace_id}/scale",
+      "GET /api/v1/workspaces/{workspace_id}/scale/containers",
+      "GET /api/v1/workspaces/{workspace_id}/scale/events"
+    ],
+    "shared_helper": "gate_triage/workbench/db.py:begin_read_snapshot",
+    "measured_scale_api_sha256": "5ff290042d2d26f617f9fda22fbb5bc478d52eeadd3b26ca7b695c13c8d51969",
+    "post_patch_scale_api_sha256": "3351ef770754dc1c65db730dbb77ba1c7e0338554e47b3a5de4e329c63654eed",
+    "post_patch_db_module_sha256": "a03f178e703e508dd7433852481dfbc3c56d44ea5ab1cfed25c6b0fd1a457256",
+    "physical_model_unchanged_from_measurement": true,
+    "scale_schema_migration_unchanged_from_measurement": true,
+    "physical_model_sha256": "e938e8397752854f38e38b955ed3c816989cd53430f18208e5c84ca46f67a49e",
+    "schema_migration_sha256": "a506a357f04a75f76e62bb9ecf8eace1036391dfb49e890e79cee42f3c8cac5c",
+    "performance_benchmark_repeated_after_patch": false,
+    "reported_timings_apply_to": "Frozen measured build before the read-isolation patch. Final patched GET timing percentiles were not measured in this report.",
+    "current_running_container_hashes_rechecked_for_this_patch": false,
+    "verification_scope": "Final API/UI regressions are recorded separately by the root verification workflow; this provenance update does not assert their completion.",
+    "source_artifacts": "post-measurement-read-isolation/; original source-snapshot and frozen-source-manifest.json remain unchanged."
+  }
+}

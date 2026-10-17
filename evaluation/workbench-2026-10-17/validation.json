@@ -1,0 +1,9 @@
+{
+  "rows": 918,
+  "unique_rows": 918,
+  "failed_rows": 0,
+  "pair_mismatches": 0,
+  "trace_audit_errors": 0,
+  "future_curve_errors": 0,
+  "negative_control_failures": []
+}

@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterator
 
-from sqlalchemy import JSON, CheckConstraint, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint, create_engine, inspect, text
+from sqlalchemy import JSON, CheckConstraint, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint, create_engine, event, inspect, text
 from sqlalchemy.engine import Engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column, sessionmaker
 from sqlalchemy.pool import StaticPool
@@ -20,6 +20,16 @@ from sqlalchemy.pool import StaticPool
 
 def utcnow() -> datetime:
     return datetime.now(timezone.utc)
+
+
+def begin_read_snapshot(session: Session) -> None:
+    """Keep multi-query PostgreSQL projections on one nonblocking MVCC view.
+
+    Call before the session's first SQL statement. SQLite's local fallback is
+    not claimed to provide the same concurrent-reader deployment guarantee.
+    """
+    if session.bind.dialect.name == "postgresql":
+        session.connection(execution_options={"isolation_level": "REPEATABLE READ"})
 
 
 class Base(DeclarativeBase):
@@ -154,6 +164,10 @@ class Database:
                 kwargs["poolclass"] = StaticPool
         self.url = url
         self.engine: Engine = create_engine(url, **kwargs)
+        if url.startswith("sqlite"):
+            @event.listens_for(self.engine, "connect")
+            def sqlite_constraints(connection, record):
+                connection.execute("PRAGMA foreign_keys=ON")
         self.sessions = sessionmaker(self.engine, expire_on_commit=False)
         # SQLite has no row-level SELECT FOR UPDATE. This protects local demo
         # requests, while the revision CAS is still checked in the database.
@@ -177,7 +191,7 @@ class Database:
                     actual = {column["name"] for column in inspector.get_columns(table_name)}
                     if not set(table.columns.keys()).issubset(actual):
                         raise RuntimeError("An incomplete workbench schema needs an explicit migration; existing data was not changed.")
-                command.stamp(configuration, "wb_0001")
+                command.stamp(configuration, "head")
             command.upgrade(configuration, "head")
         with self.session() as session:
             if session.get(SchemaVersion, "workbench-1") is None:

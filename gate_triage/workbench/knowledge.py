@@ -60,6 +60,16 @@ def passages() -> list[dict]:
                        "source_title": source["title"], "url": source["url"],
                        "scope": "Historical/API background; not a live operational observation.",
                        "kind": "official_background"})
+    from .spatial import incident_catalog
+    for scenario in incident_catalog():
+        for index, source in enumerate(scenario["source_refs"]):
+            result.append({"id": f"emergency:{scenario['id']}:{index}",
+                           "title": source["title"],
+                           "passage": scenario["historical_facts"] + " Exercise policy: " + " ".join(scenario["response_steps"]),
+                           "search_terms": scenario["name"] + " " + scenario["historical_facts"] + " " + " ".join(scenario["response_steps"]),
+                           "source_id": f"emergency:{scenario['id']}", "source_title": source["title"], "url": source["url"],
+                           "scope": "Historical source supports background only. Response steps are our generic exercise policy, not that authority's approved operating procedure or a live closure signal.",
+                           "kind": "historical_background_and_exercise_policy"})
     return result
 
 

@@ -92,7 +92,7 @@ def create_state(scenario_id: str, seed: int = 17, mode: str = "SIMULATION") -> 
     overlay = _read(PACK / config["containers_fixture"]["overlay_path"])
     provider = {r["attributes"]["number"]: r for r in fixture["response"]["data"]}
     state = {
-        "version": "workbench-1", "engine_revision": 3, "scenario_id": scenario_id, "scenario_name": SCENARIO_NAMES[scenario_id][0],
+        "version": "workbench-1", "engine_revision": 4, "scenario_id": scenario_id, "scenario_name": SCENARIO_NAMES[scenario_id][0],
         "seed": int(seed), "mode": mode, "clock_min": 0, "start_at": config["start_at"],
         "horizon_minutes": config["horizon_minutes"], "config": config, "hero_id": overlay["hero_id"],
         "containers": {}, "operations": {}, "resources": {}, "timeline": [], "sequence": 0,
@@ -129,6 +129,8 @@ def create_state(scenario_id: str, seed: int = 17, mode: str = "SIMULATION") -> 
     state["feed_inbox"].append(bootstrap)
     state["feed_processed"][bootstrap["id"]] = _envelope_hash(bootstrap)
     _event(state, "run.created", "Synthetic exercise ready", f"{len(state['containers'])} provider-shaped records loaded. Physical resources and observations come from a separate synthetic overlay.")
+    from .spatial_simulation import initialize_in_place
+    initialize_in_place(state)
     return state
 
 
@@ -138,10 +140,10 @@ def upgrade_state(state: dict) -> dict:
     Never resets the clock, completed handoffs, user tasks or source evidence.
     The next successful command naturally persists the upgraded representation.
     """
-    if state.get("engine_revision", 0) >= 3:
+    if state.get("engine_revision", 0) >= 4:
         return state
     upgraded = copy.deepcopy(state)
-    upgraded["engine_revision"] = 3
+    upgraded["engine_revision"] = 4
     upgraded.setdefault("feed", {"online": upgraded.get("provider_online", True), "latency_minutes": 0,
                                  "last_received_min": upgraded.get("clock_min", 0), "events_received": 0,
                                  "duplicates_ignored": 0, "delayed_events": 0})
@@ -175,6 +177,8 @@ def upgrade_state(state: dict) -> dict:
         upgraded["feed_processed"][envelope["id"]] = _envelope_hash(envelope)
     for envelope in upgraded["feed_inbox"]:
         upgraded["feed_processed"].setdefault(envelope["id"], _envelope_hash(envelope))
+    from .spatial_simulation import initialize_in_place
+    initialize_in_place(upgraded)
     return upgraded
 
 
@@ -410,6 +414,9 @@ def snapshot(state: dict) -> dict:
     for running in state["running"]:
         for rid in running["resource_ids"]:
             busy_resources[rid] = busy_resources.get(rid, 0) + 1
+    for order in state.get("spatial_operations", {}).get("workorders", []):
+        if order["status"] == "in_progress":
+            busy_resources[order["resource_id"]] = busy_resources.get(order["resource_id"], 0) + 1
     resources = [{**r, "available_capacity": _available_capacity(state, r), "busy_capacity": busy_resources.get(r["id"], 0), "status": "power_off" if r["kind"] == "reefer_technician" and not state["power_enabled"] else r["status"]} for r in state["resources"].values()]
     overview = {"total_containers": len(rows), "completed_handoffs": completed, "backlog": sum(c["arrived"] and c["completed_at_min"] is None for c in rows),
                 "reported_departed": sum(c["pickup_state"] == "REPORTED_DEPARTED" for c in rows),
@@ -434,10 +441,13 @@ def snapshot(state: dict) -> dict:
     from .scheduler import state_fingerprint
     if not current_plan or current_plan.get("input_clock_min") != state["clock_min"] or current_plan.get("input_state_hash") != state_fingerprint(state):
         current_plan = plan(state)
+    from .spatial_simulation import spatial_snapshot
     return {"scenario_id": state["scenario_id"], "scenario_name": state["scenario_name"], "mode": state["mode"], "seed": state["seed"],
             "clock_min": state["clock_min"], "horizon_minutes": state["horizon_minutes"], "as_of": _at(state), "hero_id": state["hero_id"],
             "assumptions": ASSUMPTIONS, "overview": overview, "containers": rows, "tasks": tasks, "resources": resources,
             "timeline": list(reversed(state["timeline"][-150:])), "metrics": metrics, "plan": current_plan,
+            "spatial_operations": spatial_snapshot(state),
+            "spatial_incidents": copy.deepcopy(state.get("spatial_incidents", {})),
             "feed": {**state["feed"], "latency_minutes": state["clock_min"] - min(e["published_min"] for e in state["feed_queue"]) if state["feed_queue"] else 0, "queued_envelopes": len(state["feed_queue"]),
                      "oldest_queued_published_min": min((e["published_min"] for e in state["feed_queue"]), default=None)}}
 
@@ -621,6 +631,10 @@ def _set_incident(state: dict, status: str, resource_ids: list[str] | None = Non
             raise ValueError("Unknown resource in incident")
         resource["available_capacity"] = min(resource["capacity"], max(0, total - i))
         resource["status"] = status if resource["available_capacity"] else "closed"
+        resource["world_available_capacity"] = resource["available_capacity"]
+        resource["world_status"] = resource["status"]
+    from .spatial_simulation import reconcile_effects_in_place
+    reconcile_effects_in_place(state)
     _event(state, "incident.changed", f"East access {status}", f"Only reported resource scope changes: {', '.join(ids)}. Other lanes, holds and authorizations are unchanged.", source="Synthetic incident report")
 
 
@@ -629,7 +643,7 @@ def apply_command(state: dict, command: dict) -> dict:
         raise ValueError("Command must be an object")
     new = copy.deepcopy(upgrade_state(state))
     name = command.get("command")
-    if new["mode"] != "SIMULATION" and name in {"incident", "power", "customs_connectivity", "evidence", "feed", "select_plan"}:
+    if new["mode"] != "SIMULATION" and name in {"incident", "power", "customs_connectivity", "evidence", "feed", "select_plan", "spatial_incident"}:
         raise ValueError("Synthetic injections and physical plans require SIMULATION mode")
     if name == "advance":
         minutes = command.get("minutes", 15)
@@ -651,10 +665,20 @@ def apply_command(state: dict, command: dict) -> dict:
         _advance_replay(new, minute)
     elif name == "reset":
         new = create_state(new["scenario_id"], new["seed"], new["mode"])
+    elif name == "spatial_incident":
+        from .spatial_simulation import apply_incident_effects, resolve_incident_effects
+        incident = command.get("incident")
+        if not isinstance(incident, dict):
+            raise ValueError("A structured spatial incident is required")
+        current = list(new.get("spatial_incidents", {}).values())
+        if incident.get("status") == "resolved":
+            return resolve_incident_effects(new, incident, [row for row in current if row["id"] != incident.get("id")])
+        return apply_incident_effects(new, incident, current)
     elif name == "feed":
         action = command.get("action")
         if action == "delay":
             new["provider_online"] = False
+            new["world_provider_online"] = False
             new["feed"]["online"] = False
             new["feed"]["latency_minutes"] = 0
             _receive_provider_envelope(new, _provider_envelope(new, f"poll:{new['clock_min']}:{new['sequence'] + 1}", new["clock_min"]))
@@ -662,7 +686,10 @@ def apply_command(state: dict, command: dict) -> dict:
         elif action == "duplicate":
             _receive_provider_envelope(new, copy.deepcopy(new["feed_inbox"][-1]), drain=True)
         elif action == "recover":
+            if any(effect.get("kind") == "feed_offline" for row in new.get("spatial_incidents", {}).values() if row.get("status") == "active" for effect in row.get("effects", [])):
+                raise ValueError("Resolve the active confirmed feed incident before restoring provider transport")
             new["provider_online"] = True
+            new["world_provider_online"] = True
             new["feed"]["online"] = True
             new["feed"]["latency_minutes"] = 0
             pending = new["feed_queue"]
@@ -744,6 +771,8 @@ def apply_command(state: dict, command: dict) -> dict:
     else:
         raise ValueError("Unsupported command")
     if new["mode"] == "SIMULATION":
+        from .spatial_simulation import reconcile_effects_in_place
+        reconcile_effects_in_place(new)
         from .simulation import _cancel_unavailable
         _cancel_unavailable(new)
     previous = new.get("plan") or {}
@@ -763,6 +792,9 @@ def _apply_events(state: dict) -> bool:
             _set_incident(state, event["state"], event["resource_ids"], event["capacity"])
         elif kind == "provider.connectivity":
             state["provider_online"] = event["state"] == "online"
+            state["world_provider_online"] = state["provider_online"]
+            from .spatial_simulation import reconcile_effects_in_place
+            reconcile_effects_in_place(state)
             state["feed"]["online"] = state["provider_online"]
             if state["provider_online"]:
                 pending = state["feed_queue"]
@@ -792,6 +824,8 @@ def _apply_events(state: dict) -> bool:
                     if not c["arrived"]:
                         c["arrival_at_min"] = now + math.ceil((c["arrival_at_min"] - now) / multiplier)
             _event(state, kind, "Synthetic arrival intensity changed", f"Multiplier {event['multiplier']} applies only to not-yet-observed fixture arrivals. No historical fee is activated.")
+    from .spatial_simulation import reconcile_effects_in_place
+    reconcile_effects_in_place(state)
     return changed
 
 

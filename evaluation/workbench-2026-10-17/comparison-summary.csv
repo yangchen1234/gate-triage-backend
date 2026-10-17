@@ -1,0 +1,13 @@
+scenario_id,horizon_minutes,n,fifo_completed_mean,priority_completed_mean,optimized_completed_mean,paired_completed_delta,paired_delta_ci_low,paired_delta_ci_high,improved,tied,worse
+normal_operations,90,30,41.0333,40.5,43.7333,2.7,2.4,3.0,30,0,0
+normal_operations,240,30,50.9667,50.9667,51,0.0333,0.0,0.1,1,29,0
+battery_truck_access_2024,90,30,32.1667,31.6,32.2667,0.1,-0.1667,0.3333,9,15,6
+battery_truck_access_2024,240,30,50.9667,50.9667,51,0.0333,0.0,0.1,1,29,0
+terminal_data_disruption_2017,90,30,25.1333,24.6,25.1667,0.0333,-0.2333,0.3,7,18,5
+terminal_data_disruption_2017,240,30,50.9667,50.9667,51,0.0333,0.0,0.1,1,29,0
+long_dwell_backlog_2021,90,30,41.4667,41.6333,44.7333,3.2667,2.8,3.7,29,1,0
+long_dwell_backlog_2021,240,30,50.9667,50.9667,51,0.0333,0.0,0.1,1,29,0
+weather_warning_no_closure_2023,90,30,41.0333,40.5,43.7,2.6667,2.3333,3.0,30,0,0
+weather_warning_no_closure_2023,240,30,50.9667,50.9667,51,0.0333,0.0,0.1,1,29,0
+equal_service_control,90,3,36,36,36,0,,,0,3,0
+equal_service_control,240,3,96,96,96,0,,,0,3,0

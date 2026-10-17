@@ -1,0 +1,976 @@
+{
+  "at_utc": "2026-10-17T09:03:50.055515+00:00",
+  "command": [
+    "scripts/inspect_scale_database.py",
+    "--run-id",
+    "f18ef99b-f120-443e-90e3-946c75d9f005",
+    "--output",
+    "evaluation/scale-2026-10-17/database-inspection.json"
+  ],
+  "postgresql_version": "PostgreSQL 17.11 on aarch64-unknown-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit",
+  "client_platform": "macOS-15.4.1-arm64-arm-64bit",
+  "run": {
+    "id": "f18ef99b-f120-443e-90e3-946c75d9f005",
+    "workspace_id": "377bfbc4-dd9b-4a12-a999-4336b8752ffb",
+    "profile": "la_seven_day",
+    "seed": 17,
+    "status": "ready",
+    "clock_min": 10080,
+    "horizon_minutes": 10080,
+    "total_records": 119014,
+    "revision": 86,
+    "next_sequence": 86,
+    "resource_state": {
+      "version": "scale-slots-1",
+      "strategy": "fifo",
+      "slots": {
+        "terminal-apm": [
+          10086,
+          10082,
+          10086,
+          10081,
+          10085,
+          10082,
+          10083,
+          10083,
+          10083,
+          10081,
+          10082,
+          10082
+        ],
+        "terminal-everport": [
+          10081,
+          10082,
+          10082,
+          10081,
+          10083,
+          10085,
+          10086,
+          10083,
+          10081,
+          10086,
+          10087,
+          10083
+        ],
+        "terminal-fenix": [
+          10082,
+          10080,
+          10081,
+          10083,
+          10085,
+          10083,
+          10077,
+          10080,
+          10080,
+          10072,
+          10070,
+          10075
+        ],
+        "terminal-trapac": [
+          10082,
+          10080,
+          10088,
+          10080,
+          10084,
+          10079,
+          10080,
+          10082,
+          10078,
+          10081,
+          10080,
+          10079
+        ],
+        "terminal-yusen": [
+          10083,
+          10081,
+          10086,
+          10080,
+          10082,
+          10082,
+          10078,
+          10078,
+          10079,
+          10080,
+          10045,
+          10050
+        ],
+        "terminal-wbct-cs": [
+          10080,
+          10085,
+          10080,
+          10084,
+          10086,
+          10088,
+          10084,
+          10080,
+          10082,
+          10083,
+          10081,
+          10083
+        ],
+        "terminal-wbct-latil": [
+          10086,
+          10082,
+          10082,
+          10081,
+          10080,
+          10084,
+          10082,
+          10084,
+          10082,
+          10085,
+          10086,
+          10085
+        ]
+      },
+      "in_service": {
+        "4aa51329-4f5d-5546-bc2c-60e4e87218c4": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 1,
+          "started_min": 10074,
+          "end_min": 10082,
+          "teu": 1
+        },
+        "ce717b48-1a40-5585-abaf-e652431b3b85": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 5,
+          "started_min": 10074,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "55c9a29c-7e41-5853-bac9-137ac50c5bc0": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 11,
+          "started_min": 10074,
+          "end_min": 10082,
+          "teu": 1
+        },
+        "243b66bf-a69d-55e2-a101-f6adf0818e62": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 7,
+          "started_min": 10075,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "aba9f8cd-be12-5217-8808-d368e6855cde": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 8,
+          "started_min": 10075,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "b4f26710-a819-510b-9396-c7ddab210769": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 4,
+          "started_min": 10076,
+          "end_min": 10085,
+          "teu": 2
+        },
+        "38bb2aee-2efd-5705-81a4-0ea59afbedf8": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 0,
+          "started_min": 10077,
+          "end_min": 10086,
+          "teu": 2
+        },
+        "53129c19-71fa-5ee7-89a9-571abfaac783": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 3,
+          "started_min": 10077,
+          "end_min": 10081,
+          "teu": 2
+        },
+        "9a52bf80-a5f3-5567-a899-8611934d9b7c": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 6,
+          "started_min": 10078,
+          "end_min": 10083,
+          "teu": 1
+        },
+        "6d22499f-d46c-5507-9a51-9150f4b45d85": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 9,
+          "started_min": 10078,
+          "end_min": 10081,
+          "teu": 2
+        },
+        "7609c953-c768-500d-846e-0d334830c589": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 10,
+          "started_min": 10078,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "054f4dca-96fd-568f-9400-bd7be914ee88": {
+          "terminal_id": "terminal-apm",
+          "slot_index": 2,
+          "started_min": 10079,
+          "end_min": 10086,
+          "teu": 2
+        },
+        "9987b9ab-74d2-5610-8bc9-b9777e048fa5": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 8,
+          "started_min": 10074,
+          "end_min": 10081,
+          "teu": 2
+        },
+        "a020446f-0311-53a4-b7d1-cb0905cbf52d": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 0,
+          "started_min": 10075,
+          "end_min": 10081,
+          "teu": 1
+        },
+        "edcfc78c-183c-54c2-868d-47b9bf19220e": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 1,
+          "started_min": 10076,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "3ceeb332-6fba-504e-a4e3-63b8b578ab04": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 2,
+          "started_min": 10076,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "d684bfff-ef27-5c7f-ad4c-c029596d690d": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 3,
+          "started_min": 10077,
+          "end_min": 10081,
+          "teu": 2
+        },
+        "11812f52-0b3e-5b2e-9046-55cf59323bf5": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 5,
+          "started_min": 10078,
+          "end_min": 10085,
+          "teu": 1
+        },
+        "eb8ad9d4-4936-5105-8c5a-540b3c7436e9": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 6,
+          "started_min": 10078,
+          "end_min": 10086,
+          "teu": 2
+        },
+        "97d4ba02-812b-51ad-a37c-92510bd5a01c": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 7,
+          "started_min": 10078,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "d723972b-1c7d-5d35-b78f-b2192cc89cb7": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 4,
+          "started_min": 10079,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "05ada748-0934-5d92-bd29-dd60c0d138e7": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 9,
+          "started_min": 10079,
+          "end_min": 10086,
+          "teu": 2
+        },
+        "02a2937e-03b7-5338-a7d9-8fb9fe474e91": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 10,
+          "started_min": 10079,
+          "end_min": 10087,
+          "teu": 2
+        },
+        "aa2ad4d2-3cbb-5801-aa57-4c18165a7331": {
+          "terminal_id": "terminal-everport",
+          "slot_index": 11,
+          "started_min": 10079,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "d443e536-1932-5544-9125-c12566d54b2e": {
+          "terminal_id": "terminal-fenix",
+          "slot_index": 2,
+          "started_min": 10072,
+          "end_min": 10081,
+          "teu": 2
+        },
+        "646d1145-ef97-5997-b8c8-b6c66dd47106": {
+          "terminal_id": "terminal-fenix",
+          "slot_index": 0,
+          "started_min": 10076,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "0b3ca785-e3a6-5e31-8e87-b61f0b61e37b": {
+          "terminal_id": "terminal-fenix",
+          "slot_index": 3,
+          "started_min": 10077,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "6ce3c618-0f60-567f-be2b-8a05b3092136": {
+          "terminal_id": "terminal-fenix",
+          "slot_index": 4,
+          "started_min": 10079,
+          "end_min": 10085,
+          "teu": 2
+        },
+        "b8602b9e-978d-5684-ada5-cd0c9ae54367": {
+          "terminal_id": "terminal-fenix",
+          "slot_index": 5,
+          "started_min": 10079,
+          "end_min": 10083,
+          "teu": 1
+        },
+        "472b578f-9511-5de0-8c8d-2cfc004db4b5": {
+          "terminal_id": "terminal-trapac",
+          "slot_index": 9,
+          "started_min": 10075,
+          "end_min": 10081,
+          "teu": 2
+        },
+        "5a2770c1-01c6-5fde-ba6e-c79c06679fc4": {
+          "terminal_id": "terminal-trapac",
+          "slot_index": 0,
+          "started_min": 10077,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "2abc8179-4d87-5f4d-9b7b-80991d507cac": {
+          "terminal_id": "terminal-trapac",
+          "slot_index": 4,
+          "started_min": 10078,
+          "end_min": 10084,
+          "teu": 2
+        },
+        "62782eb6-a217-5e2e-94cb-f571743251f9": {
+          "terminal_id": "terminal-trapac",
+          "slot_index": 7,
+          "started_min": 10078,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "86baf7c1-3072-5224-8cf3-51f7935c7eb5": {
+          "terminal_id": "terminal-trapac",
+          "slot_index": 2,
+          "started_min": 10079,
+          "end_min": 10088,
+          "teu": 2
+        },
+        "0137a898-e082-5aee-8133-2dc4fcb84299": {
+          "terminal_id": "terminal-yusen",
+          "slot_index": 4,
+          "started_min": 10073,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "e93fa6af-90ae-5434-b969-5a2ca12d34a2": {
+          "terminal_id": "terminal-yusen",
+          "slot_index": 0,
+          "started_min": 10077,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "eab48e95-0529-5e31-b4fe-e62a0c15bac6": {
+          "terminal_id": "terminal-yusen",
+          "slot_index": 1,
+          "started_min": 10078,
+          "end_min": 10081,
+          "teu": 1
+        },
+        "75dce0bd-9382-5632-b218-5fdd9aed8e12": {
+          "terminal_id": "terminal-yusen",
+          "slot_index": 5,
+          "started_min": 10078,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "e9d6b4df-3d5c-5e99-97a7-d33658b4a4f0": {
+          "terminal_id": "terminal-yusen",
+          "slot_index": 2,
+          "started_min": 10079,
+          "end_min": 10086,
+          "teu": 2
+        },
+        "c08aae13-5cfe-5ce2-8f2d-7a4acb2a0fdd": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 8,
+          "started_min": 10075,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "48b50eef-0829-5fc1-99bd-c603ff7a394b": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 1,
+          "started_min": 10076,
+          "end_min": 10085,
+          "teu": 1
+        },
+        "0eb5a5f6-f854-5e17-a96f-da2727a64dc4": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 9,
+          "started_min": 10076,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "b0fd1c38-c71a-573e-ab28-634eefc95674": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 10,
+          "started_min": 10077,
+          "end_min": 10081,
+          "teu": 2
+        },
+        "1f2c84ef-129c-5187-8307-e878fc42123d": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 11,
+          "started_min": 10077,
+          "end_min": 10083,
+          "teu": 2
+        },
+        "a7728abc-a50f-56c2-95e9-e94c891c8c8b": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 3,
+          "started_min": 10079,
+          "end_min": 10084,
+          "teu": 1
+        },
+        "9edbd125-7600-522f-bb9a-fbc1681d281e": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 4,
+          "started_min": 10079,
+          "end_min": 10086,
+          "teu": 2
+        },
+        "78d2d636-d039-572a-bd26-ce3f08d339c8": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 5,
+          "started_min": 10079,
+          "end_min": 10088,
+          "teu": 2
+        },
+        "2ed36ee2-66e4-50a2-9d0a-5f57362366a2": {
+          "terminal_id": "terminal-wbct-cs",
+          "slot_index": 6,
+          "started_min": 10079,
+          "end_min": 10084,
+          "teu": 1
+        },
+        "ad59d584-5223-5f39-9d57-d0fe119fe1d4": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 2,
+          "started_min": 10074,
+          "end_min": 10082,
+          "teu": 1
+        },
+        "f279c1c9-c753-5199-b99b-883d386806ed": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 3,
+          "started_min": 10074,
+          "end_min": 10081,
+          "teu": 2
+        },
+        "785684fe-6fac-54ca-85eb-bad9d3d3bdea": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 1,
+          "started_min": 10075,
+          "end_min": 10082,
+          "teu": 1
+        },
+        "19c4f042-a5b2-5a3e-a51d-00228f7df508": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 6,
+          "started_min": 10077,
+          "end_min": 10082,
+          "teu": 1
+        },
+        "1d2b715e-01cd-59db-8d49-e750ba3a2862": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 8,
+          "started_min": 10077,
+          "end_min": 10082,
+          "teu": 2
+        },
+        "4dde88be-941e-57f0-8cbf-7b5dbf7d910d": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 9,
+          "started_min": 10077,
+          "end_min": 10085,
+          "teu": 2
+        },
+        "ddd4fe90-5ed5-5915-846b-3af855d134ca": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 10,
+          "started_min": 10077,
+          "end_min": 10086,
+          "teu": 1
+        },
+        "c0f31efa-ad77-5369-8914-68421b8d1337": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 0,
+          "started_min": 10078,
+          "end_min": 10086,
+          "teu": 1
+        },
+        "3f640959-86a5-5666-9901-df26efa25a4d": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 5,
+          "started_min": 10079,
+          "end_min": 10084,
+          "teu": 2
+        },
+        "623f620e-7b4b-573a-86dc-b254dc33da2a": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 7,
+          "started_min": 10079,
+          "end_min": 10084,
+          "teu": 2
+        },
+        "972eb599-d736-5edf-ac21-4c310cbd1e9c": {
+          "terminal_id": "terminal-wbct-latil",
+          "slot_index": 11,
+          "started_min": 10079,
+          "end_min": 10085,
+          "teu": 2
+        }
+      },
+      "clock_min": 10080,
+      "restriction_since": {
+        "terminal-apm": {},
+        "terminal-everport": {},
+        "terminal-fenix": {},
+        "terminal-trapac": {},
+        "terminal-yusen": {},
+        "terminal-wbct-cs": {},
+        "terminal-wbct-latil": {}
+      }
+    }
+  },
+  "counts_by_status": [
+    {
+      "status": "blocked",
+      "records": 4577,
+      "teu": 7476
+    },
+    {
+      "status": "completed",
+      "records": 114130,
+      "teu": 188394
+    },
+    {
+      "status": "in_service",
+      "records": 59,
+      "teu": 103
+    },
+    {
+      "status": "queued",
+      "records": 248,
+      "teu": 398
+    }
+  ],
+  "aggregate": {
+    "records": 119014,
+    "teu": 196371,
+    "future_completions": 0,
+    "missing_completion_times": 0,
+    "composite_row_bytes": 54936944
+  },
+  "audit": {
+    "batch_events": 85,
+    "first_sequence": 1,
+    "last_sequence": 85,
+    "latest_clock": 10080
+  },
+  "all_runs_relation_sizes": {
+    "movements_all_runs_total_bytes": 288817152,
+    "movements_all_runs_index_bytes": 67846144,
+    "events_all_runs_total_bytes": 14966784,
+    "cohort_runs": 1,
+    "scope": "Entire current public relations across all retained runs, including indexes/TOAST where applicable; not exclusive per-run disk or memory."
+  },
+  "queries": {
+    "first_page": {
+      "sql": "SELECT * FROM wb_scale_movements WHERE run_id=:run_id ORDER BY arrival_min,id LIMIT 100",
+      "parameters": {
+        "run_id": "f18ef99b-f120-443e-90e3-946c75d9f005",
+        "offset": 59507,
+        "clock": 10080
+      },
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.42,
+            "Total Cost": 64.24,
+            "Plan Rows": 100,
+            "Plan Width": 431,
+            "Actual Startup Time": 0.036,
+            "Actual Total Time": 0.12,
+            "Actual Rows": 100,
+            "Actual Loops": 1,
+            "Shared Hit Blocks": 100,
+            "Shared Read Blocks": 3,
+            "Shared Dirtied Blocks": 1,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Index Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Scan Direction": "Forward",
+                "Index Name": "ix_wb_scale_arrival",
+                "Relation Name": "wb_scale_movements",
+                "Alias": "wb_scale_movements",
+                "Startup Cost": 0.42,
+                "Total Cost": 75960.79,
+                "Plan Rows": 119014,
+                "Plan Width": 431,
+                "Actual Startup Time": 0.035,
+                "Actual Total Time": 0.113,
+                "Actual Rows": 100,
+                "Actual Loops": 1,
+                "Index Cond": "((run_id)::text = 'f18ef99b-f120-443e-90e3-946c75d9f005'::text)",
+                "Rows Removed by Index Recheck": 0,
+                "Shared Hit Blocks": 100,
+                "Shared Read Blocks": 3,
+                "Shared Dirtied Blocks": 1,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 4,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.073,
+          "Triggers": [],
+          "Execution Time": 0.137
+        }
+      ]
+    },
+    "middle_page": {
+      "sql": "SELECT * FROM wb_scale_movements WHERE run_id=:run_id ORDER BY arrival_min,id OFFSET :offset LIMIT 100",
+      "parameters": {
+        "run_id": "f18ef99b-f120-443e-90e3-946c75d9f005",
+        "offset": 59507,
+        "clock": 10080
+      },
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 37980.6,
+            "Total Cost": 38044.43,
+            "Plan Rows": 100,
+            "Plan Width": 431,
+            "Actual Startup Time": 28.317,
+            "Actual Total Time": 28.369,
+            "Actual Rows": 100,
+            "Actual Loops": 1,
+            "Shared Hit Blocks": 61418,
+            "Shared Read Blocks": 1462,
+            "Shared Dirtied Blocks": 1015,
+            "Shared Written Blocks": 316,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Index Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Scan Direction": "Forward",
+                "Index Name": "ix_wb_scale_arrival",
+                "Relation Name": "wb_scale_movements",
+                "Alias": "wb_scale_movements",
+                "Startup Cost": 0.42,
+                "Total Cost": 75960.79,
+                "Plan Rows": 119014,
+                "Plan Width": 431,
+                "Actual Startup Time": 0.012,
+                "Actual Total Time": 26.637,
+                "Actual Rows": 59607,
+                "Actual Loops": 1,
+                "Index Cond": "((run_id)::text = 'f18ef99b-f120-443e-90e3-946c75d9f005'::text)",
+                "Rows Removed by Index Recheck": 0,
+                "Shared Hit Blocks": 61418,
+                "Shared Read Blocks": 1462,
+                "Shared Dirtied Blocks": 1015,
+                "Shared Written Blocks": 316,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.052,
+          "Triggers": [],
+          "Execution Time": 28.406
+        }
+      ]
+    },
+    "terminal_page": {
+      "sql": "SELECT * FROM wb_scale_movements WHERE run_id=:run_id AND terminal_id='terminal-fenix' ORDER BY arrival_min,id LIMIT 100",
+      "parameters": {
+        "run_id": "f18ef99b-f120-443e-90e3-946c75d9f005",
+        "offset": 59507,
+        "clock": 10080
+      },
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 0.42,
+            "Total Cost": 445.49,
+            "Plan Rows": 100,
+            "Plan Width": 431,
+            "Actual Startup Time": 0.024,
+            "Actual Total Time": 0.261,
+            "Actual Rows": 100,
+            "Actual Loops": 1,
+            "Shared Hit Blocks": 691,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Index Scan",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Scan Direction": "Forward",
+                "Index Name": "ix_wb_scale_arrival",
+                "Relation Name": "wb_scale_movements",
+                "Alias": "wb_scale_movements",
+                "Startup Cost": 0.42,
+                "Total Cost": 76258.32,
+                "Plan Rows": 17134,
+                "Plan Width": 431,
+                "Actual Startup Time": 0.024,
+                "Actual Total Time": 0.254,
+                "Actual Rows": 100,
+                "Actual Loops": 1,
+                "Index Cond": "((run_id)::text = 'f18ef99b-f120-443e-90e3-946c75d9f005'::text)",
+                "Rows Removed by Index Recheck": 0,
+                "Filter": "((terminal_id)::text = 'terminal-fenix'::text)",
+                "Rows Removed by Filter": 598,
+                "Shared Hit Blocks": 691,
+                "Shared Read Blocks": 0,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 0,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 0,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.089,
+          "Triggers": [],
+          "Execution Time": 0.282
+        }
+      ]
+    },
+    "bounded_candidates": {
+      "sql": "SELECT * FROM wb_scale_movements WHERE run_id=:run_id AND terminal_id='terminal-fenix' AND status!='completed' AND arrival_min<=:clock ORDER BY CASE WHEN status='in_service' THEN 0 ELSE 1 END,blocked,arrival_min,id LIMIT 2000",
+      "parameters": {
+        "run_id": "f18ef99b-f120-443e-90e3-946c75d9f005",
+        "offset": 59507,
+        "clock": 10080
+      },
+      "plan": [
+        {
+          "Plan": {
+            "Node Type": "Limit",
+            "Parallel Aware": false,
+            "Async Capable": false,
+            "Startup Cost": 25563.65,
+            "Total Cost": 25565.37,
+            "Plan Rows": 691,
+            "Plan Width": 435,
+            "Actual Startup Time": 5.802,
+            "Actual Total Time": 5.86,
+            "Actual Rows": 702,
+            "Actual Loops": 1,
+            "Shared Hit Blocks": 1283,
+            "Shared Read Blocks": 11,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 11,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0,
+            "Plans": [
+              {
+                "Node Type": "Sort",
+                "Parent Relationship": "Outer",
+                "Parallel Aware": false,
+                "Async Capable": false,
+                "Startup Cost": 25563.65,
+                "Total Cost": 25565.37,
+                "Plan Rows": 691,
+                "Plan Width": 435,
+                "Actual Startup Time": 5.801,
+                "Actual Total Time": 5.822,
+                "Actual Rows": 702,
+                "Actual Loops": 1,
+                "Sort Key": [
+                  "(CASE WHEN ((status)::text = 'in_service'::text) THEN 0 ELSE 1 END)",
+                  "blocked",
+                  "arrival_min",
+                  "id"
+                ],
+                "Sort Method": "quicksort",
+                "Sort Space Used": 381,
+                "Sort Space Type": "Memory",
+                "Shared Hit Blocks": 1283,
+                "Shared Read Blocks": 11,
+                "Shared Dirtied Blocks": 0,
+                "Shared Written Blocks": 11,
+                "Local Hit Blocks": 0,
+                "Local Read Blocks": 0,
+                "Local Dirtied Blocks": 0,
+                "Local Written Blocks": 0,
+                "Temp Read Blocks": 0,
+                "Temp Written Blocks": 0,
+                "Plans": [
+                  {
+                    "Node Type": "Index Scan",
+                    "Parent Relationship": "Outer",
+                    "Parallel Aware": false,
+                    "Async Capable": false,
+                    "Scan Direction": "Forward",
+                    "Index Name": "ix_wb_scale_terminal_status",
+                    "Relation Name": "wb_scale_movements",
+                    "Alias": "wb_scale_movements",
+                    "Startup Cost": 0.42,
+                    "Total Cost": 25531.06,
+                    "Plan Rows": 691,
+                    "Plan Width": 435,
+                    "Actual Startup Time": 0.012,
+                    "Actual Total Time": 4.353,
+                    "Actual Rows": 702,
+                    "Actual Loops": 1,
+                    "Index Cond": "(((run_id)::text = 'f18ef99b-f120-443e-90e3-946c75d9f005'::text) AND ((terminal_id)::text = 'terminal-fenix'::text))",
+                    "Rows Removed by Index Recheck": 0,
+                    "Filter": "(((status)::text <> 'completed'::text) AND (arrival_min <= '10080'::smallint))",
+                    "Rows Removed by Filter": 16300,
+                    "Shared Hit Blocks": 1275,
+                    "Shared Read Blocks": 11,
+                    "Shared Dirtied Blocks": 0,
+                    "Shared Written Blocks": 11,
+                    "Local Hit Blocks": 0,
+                    "Local Read Blocks": 0,
+                    "Local Dirtied Blocks": 0,
+                    "Local Written Blocks": 0,
+                    "Temp Read Blocks": 0,
+                    "Temp Written Blocks": 0
+                  }
+                ]
+              }
+            ]
+          },
+          "Planning": {
+            "Shared Hit Blocks": 12,
+            "Shared Read Blocks": 0,
+            "Shared Dirtied Blocks": 0,
+            "Shared Written Blocks": 0,
+            "Local Hit Blocks": 0,
+            "Local Read Blocks": 0,
+            "Local Dirtied Blocks": 0,
+            "Local Written Blocks": 0,
+            "Temp Read Blocks": 0,
+            "Temp Written Blocks": 0
+          },
+          "Planning Time": 0.122,
+          "Triggers": [],
+          "Execution Time": 5.977
+        }
+      ]
+    }
+  },
+  "wall_seconds": 0.1795339590171352,
+  "verified": [
+    "Fresh SQL connection reads committed run/rows/resource state after HTTP requests completed.",
+    "Relational row count matches persisted run total.",
+    "No completed timestamp exceeds persisted clock; no completed row lacks its time.",
+    "Audit batch-event sequence is contiguous."
+  ],
+  "limits": [
+    "This is a fresh-connection persistence inspection, not an app/PostgreSQL crash-recovery test.",
+    "EXPLAIN ANALYZE measures a warm local database; results are not a production SLA.",
+    "Composite row-size sum is not relation disk footprint; relation sizes include all retained runs."
+  ]
+}

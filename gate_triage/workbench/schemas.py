@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
 class StrictModel(BaseModel):
@@ -35,7 +35,16 @@ class PlanCreate(StrictModel):
 class ExperimentCreate(StrictModel):
     scenario_id: str | None = Field(default=None, max_length=100)
     seeds: list[int] = Field(default_factory=lambda: [17, 29, 43], min_length=1, max_length=30)
-    horizon_minutes: int = Field(default=240, ge=30, le=480)
+    horizon_minutes: int = Field(default=240, ge=1, le=240)
+
+    @field_validator("seeds")
+    @classmethod
+    def independent_seeds(cls, seeds: list[int]) -> list[int]:
+        if any(seed < 0 or seed > 2147483647 for seed in seeds):
+            raise ValueError("Seeds must be between 0 and 2147483647")
+        if len(set(seeds)) != len(seeds):
+            raise ValueError("Use distinct seeds for independent paired worlds")
+        return seeds
 
 
 class ExportCreate(StrictModel):

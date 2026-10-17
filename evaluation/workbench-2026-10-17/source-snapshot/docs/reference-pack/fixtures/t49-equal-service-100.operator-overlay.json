@@ -1,0 +1,3220 @@
+{
+  "schema_version": "operator-overlay-1",
+  "provenance": {
+    "kind": "synthetic",
+    "description": "All resources, job models, approvals and sensor values are invented demo inputs.",
+    "source_refs": []
+  },
+  "hero_id": null,
+  "containers": [
+    {
+      "container_id": "PCLU3500715",
+      "resource_id": "3b950c11-e331-5e0d-9576-1c36ab6f7831",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU3500715:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU8038374",
+      "resource_id": "13989239-c624-5fad-90fc-6031842b088a",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU8038374:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU4318855",
+      "resource_id": "9c1bb0a3-47a5-5098-95ad-7017a8e08e77",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU4318855:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU5200476",
+      "resource_id": "96a5d7ba-132c-52cc-b0bd-b6560939cae4",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU5200476:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU6481437",
+      "resource_id": "ee78f224-8515-513d-bbdf-e8cca500c56c",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU6481437:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU5398338",
+      "resource_id": "273917a8-0026-5dbf-b579-3f8ee0e1a17d",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU5398338:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU7982241",
+      "resource_id": "505b1b62-5f34-555e-b841-e5e1f2910e33",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU7982241:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU2903561",
+      "resource_id": "10b63cbe-ae6c-5b96-8ed4-4db3691a62a8",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU2903561:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU2044645",
+      "resource_id": "5fecb68a-ef4e-51a2-a0de-bf289bd260df",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU2044645:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU2944841",
+      "resource_id": "01530647-9d19-560b-9f0e-cf04a0c03a9f",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU2944841:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU5963914",
+      "resource_id": "a4c464f9-6a30-59e8-8841-fdf1b316001d",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU5963914:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU7731902",
+      "resource_id": "0d935344-5d5a-53c2-9985-fb49cdcf6799",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU7731902:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU7542890",
+      "resource_id": "615a382a-d6d2-594f-9686-5760e90d1806",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU7542890:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU5842082",
+      "resource_id": "e9282c4a-0c6b-5407-91b6-ab041abcc6f6",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU5842082:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU9897858",
+      "resource_id": "91df5202-0286-51d6-ae41-807e6dc49789",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU9897858:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU1873851",
+      "resource_id": "1bfa9918-af97-53eb-a488-611e7186500e",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU1873851:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU3589751",
+      "resource_id": "0b8bdcc2-9196-5aa8-aba1-a8816fb49316",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU3589751:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU1649691",
+      "resource_id": "b04d084c-467d-5ed5-8451-e3159ddbd506",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU1649691:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU2833230",
+      "resource_id": "fa881745-1bda-5267-a531-c191c2bd3e25",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU2833230:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU7654757",
+      "resource_id": "19a4fd43-fdc6-529b-b6cb-d1b6106fe388",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU7654757:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU9910817",
+      "resource_id": "4c93aedc-7a9a-5650-93ac-1af603d25272",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU9910817:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU6503032",
+      "resource_id": "44be04a4-810d-54c7-9a38-729eb5f954ea",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU6503032:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU9683481",
+      "resource_id": "e6522a3f-a7c0-540d-bc40-ce35f5b7ee50",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU9683481:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU4020853",
+      "resource_id": "f83d6d26-9590-53a6-b919-3ebafbe4bd07",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU4020853:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU7120868",
+      "resource_id": "c611d119-cfd4-5516-ba05-ff058aa5724b",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU7120868:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU9398441",
+      "resource_id": "7c820056-5be7-5c00-bd54-cbc7d7dc1050",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU9398441:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU8194570",
+      "resource_id": "629b5279-1ada-53ff-a076-9b1ea57029e9",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU8194570:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU3472189",
+      "resource_id": "76e716f2-6c75-5c1c-ad35-6396e221249e",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU3472189:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU5394880",
+      "resource_id": "e2fedb0e-f381-58e6-9fce-2f3a2863271f",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU5394880:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU5118725",
+      "resource_id": "0ee96226-6b2f-5f91-8793-3c259628a787",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU5118725:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU9094999",
+      "resource_id": "367815a8-e7e7-5aff-b476-dab9720f7932",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU9094999:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU5821419",
+      "resource_id": "b9bd095a-33d2-5eb3-8107-28b7bbfdcb5e",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU5821419:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU5453786",
+      "resource_id": "7e91a368-b03b-5a82-8495-ff0d0d8a5b7c",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU5453786:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU5374922",
+      "resource_id": "0cfb6e76-6b3d-5249-b16a-d0d018e2ecf4",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU5374922:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU7783308",
+      "resource_id": "d73a1cf3-faaa-5c28-8a3b-43491a67a21d",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU7783308:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU7728339",
+      "resource_id": "8f2087ad-03fa-5c67-bc43-9790bd954907",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU7728339:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU6304573",
+      "resource_id": "d564d21b-ba9c-508d-acc9-7c6083fa182f",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU6304573:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU8118722",
+      "resource_id": "e7f539a5-8cc4-5f35-aa8a-2fdf5259714b",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU8118722:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU9518424",
+      "resource_id": "63926e51-5447-5545-8098-6dbbd6b1ed33",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU9518424:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU6363836",
+      "resource_id": "81bccf77-1b7d-5fda-b186-c74f83ea4115",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU6363836:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU2259379",
+      "resource_id": "f2c041e9-1681-5a42-a994-b0bc46c96c40",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU2259379:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU6338112",
+      "resource_id": "fc7d6444-ac9b-5947-9391-b8dd9ff66c97",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU6338112:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU1093026",
+      "resource_id": "ce4fe563-c955-55a5-9f9b-4020bd988b99",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU1093026:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU9952696",
+      "resource_id": "16fac1a7-fc33-54f1-998b-021a8d799211",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU9952696:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU5666692",
+      "resource_id": "5041f09c-710c-5b3a-b6f0-59bd613fbda2",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU5666692:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU3036059",
+      "resource_id": "fc42bb1f-0580-5835-8c25-cebe82384333",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU3036059:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU3760597",
+      "resource_id": "7526175b-cf2d-58e9-ae92-45cde8cadfaa",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU3760597:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU5098412",
+      "resource_id": "60666cce-effc-5b77-b8e1-89d446121393",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU5098412:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU9333700",
+      "resource_id": "7b581bdd-8749-5a19-b7db-5cf6b1398db4",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU9333700:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU4524499",
+      "resource_id": "1f33d9d4-0c8f-5063-a208-397f8113c59b",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU4524499:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU9479356",
+      "resource_id": "19eb2cc6-526c-519d-a702-9ce1f7158729",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU9479356:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU7328534",
+      "resource_id": "8792a7b7-1fde-5c18-947b-d15ac34fdbc6",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU7328534:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU7667458",
+      "resource_id": "fc84ca5f-3bfc-54d8-8847-0fa19309873a",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU7667458:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU9363326",
+      "resource_id": "2de7fb01-8d96-58f6-8cd2-55f3ab111cbf",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU9363326:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU5130808",
+      "resource_id": "2d3b379c-7d40-5148-bdf0-0b7618cc3449",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU5130808:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU2642635",
+      "resource_id": "f3567c59-523b-578b-9388-2f016738b260",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU2642635:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU9468772",
+      "resource_id": "9c999529-5fdb-5b9b-9186-e6c3cfdbf175",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU9468772:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU5682940",
+      "resource_id": "5bd7f57f-3667-59bd-9dd5-6839d6aec471",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU5682940:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU9722815",
+      "resource_id": "4fe1efea-5b8d-553d-b2fd-71bb44630768",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU9722815:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU6098175",
+      "resource_id": "9a3a768f-0c75-5c60-b228-5561e13ba59a",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU6098175:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU5960271",
+      "resource_id": "8f061dc7-d9fb-5018-b822-ed91c2516f22",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU5960271:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU3219824",
+      "resource_id": "56662d58-8d2f-5c4d-a043-96a16c87bfab",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU3219824:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU6902401",
+      "resource_id": "f9a6cfa4-fdcd-57c6-8b72-22f866852302",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU6902401:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU1157662",
+      "resource_id": "ff0ae6eb-9a43-566b-8331-e4948703d6fb",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU1157662:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU8106470",
+      "resource_id": "257f9f4f-f02a-526c-ae67-1633fbead6f7",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU8106470:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU2422633",
+      "resource_id": "b4d12a7c-ee4d-590a-807e-3bf829ab72e0",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU2422633:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU5476583",
+      "resource_id": "608ba9a9-fe40-5fac-844a-4161e1b3c48d",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU5476583:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU2065818",
+      "resource_id": "e93bb739-de5a-5892-b229-eaf86f9a5072",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU2065818:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU1689025",
+      "resource_id": "3594f8eb-b448-57e7-b341-f9ff47614472",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU1689025:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU5081983",
+      "resource_id": "4c6799bb-e456-56ef-98df-f9da98d40e77",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU5081983:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU6569946",
+      "resource_id": "45c31706-81ef-5d8f-86e8-7a61208d0c68",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU6569946:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU2921542",
+      "resource_id": "82da992e-86a2-546b-befc-01dc58866087",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU2921542:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU5364698",
+      "resource_id": "d3063d3d-8ef4-5c4e-9051-fe388c40f7e2",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU5364698:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU9667566",
+      "resource_id": "32cd7ceb-83d8-52db-b4e8-c8b5aaf67cc2",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU9667566:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU3342608",
+      "resource_id": "d8b2e473-3b31-5e19-859b-44a1fbab7774",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU3342608:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU7067228",
+      "resource_id": "238e199f-81b2-5889-a1bf-f50324802e6d",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU7067228:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU5531230",
+      "resource_id": "f1f797f4-8169-583b-a1d9-3b6bd21020d2",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU5531230:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU6266630",
+      "resource_id": "48edd076-6d61-58ce-9e9a-30396d9213f4",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU6266630:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU1205779",
+      "resource_id": "c5c2e360-6f2b-5aef-b5ec-858eff28b37e",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU1205779:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU3741438",
+      "resource_id": "f39f5fe8-bb54-5edd-9435-e66a24e2d7ce",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU3741438:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU9132114",
+      "resource_id": "8d100d96-97fc-5808-a6a4-883a96df8cb0",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU9132114:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU3253031",
+      "resource_id": "92b7a328-b174-5fe2-a4b4-bc754791d4f4",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU3253031:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU9990305",
+      "resource_id": "5b346394-e6b8-5f9e-9fc7-52fc7d447314",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU9990305:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU1771600",
+      "resource_id": "fa32d054-aaf9-5339-ab35-c30e5d0a40b6",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU1771600:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU2321324",
+      "resource_id": "f8b60409-9795-564a-a836-88fe1c094798",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU2321324:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU2754894",
+      "resource_id": "eb517802-d7a5-565e-ae84-22ffc599cebe",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU2754894:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU4010529",
+      "resource_id": "17917a42-7c57-504e-ae1f-e9969d6484eb",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU4010529:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU5652512",
+      "resource_id": "18c7e3e9-4306-5241-9bea-b2993b1f19b7",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU5652512:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU9224219",
+      "resource_id": "7c2e88c7-4ec5-5a20-93f2-938aa43a360c",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU9224219:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU9179730",
+      "resource_id": "806c2b5f-3c80-5bad-b8ca-c2baf0ef163a",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU9179730:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "PCLU3320821",
+      "resource_id": "13742ee5-a838-55e2-9e23-4e12beed4e43",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "PCLU3320821:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU9852897",
+      "resource_id": "a96990a0-0a71-5083-88b0-9492aea85805",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU9852897:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "OOLU2096280",
+      "resource_id": "96c7e9b5-1f1f-554c-a87a-238164170cbb",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "OOLU2096280:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU2919136",
+      "resource_id": "3ec481a5-a17e-57d9-a46f-b0211449a98b",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU2919136:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU3294774",
+      "resource_id": "3acef889-79fc-5df6-8661-fb1a9ed227ff",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU3294774:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MAEU4841005",
+      "resource_id": "c6b12d5a-69aa-5c8e-b081-26eec718fcbf",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MAEU4841005:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "TRXU7730428",
+      "resource_id": "cc6899ab-f7bc-5a2c-ac0a-5a79f94d29e0",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-0",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "TRXU7730428:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU3970445",
+      "resource_id": "cae87fd8-e18f-5d39-bcbe-f9c2547d8c0c",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-1",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU3970445:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "MSCU9164991",
+      "resource_id": "e9fc7c71-b9a9-5e8a-bf6e-2245be0bdbc5",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-2",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "MSCU9164991:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    },
+    {
+      "container_id": "ONEU6647119",
+      "resource_id": "0e1da9df-bbc3-53e2-9961-9cd3ec1252f8",
+      "provenance": "synthetic",
+      "gate": "Any",
+      "arrival_at_min": 0,
+      "stakeholder_group": "truck-group-3",
+      "source_state_is_not_physical_authorization": true,
+      "jobs": [
+        {
+          "id": "ONEU6647119:gate_handoff:1",
+          "kind": "gate_handoff",
+          "predecessors": [],
+          "resource_options": [
+            "east-lane-1",
+            "west-lane-1"
+          ],
+          "requires_all": [],
+          "outcome": "valid_gate_handoff",
+          "duration_model": "gate_handoff",
+          "requires_current_departure_eligibility": true
+        }
+      ],
+      "site_evidence": {},
+      "simulated_prerequisites": {
+        "appointment_ready": true,
+        "payment_ready": true,
+        "documents_ready": true,
+        "movement_authorized": true
+      },
+      "demonstration_flags": []
+    }
+  ],
+  "policies": {
+    "verification_completion_clears_holds": false,
+    "normal_temperature_certifies_cargo": false,
+    "additional_2021_port_dwell_fee_activated": false,
+    "additional_2021_port_dwell_fee_usd": 0
+  },
+  "duration_semantics": "Sample hidden world durations by seed/container/job/episode/attempt/resource_class; same keyed samples across policies.",
+  "demand_semantics": "Multiplier compresses only future, still-unobserved fixture interarrival intervals; it creates no extra containers.",
+  "movement_semantics": "Readiness flags are demo assumptions; departure still checks reported holds, unknown evidence and current resources."
+}

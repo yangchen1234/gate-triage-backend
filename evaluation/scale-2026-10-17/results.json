@@ -1,0 +1,4451 @@
+{
+  "started_at_utc": "2026-10-17T09:02:09.897861+00:00",
+  "command": [
+    "scripts/benchmark_scale.py",
+    "--url",
+    "http://127.0.0.1:8088",
+    "--profile",
+    "la_seven_day",
+    "--output",
+    "evaluation/scale-2026-10-17"
+  ],
+  "source_hashes_at_start": {
+    "gate_triage/workbench/scale_simulation.py": "e938e8397752854f38e38b955ed3c816989cd53430f18208e5c84ca46f67a49e",
+    "gate_triage/workbench/scale.py": "5ff290042d2d26f617f9fda22fbb5bc478d52eeadd3b26ca7b695c13c8d51969",
+    "gate_triage/workbench/migrations/versions/wb_0003_port_scale.py": "a506a357f04a75f76e62bb9ecf8eace1036391dfb49e890e79cee42f3c8cac5c",
+    "scripts/benchmark_scale.py": "1d3e69bddb47fd043e1efa9bdc658599f3b1d04f4da4e51e466bb2d0744cd2a6",
+    "tests/test_scale_simulation.py": "2ed3a103bb33f01086b9c12df0a64594ca1c3255350cbef9abd6c04ecc8c8baa"
+  },
+  "environment": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "platform": "macOS-15.4.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "cpu_count": 10
+  },
+  "status": "passed",
+  "failures": [],
+  "assumptions": [
+    "All movement rows, timing, terminal assignment, service times, prerequisites and resource slots are synthetic.",
+    "Official Port of Los Angeles 2025 totals calibrate aggregate TEU volume only; records are not historical unique-container counts.",
+    "Assume 65% 40-foot and 35% 20-foot movement records; exact integer TEU totals use 1/2 TEU units and nearest feasible mix.",
+    "Allocate approximately equal movement counts to seven terminals; these are not actual terminal volume shares or capacities.",
+    "Use twelve synthetic independent service slots per terminal, 3–9 minute service, and an explicit synthetic blocked prerequisite fraction.",
+    "Local bounded queue simulation does not claim global CP-SAT optimization of 100,000 records or validated physical port performance.",
+    "Imports abstract vessel-unload arrival then gate-out service; exports abstract gate-in arrival then vessel-load service. These are synthetic phases, not real berth/lift/gate telemetry.",
+    "Cyber source loss changes freshness visibility only; this physical world model continues known permitted work and does not infer new permission or automatic recovery."
+  ],
+  "generator": {
+    "profiles": [
+      {
+        "profile": "la_average_day",
+        "seed": 17,
+        "records": 17002,
+        "teu": 28053,
+        "wall_seconds": 2.374921999988146,
+        "records_per_second": 7158.97195785161,
+        "python_tracemalloc_peak_bytes": 1885413,
+        "maximum_batch_rows": 1000,
+        "terminal_records": {
+          "terminal-apm": 2429,
+          "terminal-everport": 2429,
+          "terminal-fenix": 2429,
+          "terminal-trapac": 2429,
+          "terminal-yusen": 2429,
+          "terminal-wbct-cs": 2429,
+          "terminal-wbct-latil": 2428
+        },
+        "category_records": {
+          "loaded_import": 8828,
+          "empty_export": 5795,
+          "loaded_export": 2373,
+          "empty_import": 6
+        },
+        "daily_teu": {
+          "0": 28053
+        },
+        "equipment_teu_units": {
+          "1": 5951,
+          "2": 11051
+        },
+        "prerequisite_blocked_records": 626,
+        "ordered_stream_sha256": "4ed0e3fa0c9b19020f2c1d1c5003b256af5cb27012d6286ef1cd1276ae803c97"
+      },
+      {
+        "profile": "la_peak_month_day",
+        "seed": 17,
+        "records": 19938,
+        "teu": 32898,
+        "wall_seconds": 2.827883500023745,
+        "records_per_second": 7050.502610815681,
+        "python_tracemalloc_peak_bytes": 1885285,
+        "maximum_batch_rows": 1000,
+        "terminal_records": {
+          "terminal-apm": 2849,
+          "terminal-everport": 2849,
+          "terminal-fenix": 2848,
+          "terminal-trapac": 2848,
+          "terminal-yusen": 2848,
+          "terminal-wbct-cs": 2848,
+          "terminal-wbct-latil": 2848
+        },
+        "category_records": {
+          "loaded_import": 10353,
+          "empty_export": 6795,
+          "loaded_export": 2783,
+          "empty_import": 7
+        },
+        "daily_teu": {
+          "0": 32898
+        },
+        "equipment_teu_units": {
+          "2": 12960,
+          "1": 6978
+        },
+        "prerequisite_blocked_records": 810,
+        "ordered_stream_sha256": "7809bb05f50d2db9636862784ec597aef1a0083deff9b2b01606bc02d9449365"
+      },
+      {
+        "profile": "la_seven_day",
+        "seed": 17,
+        "records": 119014,
+        "teu": 196371,
+        "wall_seconds": 18.038267291965894,
+        "records_per_second": 6597.862093606293,
+        "python_tracemalloc_peak_bytes": 3132941,
+        "maximum_batch_rows": 1000,
+        "terminal_records": {
+          "terminal-apm": 17002,
+          "terminal-everport": 17002,
+          "terminal-fenix": 17002,
+          "terminal-trapac": 17002,
+          "terminal-yusen": 17002,
+          "terminal-wbct-cs": 17002,
+          "terminal-wbct-latil": 17002
+        },
+        "category_records": {
+          "loaded_import": 61796,
+          "empty_export": 40565,
+          "loaded_export": 16611,
+          "empty_import": 42
+        },
+        "daily_teu": {
+          "0": 28053,
+          "1": 28053,
+          "2": 28053,
+          "3": 28053,
+          "4": 28053,
+          "5": 28053,
+          "6": 28053
+        },
+        "equipment_teu_units": {
+          "1": 41657,
+          "2": 77357
+        },
+        "prerequisite_blocked_records": 4577,
+        "ordered_stream_sha256": "f074eda15aeced3eda5ad3cf56357d68834c2d98f458644079558c29c4d49f40",
+        "bounded_window": {
+          "input_rows": 1432,
+          "from_min": 0,
+          "to_min": 120,
+          "metrics": {
+            "completed_movements": 1061,
+            "completed_teu": 1746,
+            "started_movements": 1122,
+            "permanent_blocked": 56,
+            "incident_blocked": 0,
+            "source_verification_waiting": 0,
+            "source_freshness_unknown": 0,
+            "phase_blocked": 0,
+            "arrival_waiting": 0,
+            "queued_observed": 254,
+            "interrupted_movements": 0,
+            "scope": "bounded input and active-service deltas; global counts come from relational state",
+            "policy": "fifo"
+          },
+          "latency": {
+            "n": 20,
+            "mean_ms": 5.9587229625321925,
+            "p50_ms": 5.889166961424053,
+            "p95_ms": 6.2676313042175025,
+            "min_ms": 5.548667046241462,
+            "max_ms": 6.771250045858324,
+            "samples_ms": [
+              6.171333021484315,
+              5.964790936559439,
+              5.548667046241462,
+              6.201084004715085,
+              6.08595903031528,
+              5.78837504144758,
+              5.812417017295957,
+              5.765542038716376,
+              5.866291932761669,
+              6.002458045259118,
+              6.057000020518899,
+              6.771250045858324,
+              5.86225010920316,
+              5.582249956205487,
+              6.233082967810333,
+              5.912041990086436,
+              5.817290977574885,
+              6.241125054657459,
+              5.748749943450093,
+              5.7425000704824924
+            ]
+          },
+          "trace_sha256": "a5592404c7a8b0e8a9ac2e6943b07b07e7732267b5eb8d97fbab6b04d67d5f5f",
+          "resource_state_bytes": 9365
+        }
+      }
+    ],
+    "memory_measurement": "tracemalloc peak covers this Python benchmark process; not the HTTP server, PostgreSQL, OS cache or production peak"
+  },
+  "api": {
+    "status": "passed",
+    "base_url": "http://127.0.0.1:8088",
+    "database": "postgresql",
+    "workspace_id": "377bfbc4-dd9b-4a12-a999-4336b8752ffb",
+    "run_id": "f18ef99b-f120-443e-90e3-946c75d9f005",
+    "job_id": "6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+    "profile": "la_seven_day",
+    "seed": 17,
+    "expected_records": 119014,
+    "expected_teu": 196371,
+    "seed_job_observed_wall_seconds": 8.8771219169721,
+    "job_polls": [
+      {
+        "elapsed_seconds": 0.008800999959930778,
+        "status": "running",
+        "progress": 10
+      },
+      {
+        "elapsed_seconds": 0.27635891700629145,
+        "status": "running",
+        "progress": 12
+      },
+      {
+        "elapsed_seconds": 0.575068167061545,
+        "status": "running",
+        "progress": 15
+      },
+      {
+        "elapsed_seconds": 0.8419679589569569,
+        "status": "running",
+        "progress": 18
+      },
+      {
+        "elapsed_seconds": 1.1222032500663772,
+        "status": "running",
+        "progress": 21
+      },
+      {
+        "elapsed_seconds": 1.3889208340551704,
+        "status": "running",
+        "progress": 23
+      },
+      {
+        "elapsed_seconds": 1.6552653750404716,
+        "status": "running",
+        "progress": 26
+      },
+      {
+        "elapsed_seconds": 1.9133220419753343,
+        "status": "running",
+        "progress": 28
+      },
+      {
+        "elapsed_seconds": 2.1764754169853404,
+        "status": "running",
+        "progress": 30
+      },
+      {
+        "elapsed_seconds": 2.450326916994527,
+        "status": "running",
+        "progress": 34
+      },
+      {
+        "elapsed_seconds": 2.7133969590067863,
+        "status": "running",
+        "progress": 36
+      },
+      {
+        "elapsed_seconds": 2.9797558339778334,
+        "status": "running",
+        "progress": 38
+      },
+      {
+        "elapsed_seconds": 3.2430077500175685,
+        "status": "running",
+        "progress": 41
+      },
+      {
+        "elapsed_seconds": 3.5086512920679525,
+        "status": "running",
+        "progress": 44
+      },
+      {
+        "elapsed_seconds": 3.780120125040412,
+        "status": "running",
+        "progress": 46
+      },
+      {
+        "elapsed_seconds": 4.057873834040947,
+        "status": "running",
+        "progress": 48
+      },
+      {
+        "elapsed_seconds": 4.337976083974354,
+        "status": "running",
+        "progress": 49
+      },
+      {
+        "elapsed_seconds": 4.677684791968204,
+        "status": "running",
+        "progress": 51
+      },
+      {
+        "elapsed_seconds": 4.944644834031351,
+        "status": "running",
+        "progress": 54
+      },
+      {
+        "elapsed_seconds": 5.213286709040403,
+        "status": "running",
+        "progress": 57
+      },
+      {
+        "elapsed_seconds": 5.493825042038225,
+        "status": "running",
+        "progress": 59
+      },
+      {
+        "elapsed_seconds": 5.750910667004064,
+        "status": "running",
+        "progress": 62
+      },
+      {
+        "elapsed_seconds": 6.012826042016968,
+        "status": "running",
+        "progress": 65
+      },
+      {
+        "elapsed_seconds": 6.283871249994263,
+        "status": "running",
+        "progress": 67
+      },
+      {
+        "elapsed_seconds": 6.544894958962686,
+        "status": "running",
+        "progress": 69
+      },
+      {
+        "elapsed_seconds": 6.8097769590094686,
+        "status": "running",
+        "progress": 72
+      },
+      {
+        "elapsed_seconds": 7.09361474995967,
+        "status": "running",
+        "progress": 75
+      },
+      {
+        "elapsed_seconds": 7.360854375059716,
+        "status": "running",
+        "progress": 77
+      },
+      {
+        "elapsed_seconds": 7.770030084066093,
+        "status": "running",
+        "progress": 80
+      },
+      {
+        "elapsed_seconds": 8.036905499990098,
+        "status": "running",
+        "progress": 82
+      },
+      {
+        "elapsed_seconds": 8.3166540840175,
+        "status": "running",
+        "progress": 85
+      },
+      {
+        "elapsed_seconds": 8.617974334047176,
+        "status": "running",
+        "progress": 88
+      },
+      {
+        "elapsed_seconds": 8.877119667013176,
+        "status": "succeeded",
+        "progress": 100
+      }
+    ],
+    "initial_summary": {
+      "total_records": 119014,
+      "counts_by_status": {
+        "scheduled": 119014
+      },
+      "teu_total": 196371,
+      "completed_movements": 0,
+      "terminals": [
+        {
+          "terminal_id": "terminal-fenix",
+          "name": "FENIX",
+          "total_records": 17002,
+          "teu_total": 28066,
+          "completed_movements": 0,
+          "counts_by_status": {
+            "scheduled": 17002
+          }
+        },
+        {
+          "terminal_id": "terminal-apm",
+          "name": "APM",
+          "total_records": 17002,
+          "teu_total": 28048,
+          "completed_movements": 0,
+          "counts_by_status": {
+            "scheduled": 17002
+          }
+        },
+        {
+          "terminal_id": "terminal-everport",
+          "name": "EVERPORT",
+          "total_records": 17002,
+          "teu_total": 28054,
+          "completed_movements": 0,
+          "counts_by_status": {
+            "scheduled": 17002
+          }
+        },
+        {
+          "terminal_id": "terminal-trapac",
+          "name": "TRAPAC",
+          "total_records": 17002,
+          "teu_total": 28056,
+          "completed_movements": 0,
+          "counts_by_status": {
+            "scheduled": 17002
+          }
+        },
+        {
+          "terminal_id": "terminal-yusen",
+          "name": "YUSEN",
+          "total_records": 17002,
+          "teu_total": 28042,
+          "completed_movements": 0,
+          "counts_by_status": {
+            "scheduled": 17002
+          }
+        },
+        {
+          "terminal_id": "terminal-wbct-cs",
+          "name": "WBCT CS",
+          "total_records": 17002,
+          "teu_total": 28050,
+          "completed_movements": 0,
+          "counts_by_status": {
+            "scheduled": 17002
+          }
+        },
+        {
+          "terminal_id": "terminal-wbct-latil",
+          "name": "WBCT LATIL",
+          "total_records": 17002,
+          "teu_total": 28055,
+          "completed_movements": 0,
+          "counts_by_status": {
+            "scheduled": 17002
+          }
+        }
+      ],
+      "scope": "synthetic_movement_cohort_not_concurrent_inventory",
+      "decision_window_limit_per_terminal": 2000
+    },
+    "final_summary": {
+      "total_records": 119014,
+      "counts_by_status": {
+        "in_service": 59,
+        "queued": 248,
+        "blocked": 4577,
+        "completed": 114130
+      },
+      "teu_total": 196371,
+      "completed_movements": 114130,
+      "terminals": [
+        {
+          "terminal_id": "terminal-fenix",
+          "name": "FENIX",
+          "total_records": 17002,
+          "teu_total": 28066,
+          "completed_movements": 16300,
+          "counts_by_status": {
+            "queued": 37,
+            "blocked": 660,
+            "in_service": 5,
+            "completed": 16300
+          }
+        },
+        {
+          "terminal_id": "terminal-apm",
+          "name": "APM",
+          "total_records": 17002,
+          "teu_total": 28048,
+          "completed_movements": 16290,
+          "counts_by_status": {
+            "queued": 33,
+            "in_service": 12,
+            "completed": 16290,
+            "blocked": 667
+          }
+        },
+        {
+          "terminal_id": "terminal-everport",
+          "name": "EVERPORT",
+          "total_records": 17002,
+          "teu_total": 28054,
+          "completed_movements": 16306,
+          "counts_by_status": {
+            "queued": 34,
+            "blocked": 650,
+            "completed": 16306,
+            "in_service": 12
+          }
+        },
+        {
+          "terminal_id": "terminal-trapac",
+          "name": "TRAPAC",
+          "total_records": 17002,
+          "teu_total": 28056,
+          "completed_movements": 16303,
+          "counts_by_status": {
+            "in_service": 5,
+            "blocked": 663,
+            "queued": 31,
+            "completed": 16303
+          }
+        },
+        {
+          "terminal_id": "terminal-yusen",
+          "name": "YUSEN",
+          "total_records": 17002,
+          "teu_total": 28042,
+          "completed_movements": 16283,
+          "counts_by_status": {
+            "completed": 16283,
+            "blocked": 674,
+            "in_service": 5,
+            "queued": 40
+          }
+        },
+        {
+          "terminal_id": "terminal-wbct-cs",
+          "name": "WBCT CS",
+          "total_records": 17002,
+          "teu_total": 28050,
+          "completed_movements": 16303,
+          "counts_by_status": {
+            "in_service": 9,
+            "queued": 34,
+            "blocked": 656,
+            "completed": 16303
+          }
+        },
+        {
+          "terminal_id": "terminal-wbct-latil",
+          "name": "WBCT LATIL",
+          "total_records": 17002,
+          "teu_total": 28055,
+          "completed_movements": 16345,
+          "counts_by_status": {
+            "in_service": 11,
+            "completed": 16345,
+            "queued": 39,
+            "blocked": 607
+          }
+        }
+      ],
+      "scope": "synthetic_movement_cohort_not_concurrent_inventory",
+      "decision_window_limit_per_terminal": 2000
+    },
+    "final_clock_min": 10080,
+    "audit_batch_events": 85,
+    "paging_samples": [
+      {
+        "case": "first_page",
+        "sample": 0,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 30.67233308684081,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 1,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 29.048750060610473,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 2,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 32.523333095014095,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 3,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 29.916042112745345,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 4,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 43.95779094193131,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 5,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 37.52508293837309,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 6,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.02929202839732,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 7,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 25.932083022780716,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 8,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.95291698910296,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 9,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 27.061374974437058,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 10,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 27.192624984309077,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 11,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 25.938207982107997,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 12,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 29.084208072163165,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 13,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 33.531625056639314,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 14,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 32.7974169049412,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 15,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.819500024430454,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 16,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 25.182917015627027,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 17,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.41012507956475,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 18,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 27.747541898861527,
+        "response_bytes": 56491
+      },
+      {
+        "case": "first_page",
+        "sample": 19,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.699041947722435,
+        "response_bytes": 56491
+      },
+      {
+        "case": "middle_page",
+        "sample": 0,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 186.86987494584173,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 1,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 134.76783293299377,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 2,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 142.1572919934988,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 3,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 139.4835829269141,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 4,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 136.24841696582735,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 5,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 131.6099159885198,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 6,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 154.2868330143392,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 7,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 148.56754196807742,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 8,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 130.6686248863116,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 9,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 135.21862507332116,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 10,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 131.80700002703816,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 11,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 134.25099989399314,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 12,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 165.74329207651317,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 13,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 133.58254206832498,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 14,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 136.44704199396074,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 15,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 135.94258297234774,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 16,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 134.81433398555964,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 17,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 161.42866690643132,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 18,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 154.7237919876352,
+        "response_bytes": 56980
+      },
+      {
+        "case": "middle_page",
+        "sample": 19,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 134.5339580439031,
+        "response_bytes": 56980
+      },
+      {
+        "case": "terminal_page",
+        "sample": 0,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.913541946560144,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 1,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 20.682959002442658,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 2,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 22.701999987475574,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 3,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 20.467250025831163,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 4,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 57.017083978280425,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 5,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.551833022385836,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 6,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 20.71433304809034,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 7,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 19.908334012143314,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 8,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.841540932655334,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 9,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 22.622416960075498,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 10,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.104958024807274,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 11,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.641166997142136,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 12,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 19.9252919992432,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 13,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.77354192826897,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 14,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.494333050213754,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 15,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.136792027391493,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 16,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 22.11449993774295,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 17,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 20.623209071345627,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 18,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 22.197459009476006,
+        "response_bytes": 56499
+      },
+      {
+        "case": "terminal_page",
+        "sample": 19,
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.698500029742718,
+        "response_bytes": 56499
+      }
+    ],
+    "paging_latency_by_case": {
+      "first_page": {
+        "n": 20,
+        "mean_ms": 29.551110410830006,
+        "p50_ms": 27.470083441585302,
+        "p95_ms": 37.84671833855101,
+        "min_ms": 25.182917015627027,
+        "max_ms": 43.95779094193131,
+        "samples_ms": [
+          30.67233308684081,
+          29.048750060610473,
+          32.523333095014095,
+          29.916042112745345,
+          43.95779094193131,
+          37.52508293837309,
+          26.02929202839732,
+          25.932083022780716,
+          26.95291698910296,
+          27.061374974437058,
+          27.192624984309077,
+          25.938207982107997,
+          29.084208072163165,
+          33.531625056639314,
+          32.7974169049412,
+          26.819500024430454,
+          25.182917015627027,
+          26.41012507956475,
+          27.747541898861527,
+          26.699041947722435
+        ]
+      },
+      "middle_page": {
+        "n": 20,
+        "mean_ms": 143.1576375325676,
+        "p50_ms": 136.09549996908754,
+        "p95_ms": 166.79962121997963,
+        "min_ms": 130.6686248863116,
+        "max_ms": 186.86987494584173,
+        "samples_ms": [
+          186.86987494584173,
+          134.76783293299377,
+          142.1572919934988,
+          139.4835829269141,
+          136.24841696582735,
+          131.6099159885198,
+          154.2868330143392,
+          148.56754196807742,
+          130.6686248863116,
+          135.21862507332116,
+          131.80700002703816,
+          134.25099989399314,
+          165.74329207651317,
+          133.58254206832498,
+          136.44704199396074,
+          135.94258297234774,
+          134.81433398555964,
+          161.42866690643132,
+          154.7237919876352,
+          134.5339580439031
+        ]
+      },
+      "terminal_page": {
+        "n": 20,
+        "mean_ms": 23.15655224956572,
+        "p50_ms": 21.596500009763986,
+        "p95_ms": 24.41775418701584,
+        "min_ms": 19.908334012143314,
+        "max_ms": 57.017083978280425,
+        "samples_ms": [
+          21.913541946560144,
+          20.682959002442658,
+          22.701999987475574,
+          20.467250025831163,
+          57.017083978280425,
+          21.551833022385836,
+          20.71433304809034,
+          19.908334012143314,
+          21.841540932655334,
+          22.622416960075498,
+          21.104958024807274,
+          21.641166997142136,
+          19.9252919992432,
+          21.77354192826897,
+          21.494333050213754,
+          21.136792027391493,
+          22.11449993774295,
+          20.623209071345627,
+          22.197459009476006,
+          21.698500029742718
+        ]
+      }
+    },
+    "advance_samples": [
+      {
+        "from_min": 0,
+        "to_min": 120,
+        "changed_records": 1432,
+        "counts_by_status": {
+          "queued": 254,
+          "completed": 1061,
+          "blocked": 56,
+          "in_service": 61,
+          "scheduled": 117582
+        },
+        "completed_movements": 1061,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 245.55262504145503,
+        "response_bytes": 4355
+      },
+      {
+        "from_min": 120,
+        "to_min": 240,
+        "changed_records": 1788,
+        "counts_by_status": {
+          "queued": 268,
+          "completed": 2419,
+          "blocked": 110,
+          "in_service": 52,
+          "scheduled": 116165
+        },
+        "completed_movements": 2419,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 244.58004103507847,
+        "response_bytes": 4359
+      },
+      {
+        "from_min": 240,
+        "to_min": 360,
+        "changed_records": 1844,
+        "counts_by_status": {
+          "queued": 241,
+          "completed": 3804,
+          "blocked": 167,
+          "in_service": 51,
+          "scheduled": 114751
+        },
+        "completed_movements": 3804,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 246.67741602752358,
+        "response_bytes": 4358
+      },
+      {
+        "from_min": 360,
+        "to_min": 480,
+        "changed_records": 1874,
+        "counts_by_status": {
+          "queued": 253,
+          "completed": 5146,
+          "blocked": 227,
+          "in_service": 52,
+          "scheduled": 113336
+        },
+        "completed_movements": 5146,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 341.46887506358325,
+        "response_bytes": 4359
+      },
+      {
+        "from_min": 480,
+        "to_min": 600,
+        "changed_records": 1950,
+        "counts_by_status": {
+          "queued": 259,
+          "completed": 6497,
+          "blocked": 286,
+          "in_service": 54,
+          "scheduled": 111918
+        },
+        "completed_movements": 6497,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 280.1253339275718,
+        "response_bytes": 4359
+      },
+      {
+        "from_min": 600,
+        "to_min": 720,
+        "changed_records": 2022,
+        "counts_by_status": {
+          "queued": 242,
+          "completed": 7863,
+          "blocked": 352,
+          "in_service": 62,
+          "scheduled": 110495
+        },
+        "completed_movements": 7863,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 266.85995794832706,
+        "response_bytes": 4376
+      },
+      {
+        "from_min": 720,
+        "to_min": 840,
+        "changed_records": 2073,
+        "counts_by_status": {
+          "queued": 275,
+          "completed": 9202,
+          "blocked": 401,
+          "in_service": 58,
+          "scheduled": 109078
+        },
+        "completed_movements": 9202,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 310.3124580811709,
+        "response_bytes": 4373
+      },
+      {
+        "from_min": 840,
+        "to_min": 960,
+        "changed_records": 2145,
+        "counts_by_status": {
+          "queued": 246,
+          "completed": 10580,
+          "blocked": 461,
+          "in_service": 60,
+          "scheduled": 107667
+        },
+        "completed_movements": 10580,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 338.6897910386324,
+        "response_bytes": 4377
+      },
+      {
+        "from_min": 960,
+        "to_min": 1080,
+        "changed_records": 2191,
+        "counts_by_status": {
+          "queued": 258,
+          "completed": 11934,
+          "blocked": 515,
+          "in_service": 64,
+          "scheduled": 106243
+        },
+        "completed_movements": 11934,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 306.7562080686912,
+        "response_bytes": 4379
+      },
+      {
+        "from_min": 1080,
+        "to_min": 1200,
+        "changed_records": 2245,
+        "counts_by_status": {
+          "queued": 256,
+          "completed": 13307,
+          "blocked": 562,
+          "in_service": 54,
+          "scheduled": 104835
+        },
+        "completed_movements": 13307,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 279.4131670380011,
+        "response_bytes": 4379
+      },
+      {
+        "from_min": 1200,
+        "to_min": 1320,
+        "changed_records": 2292,
+        "counts_by_status": {
+          "queued": 254,
+          "completed": 14671,
+          "blocked": 622,
+          "in_service": 52,
+          "scheduled": 103415
+        },
+        "completed_movements": 14671,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 278.2125829253346,
+        "response_bytes": 4378
+      },
+      {
+        "from_min": 1320,
+        "to_min": 1440,
+        "changed_records": 2348,
+        "counts_by_status": {
+          "queued": 256,
+          "completed": 16027,
+          "blocked": 670,
+          "in_service": 66,
+          "scheduled": 101995
+        },
+        "completed_movements": 16027,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 362.98120906576514,
+        "response_bytes": 4383
+      },
+      {
+        "from_min": 1440,
+        "to_min": 1560,
+        "changed_records": 2404,
+        "counts_by_status": {
+          "queued": 257,
+          "completed": 17401,
+          "blocked": 724,
+          "in_service": 49,
+          "scheduled": 100583
+        },
+        "completed_movements": 17401,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 293.9725829055533,
+        "response_bytes": 4384
+      },
+      {
+        "from_min": 1560,
+        "to_min": 1680,
+        "changed_records": 2449,
+        "counts_by_status": {
+          "queued": 261,
+          "blocked": 789,
+          "scheduled": 99164,
+          "in_service": 58,
+          "completed": 18742
+        },
+        "completed_movements": 18742,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 316.82262499816716,
+        "response_bytes": 4387
+      },
+      {
+        "from_min": 1680,
+        "to_min": 1800,
+        "changed_records": 2513,
+        "counts_by_status": {
+          "queued": 231,
+          "blocked": 837,
+          "scheduled": 97759,
+          "in_service": 55,
+          "completed": 20132
+        },
+        "completed_movements": 20132,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 299.42854098044336,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 1800,
+        "to_min": 1920,
+        "changed_records": 2549,
+        "counts_by_status": {
+          "queued": 267,
+          "blocked": 878,
+          "scheduled": 96333,
+          "in_service": 62,
+          "completed": 21474
+        },
+        "completed_movements": 21474,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 309.64566697366536,
+        "response_bytes": 4387
+      },
+      {
+        "from_min": 1920,
+        "to_min": 2040,
+        "changed_records": 2631,
+        "counts_by_status": {
+          "queued": 255,
+          "blocked": 938,
+          "scheduled": 94909,
+          "in_service": 60,
+          "completed": 22852
+        },
+        "completed_movements": 22852,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 354.14737497922033,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 2040,
+        "to_min": 2160,
+        "changed_records": 2659,
+        "counts_by_status": {
+          "queued": 252,
+          "blocked": 997,
+          "scheduled": 93503,
+          "in_service": 57,
+          "completed": 24205
+        },
+        "completed_movements": 24205,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 394.79762502014637,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 2160,
+        "to_min": 2280,
+        "changed_records": 2732,
+        "counts_by_status": {
+          "queued": 261,
+          "blocked": 1051,
+          "scheduled": 92077,
+          "in_service": 47,
+          "completed": 25578
+        },
+        "completed_movements": 25578,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 366.47095798980445,
+        "response_bytes": 4385
+      },
+      {
+        "from_min": 2280,
+        "to_min": 2400,
+        "changed_records": 2770,
+        "counts_by_status": {
+          "queued": 265,
+          "blocked": 1107,
+          "scheduled": 90666,
+          "in_service": 48,
+          "completed": 26928
+        },
+        "completed_movements": 26928,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 352.6187080424279,
+        "response_bytes": 4385
+      },
+      {
+        "from_min": 2400,
+        "to_min": 2520,
+        "changed_records": 2840,
+        "counts_by_status": {
+          "queued": 252,
+          "blocked": 1170,
+          "scheduled": 89246,
+          "in_service": 62,
+          "completed": 28284
+        },
+        "completed_movements": 28284,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 351.12662496976554,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 2520,
+        "to_min": 2640,
+        "changed_records": 2904,
+        "counts_by_status": {
+          "queued": 264,
+          "blocked": 1219,
+          "scheduled": 87826,
+          "in_service": 50,
+          "completed": 29655
+        },
+        "completed_movements": 29655,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 382.2877500206232,
+        "response_bytes": 4384
+      },
+      {
+        "from_min": 2640,
+        "to_min": 2760,
+        "changed_records": 2949,
+        "counts_by_status": {
+          "queued": 267,
+          "blocked": 1280,
+          "scheduled": 86410,
+          "in_service": 53,
+          "completed": 31004
+        },
+        "completed_movements": 31004,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 446.06645905878395,
+        "response_bytes": 4385
+      },
+      {
+        "from_min": 2760,
+        "to_min": 2880,
+        "changed_records": 3021,
+        "counts_by_status": {
+          "queued": 280,
+          "blocked": 1334,
+          "scheduled": 84989,
+          "in_service": 55,
+          "completed": 32356
+        },
+        "completed_movements": 32356,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 443.27620894182473,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 2880,
+        "to_min": 3000,
+        "changed_records": 3069,
+        "counts_by_status": {
+          "queued": 247,
+          "blocked": 1389,
+          "scheduled": 83589,
+          "in_service": 51,
+          "completed": 33738
+        },
+        "completed_movements": 33738,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 388.1355411140248,
+        "response_bytes": 4385
+      },
+      {
+        "from_min": 3000,
+        "to_min": 3120,
+        "changed_records": 3123,
+        "counts_by_status": {
+          "queued": 274,
+          "blocked": 1443,
+          "scheduled": 82153,
+          "in_service": 55,
+          "completed": 35089
+        },
+        "completed_movements": 35089,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 461.76724997349083,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 3120,
+        "to_min": 3240,
+        "changed_records": 3186,
+        "counts_by_status": {
+          "queued": 265,
+          "blocked": 1500,
+          "scheduled": 80739,
+          "in_service": 60,
+          "completed": 36450
+        },
+        "completed_movements": 36450,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 425.5673330044374,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 3240,
+        "to_min": 3360,
+        "changed_records": 3232,
+        "counts_by_status": {
+          "queued": 268,
+          "blocked": 1562,
+          "scheduled": 79332,
+          "in_service": 60,
+          "completed": 37792
+        },
+        "completed_movements": 37792,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 430.26504199951887,
+        "response_bytes": 4388
+      },
+      {
+        "from_min": 3360,
+        "to_min": 3480,
+        "changed_records": 3304,
+        "counts_by_status": {
+          "queued": 241,
+          "blocked": 1615,
+          "scheduled": 77918,
+          "in_service": 56,
+          "completed": 39184
+        },
+        "completed_movements": 39184,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 443.21916706394404,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 3480,
+        "to_min": 3600,
+        "changed_records": 3339,
+        "counts_by_status": {
+          "queued": 256,
+          "blocked": 1671,
+          "scheduled": 76491,
+          "in_service": 57,
+          "completed": 40539
+        },
+        "completed_movements": 40539,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 414.2697909846902,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 3600,
+        "to_min": 3720,
+        "changed_records": 3395,
+        "counts_by_status": {
+          "queued": 242,
+          "blocked": 1736,
+          "scheduled": 75080,
+          "in_service": 51,
+          "completed": 41905
+        },
+        "completed_movements": 41905,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 472.0212909160182,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 3720,
+        "to_min": 3840,
+        "changed_records": 3446,
+        "counts_by_status": {
+          "queued": 253,
+          "blocked": 1792,
+          "scheduled": 73663,
+          "in_service": 52,
+          "completed": 43254
+        },
+        "completed_movements": 43254,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 430.54600001778454,
+        "response_bytes": 4385
+      },
+      {
+        "from_min": 3840,
+        "to_min": 3960,
+        "changed_records": 3512,
+        "counts_by_status": {
+          "queued": 240,
+          "blocked": 1851,
+          "scheduled": 72248,
+          "in_service": 48,
+          "completed": 44627
+        },
+        "completed_movements": 44627,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 522.0510420622304,
+        "response_bytes": 4385
+      },
+      {
+        "from_min": 3960,
+        "to_min": 4080,
+        "changed_records": 3554,
+        "counts_by_status": {
+          "queued": 242,
+          "blocked": 1906,
+          "scheduled": 70833,
+          "in_service": 55,
+          "completed": 45978
+        },
+        "completed_movements": 45978,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 413.2212499389425,
+        "response_bytes": 4385
+      },
+      {
+        "from_min": 4080,
+        "to_min": 4200,
+        "changed_records": 3618,
+        "counts_by_status": {
+          "queued": 261,
+          "blocked": 1972,
+          "scheduled": 69418,
+          "in_service": 54,
+          "completed": 47309
+        },
+        "completed_movements": 47309,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 456.95537503343076,
+        "response_bytes": 4377
+      },
+      {
+        "from_min": 4200,
+        "to_min": 4320,
+        "changed_records": 3714,
+        "counts_by_status": {
+          "queued": 252,
+          "blocked": 2015,
+          "scheduled": 67991,
+          "in_service": 54,
+          "completed": 48702
+        },
+        "completed_movements": 48702,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 465.74691601563245,
+        "response_bytes": 4379
+      },
+      {
+        "from_min": 4320,
+        "to_min": 4440,
+        "changed_records": 3736,
+        "counts_by_status": {
+          "queued": 259,
+          "blocked": 2065,
+          "scheduled": 66576,
+          "in_service": 60,
+          "completed": 50054
+        },
+        "completed_movements": 50054,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 461.47391700651497,
+        "response_bytes": 4379
+      },
+      {
+        "from_min": 4440,
+        "to_min": 4560,
+        "changed_records": 3796,
+        "counts_by_status": {
+          "queued": 265,
+          "blocked": 2115,
+          "scheduled": 65164,
+          "in_service": 41,
+          "completed": 51429
+        },
+        "completed_movements": 51429,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 471.62204096093774,
+        "response_bytes": 4378
+      },
+      {
+        "from_min": 4560,
+        "to_min": 4680,
+        "changed_records": 3834,
+        "counts_by_status": {
+          "queued": 259,
+          "blocked": 2170,
+          "scheduled": 63751,
+          "in_service": 60,
+          "completed": 52774
+        },
+        "completed_movements": 52774,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 523.7689580535516,
+        "response_bytes": 4379
+      },
+      {
+        "from_min": 4680,
+        "to_min": 4800,
+        "changed_records": 3914,
+        "counts_by_status": {
+          "queued": 273,
+          "blocked": 2227,
+          "scheduled": 62326,
+          "in_service": 59,
+          "completed": 54129
+        },
+        "completed_movements": 54129,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 464.90741602610797,
+        "response_bytes": 4379
+      },
+      {
+        "from_min": 4800,
+        "to_min": 4920,
+        "changed_records": 3973,
+        "counts_by_status": {
+          "queued": 265,
+          "blocked": 2286,
+          "scheduled": 60912,
+          "in_service": 55,
+          "completed": 55496
+        },
+        "completed_movements": 55496,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 471.2747499579564,
+        "response_bytes": 4379
+      },
+      {
+        "from_min": 4920,
+        "to_min": 5040,
+        "changed_records": 4024,
+        "counts_by_status": {
+          "queued": 244,
+          "blocked": 2330,
+          "scheduled": 59494,
+          "in_service": 58,
+          "completed": 56888
+        },
+        "completed_movements": 56888,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 521.6834580060095,
+        "response_bytes": 4378
+      },
+      {
+        "from_min": 5040,
+        "to_min": 5160,
+        "changed_records": 4057,
+        "counts_by_status": {
+          "queued": 258,
+          "blocked": 2383,
+          "scheduled": 58069,
+          "in_service": 47,
+          "completed": 58257
+        },
+        "completed_movements": 58257,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 576.8395418999717,
+        "response_bytes": 4377
+      },
+      {
+        "from_min": 5160,
+        "to_min": 5280,
+        "changed_records": 4095,
+        "counts_by_status": {
+          "queued": 260,
+          "blocked": 2439,
+          "scheduled": 56662,
+          "in_service": 47,
+          "completed": 59606
+        },
+        "completed_movements": 59606,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 538.0718329688534,
+        "response_bytes": 4378
+      },
+      {
+        "from_min": 5280,
+        "to_min": 5400,
+        "changed_records": 4165,
+        "counts_by_status": {
+          "queued": 270,
+          "blocked": 2498,
+          "scheduled": 55243,
+          "in_service": 60,
+          "completed": 60943
+        },
+        "completed_movements": 60943,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 746.1374999256805,
+        "response_bytes": 4378
+      },
+      {
+        "from_min": 5400,
+        "to_min": 5520,
+        "changed_records": 4241,
+        "counts_by_status": {
+          "queued": 263,
+          "blocked": 2551,
+          "scheduled": 53830,
+          "in_service": 57,
+          "completed": 62313
+        },
+        "completed_movements": 62313,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 549.7592919273302,
+        "response_bytes": 4380
+      },
+      {
+        "from_min": 5520,
+        "to_min": 5640,
+        "changed_records": 4284,
+        "counts_by_status": {
+          "queued": 257,
+          "blocked": 2594,
+          "scheduled": 52417,
+          "in_service": 45,
+          "completed": 63701
+        },
+        "completed_movements": 63701,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 484.596083057113,
+        "response_bytes": 4377
+      },
+      {
+        "from_min": 5640,
+        "to_min": 5760,
+        "changed_records": 4327,
+        "counts_by_status": {
+          "queued": 275,
+          "blocked": 2640,
+          "scheduled": 50986,
+          "in_service": 57,
+          "completed": 65056
+        },
+        "completed_movements": 65056,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 523.7007499672472,
+        "response_bytes": 4379
+      },
+      {
+        "from_min": 5760,
+        "to_min": 5880,
+        "changed_records": 4381,
+        "counts_by_status": {
+          "queued": 248,
+          "blocked": 2712,
+          "scheduled": 49577,
+          "in_service": 48,
+          "completed": 66429
+        },
+        "completed_movements": 66429,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 551.959834061563,
+        "response_bytes": 4378
+      },
+      {
+        "from_min": 5880,
+        "to_min": 6000,
+        "changed_records": 4429,
+        "counts_by_status": {
+          "queued": 259,
+          "blocked": 2754,
+          "scheduled": 48156,
+          "in_service": 48,
+          "completed": 67797
+        },
+        "completed_movements": 67797,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 500.2651250688359,
+        "response_bytes": 4378
+      },
+      {
+        "from_min": 6000,
+        "to_min": 6120,
+        "changed_records": 4475,
+        "counts_by_status": {
+          "queued": 271,
+          "blocked": 2816,
+          "scheduled": 46742,
+          "in_service": 67,
+          "completed": 69118
+        },
+        "completed_movements": 69118,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 537.6936249667779,
+        "response_bytes": 4382
+      },
+      {
+        "from_min": 6120,
+        "to_min": 6240,
+        "changed_records": 4568,
+        "counts_by_status": {
+          "queued": 260,
+          "blocked": 2869,
+          "scheduled": 45328,
+          "in_service": 41,
+          "completed": 70516
+        },
+        "completed_movements": 70516,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 564.9513750104234,
+        "response_bytes": 4392
+      },
+      {
+        "from_min": 6240,
+        "to_min": 6360,
+        "changed_records": 4588,
+        "counts_by_status": {
+          "queued": 249,
+          "blocked": 2915,
+          "scheduled": 43910,
+          "in_service": 63,
+          "completed": 71877
+        },
+        "completed_movements": 71877,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 582.1794170187786,
+        "response_bytes": 4394
+      },
+      {
+        "from_min": 6360,
+        "to_min": 6480,
+        "changed_records": 4648,
+        "counts_by_status": {
+          "in_service": 49,
+          "scheduled": 42489,
+          "queued": 257,
+          "blocked": 2977,
+          "completed": 73242
+        },
+        "completed_movements": 73242,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 550.0287079485133,
+        "response_bytes": 4391
+      },
+      {
+        "from_min": 6480,
+        "to_min": 6600,
+        "changed_records": 4694,
+        "counts_by_status": {
+          "in_service": 49,
+          "scheduled": 41078,
+          "queued": 270,
+          "blocked": 3021,
+          "completed": 74596
+        },
+        "completed_movements": 74596,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 573.9528329577297,
+        "response_bytes": 4392
+      },
+      {
+        "from_min": 6600,
+        "to_min": 6720,
+        "changed_records": 4760,
+        "counts_by_status": {
+          "in_service": 63,
+          "scheduled": 39658,
+          "queued": 250,
+          "blocked": 3075,
+          "completed": 75968
+        },
+        "completed_movements": 75968,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 564.6863750880584,
+        "response_bytes": 4394
+      },
+      {
+        "from_min": 6720,
+        "to_min": 6840,
+        "changed_records": 4805,
+        "counts_by_status": {
+          "in_service": 56,
+          "scheduled": 38241,
+          "queued": 255,
+          "blocked": 3131,
+          "completed": 77331
+        },
+        "completed_movements": 77331,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 558.0055840546265,
+        "response_bytes": 4392
+      },
+      {
+        "from_min": 6840,
+        "to_min": 6960,
+        "changed_records": 4867,
+        "counts_by_status": {
+          "in_service": 60,
+          "scheduled": 36816,
+          "queued": 264,
+          "blocked": 3188,
+          "completed": 78686
+        },
+        "completed_movements": 78686,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 569.1435419721529,
+        "response_bytes": 4395
+      },
+      {
+        "from_min": 6960,
+        "to_min": 7080,
+        "changed_records": 4920,
+        "counts_by_status": {
+          "in_service": 61,
+          "scheduled": 35408,
+          "queued": 261,
+          "blocked": 3234,
+          "completed": 80050
+        },
+        "completed_movements": 80050,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 603.0262080021203,
+        "response_bytes": 4393
+      },
+      {
+        "from_min": 7080,
+        "to_min": 7200,
+        "changed_records": 4972,
+        "counts_by_status": {
+          "in_service": 46,
+          "scheduled": 33992,
+          "queued": 269,
+          "blocked": 3294,
+          "completed": 81413
+        },
+        "completed_movements": 81413,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 715.9685420338064,
+        "response_bytes": 4391
+      },
+      {
+        "from_min": 7200,
+        "to_min": 7320,
+        "changed_records": 5029,
+        "counts_by_status": {
+          "in_service": 64,
+          "scheduled": 32572,
+          "queued": 255,
+          "blocked": 3346,
+          "completed": 82777
+        },
+        "completed_movements": 82777,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 739.8857499938458,
+        "response_bytes": 4394
+      },
+      {
+        "from_min": 7320,
+        "to_min": 7440,
+        "changed_records": 5088,
+        "counts_by_status": {
+          "in_service": 53,
+          "scheduled": 31149,
+          "queued": 273,
+          "blocked": 3399,
+          "completed": 84140
+        },
+        "completed_movements": 84140,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 614.2445000587031,
+        "response_bytes": 4393
+      },
+      {
+        "from_min": 7440,
+        "to_min": 7560,
+        "changed_records": 5133,
+        "counts_by_status": {
+          "in_service": 55,
+          "scheduled": 29741,
+          "queued": 263,
+          "blocked": 3440,
+          "completed": 85515
+        },
+        "completed_movements": 85515,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 634.9427079549059,
+        "response_bytes": 4392
+      },
+      {
+        "from_min": 7560,
+        "to_min": 7680,
+        "changed_records": 5175,
+        "counts_by_status": {
+          "in_service": 42,
+          "scheduled": 28324,
+          "queued": 252,
+          "blocked": 3482,
+          "completed": 86914
+        },
+        "completed_movements": 86914,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 674.032291979529,
+        "response_bytes": 4377
+      },
+      {
+        "from_min": 7680,
+        "to_min": 7800,
+        "changed_records": 5189,
+        "counts_by_status": {
+          "in_service": 54,
+          "scheduled": 26911,
+          "queued": 237,
+          "blocked": 3538,
+          "completed": 88274
+        },
+        "completed_movements": 88274,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 585.2991249412298,
+        "response_bytes": 4392
+      },
+      {
+        "from_min": 7800,
+        "to_min": 7920,
+        "changed_records": 5244,
+        "counts_by_status": {
+          "in_service": 59,
+          "scheduled": 25496,
+          "queued": 276,
+          "blocked": 3596,
+          "completed": 89587
+        },
+        "completed_movements": 89587,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 609.1187910642475,
+        "response_bytes": 4395
+      },
+      {
+        "from_min": 7920,
+        "to_min": 8040,
+        "changed_records": 5353,
+        "counts_by_status": {
+          "in_service": 53,
+          "scheduled": 24074,
+          "queued": 242,
+          "blocked": 3660,
+          "completed": 90985
+        },
+        "completed_movements": 90985,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 727.8927500592545,
+        "response_bytes": 4393
+      },
+      {
+        "from_min": 8040,
+        "to_min": 8160,
+        "changed_records": 5370,
+        "counts_by_status": {
+          "in_service": 55,
+          "scheduled": 22659,
+          "queued": 268,
+          "blocked": 3700,
+          "completed": 92332
+        },
+        "completed_movements": 92332,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 620.8672500215471,
+        "response_bytes": 4393
+      },
+      {
+        "from_min": 8160,
+        "to_min": 8280,
+        "changed_records": 5442,
+        "counts_by_status": {
+          "in_service": 56,
+          "scheduled": 21240,
+          "queued": 269,
+          "blocked": 3754,
+          "completed": 93695
+        },
+        "completed_movements": 93695,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 677.6071669301018,
+        "response_bytes": 4395
+      },
+      {
+        "from_min": 8280,
+        "to_min": 8400,
+        "changed_records": 5502,
+        "counts_by_status": {
+          "queued": 246,
+          "blocked": 3804,
+          "scheduled": 19817,
+          "in_service": 54,
+          "completed": 95093
+        },
+        "completed_movements": 95093,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 644.0059579908848,
+        "response_bytes": 4393
+      },
+      {
+        "from_min": 8400,
+        "to_min": 8520,
+        "changed_records": 5517,
+        "counts_by_status": {
+          "in_service": 56,
+          "scheduled": 18404,
+          "queued": 254,
+          "blocked": 3857,
+          "completed": 96443
+        },
+        "completed_movements": 96443,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 620.8699579583481,
+        "response_bytes": 4393
+      },
+      {
+        "from_min": 8520,
+        "to_min": 8640,
+        "changed_records": 5587,
+        "counts_by_status": {
+          "in_service": 52,
+          "scheduled": 16984,
+          "queued": 257,
+          "blocked": 3913,
+          "completed": 97808
+        },
+        "completed_movements": 97808,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 682.7711249934509,
+        "response_bytes": 4392
+      },
+      {
+        "from_min": 8640,
+        "to_min": 8760,
+        "changed_records": 5638,
+        "counts_by_status": {
+          "queued": 255,
+          "blocked": 3963,
+          "scheduled": 15568,
+          "in_service": 50,
+          "completed": 99178
+        },
+        "completed_movements": 99178,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 642.9552079644054,
+        "response_bytes": 4393
+      },
+      {
+        "from_min": 8760,
+        "to_min": 8880,
+        "changed_records": 5680,
+        "counts_by_status": {
+          "in_service": 40,
+          "scheduled": 14156,
+          "queued": 262,
+          "blocked": 4026,
+          "completed": 100530
+        },
+        "completed_movements": 100530,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 627.121708006598,
+        "response_bytes": 4394
+      },
+      {
+        "from_min": 8880,
+        "to_min": 9000,
+        "changed_records": 5745,
+        "counts_by_status": {
+          "in_service": 48,
+          "scheduled": 12739,
+          "queued": 262,
+          "blocked": 4086,
+          "completed": 101879
+        },
+        "completed_movements": 101879,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 677.8037920594215,
+        "response_bytes": 4394
+      },
+      {
+        "from_min": 9000,
+        "to_min": 9120,
+        "changed_records": 5806,
+        "counts_by_status": {
+          "in_service": 60,
+          "scheduled": 11329,
+          "queued": 245,
+          "blocked": 4139,
+          "completed": 103241
+        },
+        "completed_movements": 103241,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 717.3957079648972,
+        "response_bytes": 4395
+      },
+      {
+        "from_min": 9120,
+        "to_min": 9240,
+        "changed_records": 5864,
+        "counts_by_status": {
+          "in_service": 45,
+          "scheduled": 9909,
+          "queued": 258,
+          "blocked": 4187,
+          "completed": 104615
+        },
+        "completed_movements": 104615,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 683.544083032757,
+        "response_bytes": 4392
+      },
+      {
+        "from_min": 9240,
+        "to_min": 9360,
+        "changed_records": 5906,
+        "counts_by_status": {
+          "in_service": 44,
+          "scheduled": 8493,
+          "queued": 265,
+          "blocked": 4253,
+          "completed": 105959
+        },
+        "completed_movements": 105959,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 703.6527920281515,
+        "response_bytes": 4392
+      },
+      {
+        "from_min": 9360,
+        "to_min": 9480,
+        "changed_records": 5981,
+        "counts_by_status": {
+          "in_service": 49,
+          "scheduled": 7074,
+          "queued": 255,
+          "blocked": 4313,
+          "completed": 107323
+        },
+        "completed_movements": 107323,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 727.5849999859929,
+        "response_bytes": 4393
+      },
+      {
+        "from_min": 9480,
+        "to_min": 9600,
+        "changed_records": 6036,
+        "counts_by_status": {
+          "queued": 266,
+          "blocked": 4375,
+          "scheduled": 5655,
+          "in_service": 57,
+          "completed": 108661
+        },
+        "completed_movements": 108661,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 727.3274160688743,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 9600,
+        "to_min": 9720,
+        "changed_records": 6112,
+        "counts_by_status": {
+          "in_service": 50,
+          "scheduled": 4241,
+          "queued": 263,
+          "blocked": 4418,
+          "completed": 110042
+        },
+        "completed_movements": 110042,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 741.9770420528948,
+        "response_bytes": 4385
+      },
+      {
+        "from_min": 9720,
+        "to_min": 9840,
+        "changed_records": 6153,
+        "counts_by_status": {
+          "in_service": 53,
+          "scheduled": 2819,
+          "queued": 270,
+          "blocked": 4470,
+          "completed": 111402
+        },
+        "completed_movements": 111402,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 859.3862919369712,
+        "response_bytes": 4386
+      },
+      {
+        "from_min": 9840,
+        "to_min": 9960,
+        "changed_records": 6210,
+        "counts_by_status": {
+          "in_service": 51,
+          "scheduled": 1402,
+          "queued": 260,
+          "blocked": 4529,
+          "completed": 112772
+        },
+        "completed_movements": 112772,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 756.3577080145478,
+        "response_bytes": 4387
+      },
+      {
+        "from_min": 9960,
+        "to_min": 10080,
+        "changed_records": 6242,
+        "counts_by_status": {
+          "in_service": 59,
+          "queued": 248,
+          "blocked": 4577,
+          "completed": 114130
+        },
+        "completed_movements": 114130,
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 748.4124579932541,
+        "response_bytes": 4260
+      }
+    ],
+    "advance_latency": {
+      "n": 84,
+      "mean_ms": 509.36678663406167,
+      "p50_ms": 521.8672500341199,
+      "p95_ms": 741.6633482440375,
+      "min_ms": 244.58004103507847,
+      "max_ms": 859.3862919369712,
+      "samples_ms": [
+        245.55262504145503,
+        244.58004103507847,
+        246.67741602752358,
+        341.46887506358325,
+        280.1253339275718,
+        266.85995794832706,
+        310.3124580811709,
+        338.6897910386324,
+        306.7562080686912,
+        279.4131670380011,
+        278.2125829253346,
+        362.98120906576514,
+        293.9725829055533,
+        316.82262499816716,
+        299.42854098044336,
+        309.64566697366536,
+        354.14737497922033,
+        394.79762502014637,
+        366.47095798980445,
+        352.6187080424279,
+        351.12662496976554,
+        382.2877500206232,
+        446.06645905878395,
+        443.27620894182473,
+        388.1355411140248,
+        461.76724997349083,
+        425.5673330044374,
+        430.26504199951887,
+        443.21916706394404,
+        414.2697909846902,
+        472.0212909160182,
+        430.54600001778454,
+        522.0510420622304,
+        413.2212499389425,
+        456.95537503343076,
+        465.74691601563245,
+        461.47391700651497,
+        471.62204096093774,
+        523.7689580535516,
+        464.90741602610797,
+        471.2747499579564,
+        521.6834580060095,
+        576.8395418999717,
+        538.0718329688534,
+        746.1374999256805,
+        549.7592919273302,
+        484.596083057113,
+        523.7007499672472,
+        551.959834061563,
+        500.2651250688359,
+        537.6936249667779,
+        564.9513750104234,
+        582.1794170187786,
+        550.0287079485133,
+        573.9528329577297,
+        564.6863750880584,
+        558.0055840546265,
+        569.1435419721529,
+        603.0262080021203,
+        715.9685420338064,
+        739.8857499938458,
+        614.2445000587031,
+        634.9427079549059,
+        674.032291979529,
+        585.2991249412298,
+        609.1187910642475,
+        727.8927500592545,
+        620.8672500215471,
+        677.6071669301018,
+        644.0059579908848,
+        620.8699579583481,
+        682.7711249934509,
+        642.9552079644054,
+        627.121708006598,
+        677.8037920594215,
+        717.3957079648972,
+        683.544083032757,
+        703.6527920281515,
+        727.5849999859929,
+        727.3274160688743,
+        741.9770420528948,
+        859.3862919369712,
+        756.3577080145478,
+        748.4124579932541
+      ]
+    },
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/health/ready",
+        "label": "readiness",
+        "status": 200,
+        "latency_ms": 7.938540889881551,
+        "response_bytes": 349
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces",
+        "label": "workspace_create",
+        "status": 201,
+        "latency_ms": 169.99695904087275,
+        "response_bytes": 663236
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale",
+        "label": "scale_enqueue",
+        "status": 202,
+        "latency_ms": 57.09625000599772,
+        "response_bytes": 609
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 8.764166967011988,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 8.304417016915977,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 39.94770802091807,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.827208097092807,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 21.681708050891757,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.7650830605998635,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.298333057202399,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.759208044968545,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 5.709459073841572,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 19.897792022675276,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 9.163916925899684,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 7.052875007502735,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 7.452166988514364,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.891334080137312,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 20.88137494865805,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 18.11637496575713,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 27.68808393739164,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 84.1066250577569,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 7.287332904525101,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 8.224292076192796,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 20.23779193405062,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.4644580706954,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.735250004567206,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 13.06650007609278,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.343499990180135,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 6.040707929059863,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 33.24612497817725,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 8.28058400657028,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 149.39612499438226,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 7.3191659757867455,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 19.24670801963657,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 46.37358395848423,
+        "response_bytes": 512
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/jobs/6d7cadb2-10dd-484d-a3f2-0fad25ed911d",
+        "label": "job_poll",
+        "status": 200,
+        "latency_ms": 7.352332933805883,
+        "response_bytes": 752
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale",
+        "label": "scale_summary_seeded",
+        "status": 200,
+        "latency_ms": 60.999208013527095,
+        "response_bytes": 9797
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 30.67233308684081,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 29.048750060610473,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 32.523333095014095,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 29.916042112745345,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 43.95779094193131,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 37.52508293837309,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.02929202839732,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 25.932083022780716,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.95291698910296,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 27.061374974437058,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 27.192624984309077,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 25.938207982107997,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 29.084208072163165,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 33.531625056639314,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 32.7974169049412,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.819500024430454,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 25.182917015627027,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.41012507956475,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 27.747541898861527,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100",
+        "label": "first_page",
+        "status": 200,
+        "latency_ms": 26.699041947722435,
+        "response_bytes": 56491
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 186.86987494584173,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 134.76783293299377,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 142.1572919934988,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 139.4835829269141,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 136.24841696582735,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 131.6099159885198,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 154.2868330143392,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 148.56754196807742,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 130.6686248863116,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 135.21862507332116,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 131.80700002703816,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 134.25099989399314,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 165.74329207651317,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 133.58254206832498,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 136.44704199396074,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 135.94258297234774,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 134.81433398555964,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 161.42866690643132,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 154.7237919876352,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&offset=59507",
+        "label": "middle_page",
+        "status": 200,
+        "latency_ms": 134.5339580439031,
+        "response_bytes": 56980
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.913541946560144,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 20.682959002442658,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 22.701999987475574,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 20.467250025831163,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 57.017083978280425,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.551833022385836,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 20.71433304809034,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 19.908334012143314,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.841540932655334,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 22.622416960075498,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.104958024807274,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.641166997142136,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 19.9252919992432,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.77354192826897,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.494333050213754,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.136792027391493,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 22.11449993774295,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 20.623209071345627,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 22.197459009476006,
+        "response_bytes": 56499
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&terminal_id=terminal-fenix",
+        "label": "terminal_page",
+        "status": 200,
+        "latency_ms": 21.698500029742718,
+        "response_bytes": 56499
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 245.55262504145503,
+        "response_bytes": 4355
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 244.58004103507847,
+        "response_bytes": 4359
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 246.67741602752358,
+        "response_bytes": 4358
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 341.46887506358325,
+        "response_bytes": 4359
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 280.1253339275718,
+        "response_bytes": 4359
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 266.85995794832706,
+        "response_bytes": 4376
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 310.3124580811709,
+        "response_bytes": 4373
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 338.6897910386324,
+        "response_bytes": 4377
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 306.7562080686912,
+        "response_bytes": 4379
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 279.4131670380011,
+        "response_bytes": 4379
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 278.2125829253346,
+        "response_bytes": 4378
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 362.98120906576514,
+        "response_bytes": 4383
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 293.9725829055533,
+        "response_bytes": 4384
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 316.82262499816716,
+        "response_bytes": 4387
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 299.42854098044336,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 309.64566697366536,
+        "response_bytes": 4387
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 354.14737497922033,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 394.79762502014637,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 366.47095798980445,
+        "response_bytes": 4385
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 352.6187080424279,
+        "response_bytes": 4385
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 351.12662496976554,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 382.2877500206232,
+        "response_bytes": 4384
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 446.06645905878395,
+        "response_bytes": 4385
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 443.27620894182473,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 388.1355411140248,
+        "response_bytes": 4385
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 461.76724997349083,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 425.5673330044374,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 430.26504199951887,
+        "response_bytes": 4388
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 443.21916706394404,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 414.2697909846902,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 472.0212909160182,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 430.54600001778454,
+        "response_bytes": 4385
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 522.0510420622304,
+        "response_bytes": 4385
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 413.2212499389425,
+        "response_bytes": 4385
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 456.95537503343076,
+        "response_bytes": 4377
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 465.74691601563245,
+        "response_bytes": 4379
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 461.47391700651497,
+        "response_bytes": 4379
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 471.62204096093774,
+        "response_bytes": 4378
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 523.7689580535516,
+        "response_bytes": 4379
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 464.90741602610797,
+        "response_bytes": 4379
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 471.2747499579564,
+        "response_bytes": 4379
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 521.6834580060095,
+        "response_bytes": 4378
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 576.8395418999717,
+        "response_bytes": 4377
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 538.0718329688534,
+        "response_bytes": 4378
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 746.1374999256805,
+        "response_bytes": 4378
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 549.7592919273302,
+        "response_bytes": 4380
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 484.596083057113,
+        "response_bytes": 4377
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 523.7007499672472,
+        "response_bytes": 4379
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 551.959834061563,
+        "response_bytes": 4378
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 500.2651250688359,
+        "response_bytes": 4378
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 537.6936249667779,
+        "response_bytes": 4382
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 564.9513750104234,
+        "response_bytes": 4392
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 582.1794170187786,
+        "response_bytes": 4394
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 550.0287079485133,
+        "response_bytes": 4391
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 573.9528329577297,
+        "response_bytes": 4392
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 564.6863750880584,
+        "response_bytes": 4394
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 558.0055840546265,
+        "response_bytes": 4392
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 569.1435419721529,
+        "response_bytes": 4395
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 603.0262080021203,
+        "response_bytes": 4393
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 715.9685420338064,
+        "response_bytes": 4391
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 739.8857499938458,
+        "response_bytes": 4394
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 614.2445000587031,
+        "response_bytes": 4393
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 634.9427079549059,
+        "response_bytes": 4392
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 674.032291979529,
+        "response_bytes": 4377
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 585.2991249412298,
+        "response_bytes": 4392
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 609.1187910642475,
+        "response_bytes": 4395
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 727.8927500592545,
+        "response_bytes": 4393
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 620.8672500215471,
+        "response_bytes": 4393
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 677.6071669301018,
+        "response_bytes": 4395
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 644.0059579908848,
+        "response_bytes": 4393
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 620.8699579583481,
+        "response_bytes": 4393
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 682.7711249934509,
+        "response_bytes": 4392
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 642.9552079644054,
+        "response_bytes": 4393
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 627.121708006598,
+        "response_bytes": 4394
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 677.8037920594215,
+        "response_bytes": 4394
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 717.3957079648972,
+        "response_bytes": 4395
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 683.544083032757,
+        "response_bytes": 4392
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 703.6527920281515,
+        "response_bytes": 4392
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 727.5849999859929,
+        "response_bytes": 4393
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 727.3274160688743,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 741.9770420528948,
+        "response_bytes": 4385
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 859.3862919369712,
+        "response_bytes": 4386
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 756.3577080145478,
+        "response_bytes": 4387
+      },
+      {
+        "method": "POST",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/advance",
+        "label": "advance_window",
+        "status": 200,
+        "latency_ms": 748.4124579932541,
+        "response_bytes": 4260
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale",
+        "label": "scale_summary_final",
+        "status": 200,
+        "latency_ms": 44.96512492187321,
+        "response_bytes": 10170
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/events?limit=100",
+        "label": "scale_audit_page",
+        "status": 200,
+        "latency_ms": 315.28087495826185,
+        "response_bytes": 81059
+      },
+      {
+        "method": "GET",
+        "path": "/workspaces/377bfbc4-dd9b-4a12-a999-4336b8752ffb/scale/containers?limit=100&status=completed",
+        "label": "completed_page",
+        "status": 200,
+        "latency_ms": 40.035416022874415,
+        "response_bytes": 56010
+      }
+    ],
+    "server_rss_observed_before_bytes": null,
+    "server_rss_observed_after_bytes": null,
+    "server_rss_measurement": "Two point-in-time process RSS readings only; not peak or PostgreSQL memory. null means unmeasured.",
+    "limits": [
+      "Single local client, descriptive request timing; no concurrency, load SLA or production network claim.",
+      "Database-backed cohort rows are paged; each local scheduling window selects at most 2,000 rows per terminal.",
+      "Coarse movement service slots and terminal allocations are synthetic; this does not benchmark real port throughput.",
+      "No global CP-SAT solve of the full cohort and no commercial-product head-to-head comparison."
+    ]
+  },
+  "wall_seconds": 79.85725674999412,
+  "source_hashes_at_end": {
+    "gate_triage/workbench/scale_simulation.py": "e938e8397752854f38e38b955ed3c816989cd53430f18208e5c84ca46f67a49e",
+    "gate_triage/workbench/scale.py": "5ff290042d2d26f617f9fda22fbb5bc478d52eeadd3b26ca7b695c13c8d51969",
+    "gate_triage/workbench/migrations/versions/wb_0003_port_scale.py": "a506a357f04a75f76e62bb9ecf8eace1036391dfb49e890e79cee42f3c8cac5c",
+    "scripts/benchmark_scale.py": "1d3e69bddb47fd043e1efa9bdc658599f3b1d04f4da4e51e466bb2d0744cd2a6",
+    "tests/test_scale_simulation.py": "2ed3a103bb33f01086b9c12df0a64594ca1c3255350cbef9abd6c04ecc8c8baa"
+  },
+  "source_unchanged_during_measurement": true,
+  "benchmark_process_lifetime_max_rss_bytes": 46415872,
+  "finished_at_utc": "2026-10-17T09:03:29.759743+00:00"
+}

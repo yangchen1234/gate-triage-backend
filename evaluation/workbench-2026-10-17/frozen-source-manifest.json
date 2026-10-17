@@ -1,0 +1,29 @@
+{
+  "purpose": "Exact evaluated engine and scenario sources retained before later spatial extensions. No production credentials.",
+  "files": {
+    "scripts/benchmark_workbench.py": "5dcfec149d58f0dbefc439ae129ee5f3ab547db91d115c59cfb426eba3df0431",
+    "gate_triage/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "docs/reference-pack/source-manifest.json": "74a63553689cec0183c568f12be431f273dfae07eb5dbbe09f38cb954ec52516",
+    "docs/reference-pack/build_reference_pack.py": "07395d36f5d3914d661622faf48e926651d6978956568524331fa10ee9ddb0a8",
+    "docs/reference-pack/scenario.schema.json": "8542d2828212633e034276a5b11c39e084bd540b8e918963555dd575d0703bbc",
+    "docs/reference-pack/README.md": "5e924109f72bab46b5add3677c7be8237ee862fae823558f145d7bda5200007d",
+    "docs/reference-pack/validate_reference_pack.py": "f4d36ac2a8bdab590700a9fc96bcf965f730991501b8d1085b87450d40870876",
+    "docs/reference-pack/scenarios/terminal_data_disruption_2017.json": "efd87472cee66987ffeebe82aa352a2bed9eab406a0fa564737724434c891f8a",
+    "docs/reference-pack/scenarios/weather_warning_no_closure_2023.json": "34eba73a5dcc2035921277747c3e1751b9b07bdcfbe1e7f95c18c5bea8eb1d74",
+    "docs/reference-pack/scenarios/normal_operations.json": "bca8c89924dfd1724f9ddf096e0c7af9ceb84ae0a12563ec2339f146f18657cd",
+    "docs/reference-pack/scenarios/equal_service_control.json": "2682ca47b81d162567ab3917be89c5cf5d0a0321f722262dce84e30fb5728666",
+    "docs/reference-pack/scenarios/long_dwell_backlog_2021.json": "b67730deac52b427c297e9505c44266976d8741913cbcef5419819d67c6b8a85",
+    "docs/reference-pack/scenarios/battery_truck_access_2024.json": "71b71294b88fdaddfb956f05c160b0cf6f60e9d4d9ff1d4cbcc8b73e0dbd56d8",
+    "docs/reference-pack/fixtures/t49-equal-service-100.json": "cff7472406155a1ae7e71a146e6871c22b0231e14d575bafef8836d551c7a8af",
+    "docs/reference-pack/fixtures/t49-backlog-100.json": "9e82e7d6805a0c91d501762cdcde1ad03f2d012d7954bd8e0f5abddf8e60a7d3",
+    "docs/reference-pack/fixtures/t49-equal-service-100.operator-overlay.json": "f465b3e06534cfa7e7885aad63efef382fd014af414fd8aee4f7048065dbd921",
+    "docs/reference-pack/fixtures/source-record-mapping.json": "7cb49380e593506a5fc4645bd4a487074b2ed3f668c4323819f3b712bf24832d",
+    "docs/reference-pack/fixtures/t49-backlog-100.operator-overlay.json": "a19bc2c6e80ca9963f0546f1b6ff4ee374b8a5487300d41b58abe10195ed8104",
+    "docs/reference-pack/fixtures/t49-cohort-100.operator-overlay.json": "a19bc2c6e80ca9963f0546f1b6ff4ee374b8a5487300d41b58abe10195ed8104",
+    "docs/reference-pack/fixtures/t49-cohort-100.json": "497b7631326017a02250d854e80b3f8ad4fa088aae62582897a489b71d6da7b6",
+    "gate_triage/workbench/simulation.py": "3dff22a82bbaac81d42fa510e3e54ea90a764f934998aa52ed17a0c49cdff34c",
+    "gate_triage/workbench/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gate_triage/workbench/engine.py": "60454aa2dfc30c07bd4e7e0cde78bb17c17b96d91838a0f0e4129234836fe51c",
+    "gate_triage/workbench/scheduler.py": "e2f461283f5e62356f985672a484e1058ced0946721ec509a1cb9f5eba6e7751"
+  }
+}

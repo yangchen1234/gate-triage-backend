@@ -8,7 +8,10 @@ from fastapi.staticfiles import StaticFiles
 
 from gate_triage.workbench.api import install_handlers, router
 from gate_triage.workbench.db import configure_database
+from gate_triage.workbench.emergency import router as emergency_router
 from gate_triage.workbench.knowledge import router as knowledge_router
+from gate_triage.workbench.spatial import router as spatial_router
+from gate_triage.workbench.scale import router as scale_router
 from gate_triage.workbench.worker import start_worker, stop_worker
 
 ROOT = Path(__file__).resolve().parent
@@ -28,6 +31,9 @@ def create_app() -> FastAPI:
     install_handlers(application)
     application.include_router(router)
     application.include_router(knowledge_router)
+    application.include_router(spatial_router)
+    application.include_router(emergency_router)
+    application.include_router(scale_router)
     if (DIST / "assets").exists():
         application.mount("/assets", StaticFiles(directory=DIST / "assets"), name="assets")
 

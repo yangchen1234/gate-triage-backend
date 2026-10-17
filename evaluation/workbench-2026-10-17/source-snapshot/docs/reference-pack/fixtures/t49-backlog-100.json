@@ -1,0 +1,2723 @@
+{
+  "provenance": {
+    "kind": "synthetic",
+    "description": "Invented Terminal49-shaped collection; not an API response or historical reconstruction.",
+    "source_refs": [
+      "t49_container",
+      "t49_holds"
+    ]
+  },
+  "response": {
+    "data": [
+      {
+        "id": "3b950c11-e331-5e0d-9576-1c36ab6f7831",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU3500715",
+          "availability_known": false,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": null,
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "13989239-c624-5fad-90fc-6031842b088a",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU8038374",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:31:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "9c1bb0a3-47a5-5098-95ad-7017a8e08e77",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU4318855",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:32:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "96a5d7ba-132c-52cc-b0bd-b6560939cae4",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU5200476",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:33:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "ee78f224-8515-513d-bbdf-e8cca500c56c",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU6481437",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:34:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "273917a8-0026-5dbf-b579-3f8ee0e1a17d",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU5398338",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-13T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:35:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "505b1b62-5f34-555e-b841-e5e1f2910e33",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU7982241",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-19T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:36:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "10b63cbe-ae6c-5b96-8ed4-4db3691a62a8",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU2903561",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-08T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-08T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-08T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "5fecb68a-ef4e-51a2-a0de-bf289bd260df",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU2044645",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-08T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:38:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-08T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-08T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "01530647-9d19-560b-9f0e-cf04a0c03a9f",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU2944841",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:39:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "a4c464f9-6a30-59e8-8841-fdf1b316001d",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU5963914",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-14T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:40:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "0d935344-5d5a-53c2-9985-fb49cdcf6799",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU7731902",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:41:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "615a382a-d6d2-594f-9686-5760e90d1806",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU7542890",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-14T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:42:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "e9282c4a-0c6b-5407-91b6-ab041abcc6f6",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU5842082",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:43:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "91df5202-0286-51d6-ae41-807e6dc49789",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU9897858",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-12T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "1bfa9918-af97-53eb-a488-611e7186500e",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU1873851",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:45:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "0b8bdcc2-9196-5aa8-aba1-a8816fb49316",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU3589751",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-14T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:46:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "b04d084c-467d-5ed5-8451-e3159ddbd506",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU1649691",
+          "availability_known": false,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": null,
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-09T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:47:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-09T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-09T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "fa881745-1bda-5267-a531-c191c2bd3e25",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU2833230",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-21T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:48:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "19a4fd43-fdc6-529b-b6cb-d1b6106fe388",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU7654757",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "pending",
+              "description": "SYNTHETIC pending notice"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-17T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:49:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "4c93aedc-7a9a-5650-93ac-1af603d25272",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU9910817",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-19T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:50:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "44be04a4-810d-54c7-9a38-729eb5f954ea",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU6503032",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "e6522a3f-a7c0-540d-bc40-ce35f5b7ee50",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU9683481",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:52:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "f83d6d26-9590-53a6-b919-3ebafbe4bd07",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU4020853",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:53:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "c611d119-cfd4-5516-ba05-ff058aa5724b",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU7120868",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:54:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "7c820056-5be7-5c00-bd54-cbc7d7dc1050",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU9398441",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-14T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:55:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "629b5279-1ada-53ff-a076-9b1ea57029e9",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU8194570",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:56:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "76e716f2-6c75-5c1c-ad35-6396e221249e",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU3472189",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:57:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "e2fedb0e-f381-58e6-9fce-2f3a2863271f",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU5394880",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-17T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "0ee96226-6b2f-5f91-8793-3c259628a787",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU5118725",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:59:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "367815a8-e7e7-5aff-b476-dab9720f7932",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU9094999",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-10T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:00:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "b9bd095a-33d2-5eb3-8107-28b7bbfdcb5e",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU5821419",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-13T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:01:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "7e91a368-b03b-5a82-8495-ff0d0d8a5b7c",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU5453786",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-20T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:02:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-20T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-20T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "0cfb6e76-6b3d-5249-b16a-d0d018e2ecf4",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU5374922",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:03:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "d73a1cf3-faaa-5c28-8a3b-43491a67a21d",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU7783308",
+          "availability_known": false,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": null,
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-10T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:04:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "8f2087ad-03fa-5c67-bc43-9790bd954907",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU7728339",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "d564d21b-ba9c-508d-acc9-7c6083fa182f",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU6304573",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-08T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:06:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "e7f539a5-8cc4-5f35-aa8a-2fdf5259714b",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU8118722",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-07T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-14T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:07:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "63926e51-5447-5545-8098-6dbbd6b1ed33",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU9518424",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "pending",
+              "description": "SYNTHETIC pending notice"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-06T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:08:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "81bccf77-1b7d-5fda-b186-c74f83ea4115",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU6363836",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-05T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-20T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:09:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-20T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "f2c041e9-1681-5a42-a994-b0bc46c96c40",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU2259379",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:10:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "fc7d6444-ac9b-5947-9391-b8dd9ff66c97",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU6338112",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:11:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "ce4fe563-c955-55a5-9f9b-4020bd988b99",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU1093026",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-12T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "16fac1a7-fc33-54f1-998b-021a8d799211",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU9952696",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:13:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "5041f09c-710c-5b3a-b6f0-59bd613fbda2",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU5666692",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-14T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-09T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:14:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-09T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-09T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "fc42bb1f-0580-5835-8c25-cebe82384333",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU3036059",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-13T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-14T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:15:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "7526175b-cf2d-58e9-ae92-45cde8cadfaa",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU3760597",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-12T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:16:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "60666cce-effc-5b77-b8e1-89d446121393",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU5098412",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:17:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "7b581bdd-8749-5a19-b7db-5cf6b1398db4",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU9333700",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-21T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:18:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "1f33d9d4-0c8f-5063-a208-397f8113c59b",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU4524499",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-13T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "19eb2cc6-526c-519d-a702-9ce1f7158729",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU9479356",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:20:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "8792a7b7-1fde-5c18-947b-d15ac34fdbc6",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU7328534",
+          "availability_known": false,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": null,
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-14T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-19T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:21:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "fc84ca5f-3bfc-54d8-8847-0fa19309873a",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU7667458",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-13T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:22:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "2de7fb01-8d96-58f6-8cd2-55f3ab111cbf",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU9363326",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-12T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-21T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:23:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "2d3b379c-7d40-5148-bdf0-0b7618cc3449",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU5130808",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:24:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "f3567c59-523b-578b-9388-2f016738b260",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU2642635",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-13T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:25:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "9c999529-5fdb-5b9b-9186-e6c3cfdbf175",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU9468772",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "5bd7f57f-3667-59bd-9dd5-6839d6aec471",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU5682940",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "pending",
+              "description": "SYNTHETIC pending notice"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:27:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "4fe1efea-5b8d-553d-b2fd-71bb44630768",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU9722815",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-14T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-13T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:28:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "9a3a768f-0c75-5c60-b228-5561e13ba59a",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU6098175",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-13T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-09T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:29:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-09T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-09T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "8f061dc7-d9fb-5018-b822-ed91c2516f22",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU5960271",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-12T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:30:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "56662d58-8d2f-5c4d-a043-96a16c87bfab",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU3219824",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:31:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "f9a6cfa4-fdcd-57c6-8b72-22f866852302",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU6902401",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:32:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "ff0ae6eb-9a43-566b-8331-e4948703d6fb",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU1157662",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-20T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-20T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-20T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "257f9f4f-f02a-526c-ae67-1633fbead6f7",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU8106470",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-17T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:34:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "b4d12a7c-ee4d-590a-807e-3bf829ab72e0",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU2422633",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-14T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-12T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:35:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "608ba9a9-fe40-5fac-844a-4161e1b3c48d",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU5476583",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-13T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:36:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "e93bb739-de5a-5892-b229-eaf86f9a5072",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU2065818",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-12T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:37:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "3594f8eb-b448-57e7-b341-f9ff47614472",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU1689025",
+          "availability_known": false,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": null,
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:38:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "4c6799bb-e456-56ef-98df-f9da98d40e77",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU5081983",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:39:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "45c31706-81ef-5d8f-86e8-7a61208d0c68",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU6569946",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-10T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "82da992e-86a2-546b-befc-01dc58866087",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU2921542",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:41:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "d3063d3d-8ef4-5c4e-9051-fe388c40f7e2",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU5364698",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-14T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-19T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:42:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "32cd7ceb-83d8-52db-b4e8-c8b5aaf67cc2",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU9667566",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-13T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-12T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:43:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "d8b2e473-3b31-5e19-859b-44a1fbab7774",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU3342608",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-12T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:44:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "238e199f-81b2-5889-a1bf-f50324802e6d",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU7067228",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-10T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:45:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "f1f797f4-8169-583b-a1d9-3b6bd21020d2",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU5531230",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "pending",
+              "description": "SYNTHETIC pending notice"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:46:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "48edd076-6d61-58ce-9e9a-30396d9213f4",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU6266630",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "c5c2e360-6f2b-5aef-b5ec-858eff28b37e",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU1205779",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-19T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:48:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-20T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "f39f5fe8-bb54-5edd-9435-e66a24e2d7ce",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU3741438",
+          "availability_known": true,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "hold",
+              "description": "SYNTHETIC customs hold"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-14T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-10T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:49:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "8d100d96-97fc-5808-a6a4-883a96df8cb0",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU9132114",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-13T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-13T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:50:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "92b7a328-b174-5fe2-a4b4-bc754791d4f4",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU3253031",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-12T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-21T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:51:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-21T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "5b346394-e6b8-5f9e-9fc7-52fc7d447314",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU9990305",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:52:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "fa32d054-aaf9-5339-ab35-c30e5d0a40b6",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU1771600",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-14T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:53:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-14T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "f8b60409-9795-564a-a836-88fe1c094798",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU2321324",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-17T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-17T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "eb517802-d7a5-565e-ae84-22ffc599cebe",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU2754894",
+          "availability_known": false,
+          "available_for_pickup": false,
+          "holds_at_pod_terminal": null,
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-20T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:55:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-20T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-20T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "17917a42-7c57-504e-ae1f-e9969d6484eb",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU4010529",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-14T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-15T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:56:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-15T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "18c7e3e9-4306-5241-9bea-b2993b1f19b7",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU5652512",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-13T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-10T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:57:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "7c2e88c7-4ec5-5a20-93f2-938aa43a360c",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU9224219",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-12T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-13T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:58:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-13T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "806c2b5f-3c80-5bad-b8ca-c2baf0ef163a",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU9179730",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T09:59:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "13742ee5-a838-55e2-9e23-4e12beed4e43",
+        "type": "container",
+        "attributes": {
+          "number": "PCLU3320821",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-12T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:00:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "a96990a0-0a71-5083-88b0-9492aea85805",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU9852897",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "96c7e9b5-1f1f-554c-a87a-238164170cbb",
+        "type": "container",
+        "attributes": {
+          "number": "OOLU2096280",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-19T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:02:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "3ec481a5-a17e-57d9-a46f-b0211449a98b",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU2919136",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-14T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-18T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:03:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-18T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "3acef889-79fc-5df6-8661-fb1a9ed227ff",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU3294774",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-13T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-11T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:04:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-11T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "c6b12d5a-69aa-5c8e-b081-26eec718fcbf",
+        "type": "container",
+        "attributes": {
+          "number": "MAEU4841005",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [
+            {
+              "name": "customs",
+              "status": "pending",
+              "description": "SYNTHETIC pending notice"
+            }
+          ],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-12T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-19T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:05:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-19T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "cc6899ab-f7bc-5a2c-ac0a-5a79f94d29e0",
+        "type": "container",
+        "attributes": {
+          "number": "TRXU7730428",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-11T09:00:00-07:00",
+          "pod_full_out_at": null,
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-16T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:06:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-16T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "cae87fd8-e18f-5d39-bcbe-f9c2547d8c0c",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU3970445",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-10T09:00:00-07:00",
+          "pod_full_out_at": "2026-10-17T08:00:00-07:00",
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-10T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:07:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "e9fc7c71-b9a9-5e8a-bf6e-2245be0bdbc5",
+        "type": "container",
+        "attributes": {
+          "number": "MSCU9164991",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "reefer",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-16T09:00:00-07:00",
+          "pod_full_out_at": "2026-10-17T08:00:00-07:00",
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-12T09:00:00-07:00",
+          "pickup_appointment_at": null,
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-12T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      },
+      {
+        "id": "0e1da9df-bbc3-53e2-9961-9cd3ec1252f8",
+        "type": "container",
+        "attributes": {
+          "number": "ONEU6647119",
+          "availability_known": true,
+          "available_for_pickup": true,
+          "holds_at_pod_terminal": [],
+          "fees_at_pod_terminal": [],
+          "weight_in_lbs": null,
+          "equipment_type": "dry",
+          "equipment_length": 40,
+          "pod_discharged_at": "2026-10-15T09:00:00-07:00",
+          "pod_full_out_at": "2026-10-17T08:00:00-07:00",
+          "terminal_checked_at": "2026-10-17T09:00:00-07:00",
+          "pickup_lfd": "2026-10-10T09:00:00-07:00",
+          "pickup_appointment_at": "2026-10-17T10:09:00-07:00",
+          "location_at_pod_terminal": null,
+          "import_deadlines": {
+            "pickup_lfd_line": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_terminal": "2026-10-10T09:00:00-07:00",
+            "pickup_lfd_rail": null
+          }
+        },
+        "relationships": {}
+      }
+    ],
+    "included": []
+  }
+}

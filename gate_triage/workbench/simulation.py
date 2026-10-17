@@ -121,6 +121,8 @@ def advance(state: dict, minutes: int, strategy: str = "optimized", profile: str
     target = min(state["clock_min"] + minutes, state["horizon_minutes"])
     if target <= state["clock_min"]:
         return
+    from .spatial_simulation import advance_spatial_operations
+    advance_spatial_operations(state)
     if not state.get("plan") or state["plan"]["strategy"] != strategy or state["plan"]["profile"] != profile:
         _store_plan(state, strategy, profile)
     _dispatch(state)
@@ -132,6 +134,10 @@ def advance(state: dict, minutes: int, strategy: str = "optimized", profile: str
         changed = _finish(state) or changed
         changed = _apply_events(state) or changed
         changed = _observe_arrivals(state) or changed
+        # Separate synthetic vessel work uses dedicated resources and the same
+        # clock. Its progress never manufactures tracked-cohort handoffs or
+        # triggers an unrelated gate-policy replan.
+        advance_spatial_operations(state)
         changed = _cancel_unavailable(state) or changed
         if changed or state["clock_min"] % state["config"]["planning"]["replan_minutes"] == 0:
             _store_plan(state, strategy, profile)
@@ -150,6 +156,8 @@ def advance(state: dict, minutes: int, strategy: str = "optimized", profile: str
 def run_experiment(scenario_id: str, seeds: list[int], horizon_minutes: int = 240) -> dict:
     if not seeds or len(seeds) > 30 or any(type(s) is not int for s in seeds):
         raise ValueError("Experiments require 1–30 integer seeds")
+    if len(set(seeds)) != len(seeds) or any(s < 0 or s > 2147483647 for s in seeds):
+        raise ValueError("Use distinct seeds between 0 and 2147483647 for independent paired worlds")
     if type(horizon_minutes) is not int or not 1 <= horizon_minutes <= 240:
         raise ValueError("Experiment horizon must be 1–240 minutes")
     strategies = []

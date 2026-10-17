@@ -4,12 +4,30 @@ Date: 2026-10-17 · Branch: `codex/fullstack-simulation-demo`.
 
 This record describes an isolated local rehearsal, not validation of a real terminal deployment. The legacy `main.py`, Ryan's original cohort and the team's hosted Render service remain separate.
 
+## Current acceptance — map, emergency and port-scale extension
+
+- Complete Python suite with isolated real PostgreSQL checks enabled: **248 passed**, 54.36 seconds. One Starlette/httpx test-client deprecation warning remains.
+- A final presentation correction makes scale-only incidents describe their actual phase restrictions rather than the precision model's monitoring fallback. The **19 relevant emergency/map checks** passed again after this correction; physics and database schema were unchanged.
+- Frontend regression suite: **11 passed**; TypeScript and final multi-stage Docker production build passed. Runtime web bundle: `index-D0ybS25a.js`.
+- PostgreSQL migrations through **wb_0003_port_scale** applied without resetting existing workspaces. Both Docker services are healthy and bound to loopback.
+- Live HTTP smoke passed: scoped token access, durable retry receipts, stale revisions, unchanged permissions after request resolution, provider LFD/fee updates, authenticated SSE, server playback, validated planning jobs and attributable source retrieval.
+- Final source includes the reset guard, source-update compatibility fix, independent scale-run incident boundaries, phase-specific disaster effects, current effective map urgency, and PostgreSQL repeatable-read map/scale responses. Regression tests exercise the actual read/write interleaving.
+- Browser acceptance used real web controls to generate **119,014 rows / 196,371 synthetic TEU** in PostgreSQL, advance the scale clock, view all seven SQL terminal aggregates, focus APM on the map and open its filtered paged records. Auto advance issued actual serialized API windows, then paused; progress remained saved after app reconstruction and reload. The precision clock stayed separate.
+- A scoped West-access incident closed the remaining two lanes in an existing East-disruption exercise. Human ownership acknowledgement left capacity closed; explicit West recovery restored only the West lanes. East restrictions and independent holds remained.
+- Map zoom/pan/focus, optional hide/show, real OSM basemap attribution, synthetic area selection, separate performed-work/readiness counts, compact disaster-specific strategy, internal escalation and required recovery notes were checked in desktop and narrow browser layouts.
+
+The saved **459-world / 918-checkpoint** strategy experiment has no failed or mismatched runs. A separate stdlib audit recomputed means, denominators, unique keys, pair matching and win/tie/loss counts from raw JSONL: **5,264 checks, zero discrepancies**. This is scoped arithmetic verification, not an overall accuracy score. Gains, ties, losses and unfinished waits are retained. See [simulation evaluation](simulation-evaluation.zh-CN.md).
+
+The seven-day real-PostgreSQL benchmark completed all 84 advance windows. It stored 119,014 movement rows and 85 audit batches; final status totals were 114,130 completed, 4,577 blocked, 248 queued and 59 in service. These reconcile exactly. Local measured seed time was 8.877 seconds; page-query P95 ranged from 24.42 to 166.80 ms and 120-minute advance P95 was 741.66 ms. Timings refer to the frozen measured build before the final read-consistency patch, not a production SLA or a commercial comparison. Source snapshots, subsequent patch provenance, raw samples and fresh-connection SQL checks are preserved in [scale evaluation](scale-evaluation.zh-CN.md).
+
+Terminal49 remains unconnected and `llm_used=false`, as explicitly requested for this demo. Large-scale flow is an assumed phase/slot model, not global optimal crane planning or real concurrent terminal inventory. All disaster strategies are generic exercise policies, with cited background and human authority boundaries.
+
 ## Environment
 
 - macOS host, Python 3.12, Node 24 and pnpm 11.25.0.
 - PostgreSQL 17 in a Docker named volume, bound to `127.0.0.1:54329`.
 - New FastAPI entry point `workbench_main:app`, web and API on `127.0.0.1:8088`.
-- SQLAlchemy / Alembic migrations `wb_0001` and `wb_0002`; application tables use the `wb_` prefix.
+- SQLAlchemy / Alembic migrations `wb_0001`, `wb_0002`, `wb_0003`; application tables use the `wb_` prefix.
 - Synthetic fixtures: 100 containers per cohort and six scenarios, with separate provider-shaped and operational evidence.
 
 ## Automated checks
@@ -63,7 +81,7 @@ Seed 17 at a 90-minute horizon produced 40 / 39 / 43 handoffs for normal operati
 - Interrupted physical work restarts in the synthetic model. Weight tolerances and temperature thresholds are explicit demo policies.
 - Internal coordination requests neither contact outside parties nor modify operational permissions. No real equipment, bookings, payments or customs systems are controlled.
 
-## Final execution results
+## Initial delivery results (superseded by current acceptance above)
 
 - `python -m pytest -q`: **163 passed** in 15.72 seconds; one existing Starlette/httpx test-client deprecation warning.
 - `pnpm test:session`: **4 passed**. Retaining access across creation/resume, migrating older sessions and isolating invalid entries are covered.

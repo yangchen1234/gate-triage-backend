@@ -1,0 +1,1710 @@
+{
+  "metadata_file": "metadata.json",
+  "raw_file": "runs.jsonl",
+  "generated_at": "2026-10-17T08:45:08.700774+00:00",
+  "rows": 360,
+  "expected_rows": 360,
+  "complete": true,
+  "failures": [],
+  "world_pair_mismatches": [],
+  "comparisons": [
+    {
+      "scenario_id": "normal_operations",
+      "horizon_minutes": 90,
+      "strategies": {
+        "fifo": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 41.0333,
+              "min": 39,
+              "max": 43,
+              "p90_across_runs": 43.0
+            },
+            "avg_wait_minutes": {
+              "mean": 9.775,
+              "min": 7.12,
+              "max": 12.82,
+              "p90_across_runs": 11.311
+            },
+            "p90_wait_minutes": {
+              "mean": 20.5567,
+              "min": 12.8,
+              "max": 31.0,
+              "p90_across_runs": 24.28
+            },
+            "unfinished_backlog": {
+              "mean": 55.9667,
+              "min": 54,
+              "max": 58,
+              "p90_across_runs": 57.1
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 43.414,
+              "min": 42.29,
+              "max": 44.46,
+              "p90_across_runs": 44.46
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 90,
+              "min": 90,
+              "max": 90,
+              "p90_across_runs": 90.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 11.4527,
+              "min": 10.6,
+              "max": 12.59,
+              "p90_across_runs": 11.968
+            },
+            "wall_seconds": {
+              "mean": 0.2332,
+              "min": 0.2122,
+              "max": 0.4045,
+              "p90_across_runs": 0.2491
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 0,
+          "plan_validation_rejections": 0
+        },
+        "priority": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 40.5,
+              "min": 38,
+              "max": 44,
+              "p90_across_runs": 43.0
+            },
+            "avg_wait_minutes": {
+              "mean": 11.1543,
+              "min": 8.44,
+              "max": 13.43,
+              "p90_across_runs": 12.27
+            },
+            "p90_wait_minutes": {
+              "mean": 32.7267,
+              "min": 26.0,
+              "max": 41.2,
+              "p90_across_runs": 37.92
+            },
+            "unfinished_backlog": {
+              "mean": 56.5,
+              "min": 53,
+              "max": 59,
+              "p90_across_runs": 58.1
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 42.8183,
+              "min": 42.05,
+              "max": 44.46,
+              "p90_across_runs": 43.388
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 90,
+              "min": 90,
+              "max": 90,
+              "p90_across_runs": 90.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 11.0737,
+              "min": 8.79,
+              "max": 12.76,
+              "p90_across_runs": 12.106
+            },
+            "wall_seconds": {
+              "mean": 0.2447,
+              "min": 0.2125,
+              "max": 0.5707,
+              "p90_across_runs": 0.2504
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 0,
+          "plan_validation_rejections": 0
+        },
+        "optimized": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 43.7333,
+              "min": 42,
+              "max": 46,
+              "p90_across_runs": 46.0
+            },
+            "avg_wait_minutes": {
+              "mean": 10.4503,
+              "min": 8.28,
+              "max": 12.74,
+              "p90_across_runs": 11.578
+            },
+            "p90_wait_minutes": {
+              "mean": 24.8367,
+              "min": 19.0,
+              "max": 34.0,
+              "p90_across_runs": 29.82
+            },
+            "unfinished_backlog": {
+              "mean": 53.2667,
+              "min": 51,
+              "max": 55,
+              "p90_across_runs": 55.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 43.0623,
+              "min": 42.28,
+              "max": 44.25,
+              "p90_across_runs": 44.096
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 90,
+              "min": 90,
+              "max": 90,
+              "p90_across_runs": 90.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 11.2963,
+              "min": 8.4,
+              "max": 13.82,
+              "p90_across_runs": 13.1
+            },
+            "wall_seconds": {
+              "mean": 5.4317,
+              "min": 3.9099,
+              "max": 6.7611,
+              "p90_across_runs": 6.3395
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 5,
+          "plan_validation_rejections": 0
+        }
+      },
+      "paired": [
+        {
+          "baseline": "fifo",
+          "paired_seeds": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "differences_optimized_minus_baseline": {
+            "completed_handoffs": {
+              "mean_difference": 2.7,
+              "min_difference": 1,
+              "max_difference": 4,
+              "bootstrap_percentile_95_ci": [
+                2.4,
+                3.0
+              ],
+              "positive": 30,
+              "zero": 0,
+              "negative": 0
+            },
+            "avg_wait_minutes": {
+              "mean_difference": 0.6753,
+              "min_difference": -0.6899999999999995,
+              "max_difference": 2.45,
+              "bootstrap_percentile_95_ci": [
+                0.3753,
+                0.9873
+              ],
+              "positive": 20,
+              "zero": 2,
+              "negative": 8
+            },
+            "p90_wait_minutes": {
+              "mean_difference": 4.28,
+              "min_difference": -3.5,
+              "max_difference": 13.8,
+              "bootstrap_percentile_95_ci": [
+                2.89,
+                5.7367
+              ],
+              "positive": 26,
+              "zero": 0,
+              "negative": 4
+            },
+            "unfinished_backlog": {
+              "mean_difference": -2.7,
+              "min_difference": -4,
+              "max_difference": -1,
+              "bootstrap_percentile_95_ci": [
+                -3.0,
+                -2.4
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean_difference": -0.3517,
+              "min_difference": -1.8400000000000034,
+              "max_difference": 0.9699999999999989,
+              "bootstrap_percentile_95_ci": [
+                -0.5733,
+                -0.1277
+              ],
+              "positive": 7,
+              "zero": 0,
+              "negative": 23
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean_difference": 0,
+              "min_difference": 0,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 30,
+              "negative": 0
+            },
+            "service_group_mean_wait_spread": {
+              "mean_difference": -0.1563,
+              "min_difference": -2.9399999999999995,
+              "max_difference": 2.7200000000000006,
+              "bootstrap_percentile_95_ci": [
+                -0.6713,
+                0.3657
+              ],
+              "positive": 12,
+              "zero": 0,
+              "negative": 18
+            }
+          }
+        },
+        {
+          "baseline": "priority",
+          "paired_seeds": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "differences_optimized_minus_baseline": {
+            "completed_handoffs": {
+              "mean_difference": 3.2333,
+              "min_difference": 1,
+              "max_difference": 5,
+              "bootstrap_percentile_95_ci": [
+                2.8667,
+                3.6
+              ],
+              "positive": 30,
+              "zero": 0,
+              "negative": 0
+            },
+            "avg_wait_minutes": {
+              "mean_difference": -0.704,
+              "min_difference": -2.460000000000001,
+              "max_difference": 0.3100000000000005,
+              "bootstrap_percentile_95_ci": [
+                -0.9947,
+                -0.4267
+              ],
+              "positive": 7,
+              "zero": 0,
+              "negative": 23
+            },
+            "p90_wait_minutes": {
+              "mean_difference": -7.89,
+              "min_difference": -16.200000000000003,
+              "max_difference": 6.0,
+              "bootstrap_percentile_95_ci": [
+                -9.5433,
+                -6.1099
+              ],
+              "positive": 2,
+              "zero": 0,
+              "negative": 28
+            },
+            "unfinished_backlog": {
+              "mean_difference": -3.2333,
+              "min_difference": -5,
+              "max_difference": -1,
+              "bootstrap_percentile_95_ci": [
+                -3.6,
+                -2.8667
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean_difference": 0.244,
+              "min_difference": -0.5600000000000023,
+              "max_difference": 1.1499999999999986,
+              "bootstrap_percentile_95_ci": [
+                0.0787,
+                0.408
+              ],
+              "positive": 20,
+              "zero": 0,
+              "negative": 10
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean_difference": 0,
+              "min_difference": 0,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 30,
+              "negative": 0
+            },
+            "service_group_mean_wait_spread": {
+              "mean_difference": 0.2227,
+              "min_difference": -2.6999999999999993,
+              "max_difference": 3.299999999999999,
+              "bootstrap_percentile_95_ci": [
+                -0.3353,
+                0.792
+              ],
+              "positive": 16,
+              "zero": 0,
+              "negative": 14
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "normal_operations",
+      "horizon_minutes": 240,
+      "strategies": {
+        "fifo": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 50.9667,
+              "min": 50,
+              "max": 51,
+              "p90_across_runs": 51.0
+            },
+            "avg_wait_minutes": {
+              "mean": 21.718,
+              "min": 18.02,
+              "max": 25.04,
+              "p90_across_runs": 23.171
+            },
+            "p90_wait_minutes": {
+              "mean": 77.6867,
+              "min": 66.0,
+              "max": 95.0,
+              "p90_across_runs": 88.1
+            },
+            "unfinished_backlog": {
+              "mean": 46.0333,
+              "min": 46,
+              "max": 47,
+              "p90_across_runs": 46.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 195.5847,
+              "min": 194.85,
+              "max": 195.61,
+              "p90_across_runs": 195.61
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 240,
+              "min": 240,
+              "max": 240,
+              "p90_across_runs": 240.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 67.1783,
+              "min": 66.04,
+              "max": 68.04,
+              "p90_across_runs": 67.895
+            },
+            "wall_seconds": {
+              "mean": 0.3759,
+              "min": 0.3264,
+              "max": 0.548,
+              "p90_across_runs": 0.4427
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 0,
+          "plan_validation_rejections": 0
+        },
+        "priority": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 50.9667,
+              "min": 50,
+              "max": 51,
+              "p90_across_runs": 51.0
+            },
+            "avg_wait_minutes": {
+              "mean": 21.0603,
+              "min": 17.94,
+              "max": 23.16,
+              "p90_across_runs": 22.737
+            },
+            "p90_wait_minutes": {
+              "mean": 56.65,
+              "min": 43.0,
+              "max": 72.0,
+              "p90_across_runs": 64.3
+            },
+            "unfinished_backlog": {
+              "mean": 46.0333,
+              "min": 46,
+              "max": 47,
+              "p90_across_runs": 46.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 195.6167,
+              "min": 195.61,
+              "max": 195.81,
+              "p90_across_runs": 195.61
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 240,
+              "min": 240,
+              "max": 240,
+              "p90_across_runs": 240.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 61.1283,
+              "min": 58.95,
+              "max": 62.43,
+              "p90_across_runs": 62.171
+            },
+            "wall_seconds": {
+              "mean": 0.4052,
+              "min": 0.3324,
+              "max": 0.7554,
+              "p90_across_runs": 0.4339
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 0,
+          "plan_validation_rejections": 0
+        },
+        "optimized": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 51,
+              "min": 51,
+              "max": 51,
+              "p90_across_runs": 51.0
+            },
+            "avg_wait_minutes": {
+              "mean": 13.7317,
+              "min": 11.18,
+              "max": 17.33,
+              "p90_across_runs": 15.132
+            },
+            "p90_wait_minutes": {
+              "mean": 31.6,
+              "min": 21.0,
+              "max": 40.0,
+              "p90_across_runs": 38.1
+            },
+            "unfinished_backlog": {
+              "mean": 46,
+              "min": 46,
+              "max": 46,
+              "p90_across_runs": 46.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 195.61,
+              "min": 195.61,
+              "max": 195.61,
+              "p90_across_runs": 195.61
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 240,
+              "min": 240,
+              "max": 240,
+              "p90_across_runs": 240.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 63.0627,
+              "min": 59.29,
+              "max": 66.32,
+              "p90_across_runs": 65.45
+            },
+            "wall_seconds": {
+              "mean": 5.8421,
+              "min": 4.2772,
+              "max": 7.2475,
+              "p90_across_runs": 6.7272
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 6,
+          "plan_validation_rejections": 0
+        }
+      },
+      "paired": [
+        {
+          "baseline": "fifo",
+          "paired_seeds": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "differences_optimized_minus_baseline": {
+            "completed_handoffs": {
+              "mean_difference": 0.0333,
+              "min_difference": 0,
+              "max_difference": 1,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.1
+              ],
+              "positive": 1,
+              "zero": 29,
+              "negative": 0
+            },
+            "avg_wait_minutes": {
+              "mean_difference": -7.9863,
+              "min_difference": -10.959999999999999,
+              "max_difference": -5.119999999999999,
+              "bootstrap_percentile_95_ci": [
+                -8.49,
+                -7.5063
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            },
+            "p90_wait_minutes": {
+              "mean_difference": -46.0867,
+              "min_difference": -70.0,
+              "max_difference": -27.0,
+              "bootstrap_percentile_95_ci": [
+                -49.4868,
+                -42.7665
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            },
+            "unfinished_backlog": {
+              "mean_difference": -0.0333,
+              "min_difference": -1,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                -0.1,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 29,
+              "negative": 1
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean_difference": 0.0253,
+              "min_difference": 0.0,
+              "max_difference": 0.7600000000000193,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.076
+              ],
+              "positive": 1,
+              "zero": 29,
+              "negative": 0
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean_difference": 0,
+              "min_difference": 0,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 30,
+              "negative": 0
+            },
+            "service_group_mean_wait_spread": {
+              "mean_difference": -4.1157,
+              "min_difference": -7.919999999999995,
+              "max_difference": -0.6199999999999903,
+              "bootstrap_percentile_95_ci": [
+                -4.7837,
+                -3.4503
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            }
+          }
+        },
+        {
+          "baseline": "priority",
+          "paired_seeds": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "differences_optimized_minus_baseline": {
+            "completed_handoffs": {
+              "mean_difference": 0.0333,
+              "min_difference": 0,
+              "max_difference": 1,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.1
+              ],
+              "positive": 1,
+              "zero": 29,
+              "negative": 0
+            },
+            "avg_wait_minutes": {
+              "mean_difference": -7.3287,
+              "min_difference": -9.730000000000002,
+              "max_difference": -4.159999999999998,
+              "bootstrap_percentile_95_ci": [
+                -7.8117,
+                -6.8457
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            },
+            "p90_wait_minutes": {
+              "mean_difference": -25.05,
+              "min_difference": -44.0,
+              "max_difference": -5.0,
+              "bootstrap_percentile_95_ci": [
+                -28.3837,
+                -21.7333
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            },
+            "unfinished_backlog": {
+              "mean_difference": -0.0333,
+              "min_difference": -1,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                -0.1,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 29,
+              "negative": 1
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean_difference": -0.0067,
+              "min_difference": -0.19999999999998863,
+              "max_difference": 0.0,
+              "bootstrap_percentile_95_ci": [
+                -0.02,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 29,
+              "negative": 1
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean_difference": 0,
+              "min_difference": 0,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 30,
+              "negative": 0
+            },
+            "service_group_mean_wait_spread": {
+              "mean_difference": 1.9343,
+              "min_difference": -1.8299999999999983,
+              "max_difference": 5.310000000000002,
+              "bootstrap_percentile_95_ci": [
+                1.2533,
+                2.631
+              ],
+              "positive": 22,
+              "zero": 1,
+              "negative": 7
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "battery_truck_access_2024",
+      "horizon_minutes": 90,
+      "strategies": {
+        "fifo": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 32.1667,
+              "min": 30,
+              "max": 34,
+              "p90_across_runs": 34.0
+            },
+            "avg_wait_minutes": {
+              "mean": 12.3293,
+              "min": 8.79,
+              "max": 16.6,
+              "p90_across_runs": 14.39
+            },
+            "p90_wait_minutes": {
+              "mean": 22.0933,
+              "min": 13.7,
+              "max": 31.0,
+              "p90_across_runs": 26.0
+            },
+            "unfinished_backlog": {
+              "mean": 64.8333,
+              "min": 63,
+              "max": 67,
+              "p90_across_runs": 66.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 41.6697,
+              "min": 40.87,
+              "max": 42.44,
+              "p90_across_runs": 42.44
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 90,
+              "min": 90,
+              "max": 90,
+              "p90_across_runs": 90.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 7.226,
+              "min": 5.92,
+              "max": 8.46,
+              "p90_across_runs": 8.211
+            },
+            "wall_seconds": {
+              "mean": 0.2339,
+              "min": 0.2119,
+              "max": 0.313,
+              "p90_across_runs": 0.2588
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 0,
+          "plan_validation_rejections": 0
+        },
+        "priority": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 31.6,
+              "min": 29,
+              "max": 34,
+              "p90_across_runs": 34.0
+            },
+            "avg_wait_minutes": {
+              "mean": 13.618,
+              "min": 10.47,
+              "max": 15.9,
+              "p90_across_runs": 15.197
+            },
+            "p90_wait_minutes": {
+              "mean": 34.7867,
+              "min": 27.4,
+              "max": 43.0,
+              "p90_across_runs": 40.28
+            },
+            "unfinished_backlog": {
+              "mean": 65.4,
+              "min": 63,
+              "max": 68,
+              "p90_across_runs": 67.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 41.4497,
+              "min": 41.02,
+              "max": 42.44,
+              "p90_across_runs": 41.673
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 90,
+              "min": 90,
+              "max": 90,
+              "p90_across_runs": 90.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 9.8517,
+              "min": 7.18,
+              "max": 11.44,
+              "p90_across_runs": 10.658
+            },
+            "wall_seconds": {
+              "mean": 0.2362,
+              "min": 0.2138,
+              "max": 0.2907,
+              "p90_across_runs": 0.2669
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 0,
+          "plan_validation_rejections": 0
+        },
+        "optimized": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 32.2667,
+              "min": 30,
+              "max": 35,
+              "p90_across_runs": 34.0
+            },
+            "avg_wait_minutes": {
+              "mean": 13.402,
+              "min": 10.65,
+              "max": 18.1,
+              "p90_across_runs": 14.668
+            },
+            "p90_wait_minutes": {
+              "mean": 32.21,
+              "min": 20.0,
+              "max": 41.8,
+              "p90_across_runs": 39.64
+            },
+            "unfinished_backlog": {
+              "mean": 64.7333,
+              "min": 62,
+              "max": 67,
+              "p90_across_runs": 66.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 41.0563,
+              "min": 40.43,
+              "max": 41.78,
+              "p90_across_runs": 41.478
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 90,
+              "min": 90,
+              "max": 90,
+              "p90_across_runs": 90.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 9.9413,
+              "min": 7.05,
+              "max": 12.43,
+              "p90_across_runs": 12.021
+            },
+            "wall_seconds": {
+              "mean": 5.8967,
+              "min": 4.6562,
+              "max": 7.2728,
+              "p90_across_runs": 6.3711
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 5,
+          "plan_validation_rejections": 0
+        }
+      },
+      "paired": [
+        {
+          "baseline": "fifo",
+          "paired_seeds": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "differences_optimized_minus_baseline": {
+            "completed_handoffs": {
+              "mean_difference": 0.1,
+              "min_difference": -1,
+              "max_difference": 1,
+              "bootstrap_percentile_95_ci": [
+                -0.1667,
+                0.3333
+              ],
+              "positive": 9,
+              "zero": 15,
+              "negative": 6
+            },
+            "avg_wait_minutes": {
+              "mean_difference": 1.0727,
+              "min_difference": -1.200000000000001,
+              "max_difference": 3.0599999999999987,
+              "bootstrap_percentile_95_ci": [
+                0.671,
+                1.4617
+              ],
+              "positive": 24,
+              "zero": 0,
+              "negative": 6
+            },
+            "p90_wait_minutes": {
+              "mean_difference": 10.1167,
+              "min_difference": -2.0,
+              "max_difference": 19.199999999999996,
+              "bootstrap_percentile_95_ci": [
+                7.9967,
+                12.0967
+              ],
+              "positive": 27,
+              "zero": 0,
+              "negative": 3
+            },
+            "unfinished_backlog": {
+              "mean_difference": -0.1,
+              "min_difference": -1,
+              "max_difference": 1,
+              "bootstrap_percentile_95_ci": [
+                -0.3667,
+                0.1667
+              ],
+              "positive": 6,
+              "zero": 15,
+              "negative": 9
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean_difference": -0.6133,
+              "min_difference": -1.8299999999999983,
+              "max_difference": 0.3499999999999943,
+              "bootstrap_percentile_95_ci": [
+                -0.798,
+                -0.4297
+              ],
+              "positive": 3,
+              "zero": 0,
+              "negative": 27
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean_difference": 0,
+              "min_difference": 0,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 30,
+              "negative": 0
+            },
+            "service_group_mean_wait_spread": {
+              "mean_difference": 2.7153,
+              "min_difference": 0.2900000000000009,
+              "max_difference": 5.359999999999999,
+              "bootstrap_percentile_95_ci": [
+                2.1896,
+                3.2363
+              ],
+              "positive": 30,
+              "zero": 0,
+              "negative": 0
+            }
+          }
+        },
+        {
+          "baseline": "priority",
+          "paired_seeds": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "differences_optimized_minus_baseline": {
+            "completed_handoffs": {
+              "mean_difference": 0.6667,
+              "min_difference": -1,
+              "max_difference": 2,
+              "bootstrap_percentile_95_ci": [
+                0.4,
+                0.9
+              ],
+              "positive": 18,
+              "zero": 11,
+              "negative": 1
+            },
+            "avg_wait_minutes": {
+              "mean_difference": -0.216,
+              "min_difference": -2.42,
+              "max_difference": 2.200000000000001,
+              "bootstrap_percentile_95_ci": [
+                -0.6133,
+                0.1783
+              ],
+              "positive": 13,
+              "zero": 0,
+              "negative": 17
+            },
+            "p90_wait_minutes": {
+              "mean_difference": -2.5767,
+              "min_difference": -20.0,
+              "max_difference": 5.899999999999999,
+              "bootstrap_percentile_95_ci": [
+                -4.7968,
+                -0.5199
+              ],
+              "positive": 12,
+              "zero": 0,
+              "negative": 18
+            },
+            "unfinished_backlog": {
+              "mean_difference": -0.6667,
+              "min_difference": -2,
+              "max_difference": 1,
+              "bootstrap_percentile_95_ci": [
+                -0.9,
+                -0.4333
+              ],
+              "positive": 1,
+              "zero": 11,
+              "negative": 18
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean_difference": -0.3933,
+              "min_difference": -1.25,
+              "max_difference": 0.5200000000000031,
+              "bootstrap_percentile_95_ci": [
+                -0.534,
+                -0.251
+              ],
+              "positive": 4,
+              "zero": 0,
+              "negative": 26
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean_difference": 0,
+              "min_difference": 0,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 30,
+              "negative": 0
+            },
+            "service_group_mean_wait_spread": {
+              "mean_difference": 0.0897,
+              "min_difference": -2.3099999999999996,
+              "max_difference": 1.9499999999999993,
+              "bootstrap_percentile_95_ci": [
+                -0.2897,
+                0.4653
+              ],
+              "positive": 15,
+              "zero": 1,
+              "negative": 14
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scenario_id": "battery_truck_access_2024",
+      "horizon_minutes": 240,
+      "strategies": {
+        "fifo": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 50.9667,
+              "min": 50,
+              "max": 51,
+              "p90_across_runs": 51.0
+            },
+            "avg_wait_minutes": {
+              "mean": 31.0667,
+              "min": 27.78,
+              "max": 34.59,
+              "p90_across_runs": 32.337
+            },
+            "p90_wait_minutes": {
+              "mean": 80.0533,
+              "min": 67.0,
+              "max": 95.0,
+              "p90_across_runs": 90.0
+            },
+            "unfinished_backlog": {
+              "mean": 46.0333,
+              "min": 46,
+              "max": 47,
+              "p90_across_runs": 46.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 195.5847,
+              "min": 194.85,
+              "max": 195.61,
+              "p90_across_runs": 195.61
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 240,
+              "min": 240,
+              "max": 240,
+              "p90_across_runs": 240.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 56.1803,
+              "min": 54.77,
+              "max": 57.42,
+              "p90_across_runs": 57.025
+            },
+            "wall_seconds": {
+              "mean": 0.4704,
+              "min": 0.4404,
+              "max": 0.5591,
+              "p90_across_runs": 0.513
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 0,
+          "plan_validation_rejections": 0
+        },
+        "priority": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 50.9667,
+              "min": 50,
+              "max": 51,
+              "p90_across_runs": 51.0
+            },
+            "avg_wait_minutes": {
+              "mean": 31.7203,
+              "min": 29.31,
+              "max": 33.96,
+              "p90_across_runs": 33.202
+            },
+            "p90_wait_minutes": {
+              "mean": 71.2767,
+              "min": 64.0,
+              "max": 81.0,
+              "p90_across_runs": 77.1
+            },
+            "unfinished_backlog": {
+              "mean": 46.0333,
+              "min": 46,
+              "max": 47,
+              "p90_across_runs": 46.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 195.6167,
+              "min": 195.61,
+              "max": 195.81,
+              "p90_across_runs": 195.61
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 240,
+              "min": 240,
+              "max": 240,
+              "p90_across_runs": 240.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 55.4613,
+              "min": 52.48,
+              "max": 57.32,
+              "p90_across_runs": 56.583
+            },
+            "wall_seconds": {
+              "mean": 0.4822,
+              "min": 0.4229,
+              "max": 0.6285,
+              "p90_across_runs": 0.5262
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 0,
+          "plan_validation_rejections": 0
+        },
+        "optimized": {
+          "runs": 30,
+          "metrics": {
+            "completed_handoffs": {
+              "mean": 51,
+              "min": 51,
+              "max": 51,
+              "p90_across_runs": 51.0
+            },
+            "avg_wait_minutes": {
+              "mean": 27.3547,
+              "min": 23.98,
+              "max": 30.35,
+              "p90_across_runs": 29.137
+            },
+            "p90_wait_minutes": {
+              "mean": 65.8,
+              "min": 57.0,
+              "max": 74.0,
+              "p90_across_runs": 72.1
+            },
+            "unfinished_backlog": {
+              "mean": 46,
+              "min": 46,
+              "max": 46,
+              "p90_across_runs": 46.0
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean": 195.61,
+              "min": 195.61,
+              "max": 195.61,
+              "p90_across_runs": 195.61
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean": 240,
+              "min": 240,
+              "max": 240,
+              "p90_across_runs": 240.0
+            },
+            "service_group_mean_wait_spread": {
+              "mean": 53.504,
+              "min": 51.46,
+              "max": 56.12,
+              "p90_across_runs": 55.385
+            },
+            "wall_seconds": {
+              "mean": 7.692,
+              "min": 6.4978,
+              "max": 9.2301,
+              "p90_across_runs": 8.3561
+            }
+          },
+          "constraint_violations": 0,
+          "invalid_action_attempts": 0,
+          "trace_audit_errors": 0,
+          "solver_fallbacks": 6,
+          "plan_validation_rejections": 0
+        }
+      },
+      "paired": [
+        {
+          "baseline": "fifo",
+          "paired_seeds": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "differences_optimized_minus_baseline": {
+            "completed_handoffs": {
+              "mean_difference": 0.0333,
+              "min_difference": 0,
+              "max_difference": 1,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.1
+              ],
+              "positive": 1,
+              "zero": 29,
+              "negative": 0
+            },
+            "avg_wait_minutes": {
+              "mean_difference": -3.712,
+              "min_difference": -6.650000000000002,
+              "max_difference": -2.1199999999999974,
+              "bootstrap_percentile_95_ci": [
+                -4.107,
+                -3.334
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            },
+            "p90_wait_minutes": {
+              "mean_difference": -14.2533,
+              "min_difference": -32.0,
+              "max_difference": 0.0,
+              "bootstrap_percentile_95_ci": [
+                -16.6333,
+                -11.9867
+              ],
+              "positive": 0,
+              "zero": 1,
+              "negative": 29
+            },
+            "unfinished_backlog": {
+              "mean_difference": -0.0333,
+              "min_difference": -1,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                -0.1,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 29,
+              "negative": 1
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean_difference": 0.0253,
+              "min_difference": 0.0,
+              "max_difference": 0.7600000000000193,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.076
+              ],
+              "positive": 1,
+              "zero": 29,
+              "negative": 0
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean_difference": 0,
+              "min_difference": 0,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 30,
+              "negative": 0
+            },
+            "service_group_mean_wait_spread": {
+              "mean_difference": -2.6763,
+              "min_difference": -5.460000000000001,
+              "max_difference": 0.6099999999999994,
+              "bootstrap_percentile_95_ci": [
+                -3.289,
+                -2.0786
+              ],
+              "positive": 2,
+              "zero": 0,
+              "negative": 28
+            }
+          }
+        },
+        {
+          "baseline": "priority",
+          "paired_seeds": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "differences_optimized_minus_baseline": {
+            "completed_handoffs": {
+              "mean_difference": 0.0333,
+              "min_difference": 0,
+              "max_difference": 1,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.1
+              ],
+              "positive": 1,
+              "zero": 29,
+              "negative": 0
+            },
+            "avg_wait_minutes": {
+              "mean_difference": -4.3657,
+              "min_difference": -5.710000000000001,
+              "max_difference": -1.0599999999999987,
+              "bootstrap_percentile_95_ci": [
+                -4.6883,
+                -4.0017
+              ],
+              "positive": 0,
+              "zero": 0,
+              "negative": 30
+            },
+            "p90_wait_minutes": {
+              "mean_difference": -5.4767,
+              "min_difference": -20.0,
+              "max_difference": 5.0,
+              "bootstrap_percentile_95_ci": [
+                -7.72,
+                -3.2533
+              ],
+              "positive": 5,
+              "zero": 2,
+              "negative": 23
+            },
+            "unfinished_backlog": {
+              "mean_difference": -0.0333,
+              "min_difference": -1,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                -0.1,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 29,
+              "negative": 1
+            },
+            "unfinished_wait_lower_bound_mean": {
+              "mean_difference": -0.0067,
+              "min_difference": -0.19999999999998863,
+              "max_difference": 0.0,
+              "bootstrap_percentile_95_ci": [
+                -0.02,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 29,
+              "negative": 1
+            },
+            "unfinished_wait_lower_bound_max": {
+              "mean_difference": 0,
+              "min_difference": 0,
+              "max_difference": 0,
+              "bootstrap_percentile_95_ci": [
+                0.0,
+                0.0
+              ],
+              "positive": 0,
+              "zero": 30,
+              "negative": 0
+            },
+            "service_group_mean_wait_spread": {
+              "mean_difference": -1.9573,
+              "min_difference": -4.539999999999999,
+              "max_difference": 1.3900000000000006,
+              "bootstrap_percentile_95_ci": [
+                -2.4947,
+                -1.4113
+              ],
+              "positive": 4,
+              "zero": 0,
+              "negative": 26
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "ci_method": "10,000 deterministic paired-seed bootstrap resamples, percentile 2.5/97.5%; no CI when n<10. Computed after the full matrix completes. Descriptive, unadjusted for multiple comparisons.",
+  "scope": "Synthetic internal-policy comparison; no commercial product or real terminal was benchmarked."
+}

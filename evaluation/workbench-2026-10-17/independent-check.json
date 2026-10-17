@@ -1,0 +1,71 @@
+{
+  "method": "Independent stdlib arithmetic, denominator, unique-key and pairing checks; no engine or benchmark helper imported.",
+  "raw_sha256": "321043823c87dbc1486ba69f484fe49ed017eb2e12981c6394e57c038f01a929",
+  "checkpoint_rows": 918,
+  "worlds": 459,
+  "checks": 5264,
+  "failures": [],
+  "observed": [
+    {
+      "scenario": "normal_operations",
+      "horizon": 90,
+      "completed_difference": 2.7
+    },
+    {
+      "scenario": "normal_operations",
+      "horizon": 240,
+      "completed_difference": 0.0333
+    },
+    {
+      "scenario": "battery_truck_access_2024",
+      "horizon": 90,
+      "completed_difference": 0.1
+    },
+    {
+      "scenario": "battery_truck_access_2024",
+      "horizon": 240,
+      "completed_difference": 0.0333
+    },
+    {
+      "scenario": "terminal_data_disruption_2017",
+      "horizon": 90,
+      "completed_difference": 0.0333
+    },
+    {
+      "scenario": "terminal_data_disruption_2017",
+      "horizon": 240,
+      "completed_difference": 0.0333
+    },
+    {
+      "scenario": "long_dwell_backlog_2021",
+      "horizon": 90,
+      "completed_difference": 3.2667
+    },
+    {
+      "scenario": "long_dwell_backlog_2021",
+      "horizon": 240,
+      "completed_difference": 0.0333
+    },
+    {
+      "scenario": "weather_warning_no_closure_2023",
+      "horizon": 90,
+      "completed_difference": 2.6667
+    },
+    {
+      "scenario": "weather_warning_no_closure_2023",
+      "horizon": 240,
+      "completed_difference": 0.0333
+    },
+    {
+      "scenario": "equal_service_control",
+      "horizon": 90,
+      "completed_difference": 0
+    },
+    {
+      "scenario": "equal_service_control",
+      "horizon": 240,
+      "completed_difference": 0
+    }
+  ],
+  "scope": "Saved synthetic results only; not commercial head-to-head performance or physical-port validation."
+}

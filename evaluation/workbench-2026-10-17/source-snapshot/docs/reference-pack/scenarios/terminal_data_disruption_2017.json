@@ -1,0 +1,236 @@
+{
+  "schema_version": "simulation-1",
+  "scenario_id": "terminal_data_disruption_2017",
+  "seed": 17,
+  "start_at": "2026-10-17T09:00:00-07:00",
+  "horizon_minutes": 240,
+  "provenance": {
+    "kind": "synthetic",
+    "description": "Compressed hypothetical exercise; historical sources explain background only, never resource counts or timings.",
+    "source_refs": [
+      "maersk_cyber_2017",
+      "torres_cyber_2017",
+      "apm_recovery_2017"
+    ]
+  },
+  "containers_fixture": {
+    "path": "fixtures/t49-cohort-100.json",
+    "sha256": "497b7631326017a02250d854e80b3f8ad4fa088aae62582897a489b71d6da7b6",
+    "mode": "synthetic",
+    "overlay_path": "fixtures/t49-cohort-100.operator-overlay.json",
+    "overlay_sha256": "a19bc2c6e80ca9963f0546f1b6ff4ee374b8a5487300d41b58abe10195ed8104"
+  },
+  "planning": {
+    "lookahead_minutes": 60,
+    "replan_minutes": 5,
+    "freeze_minutes": 5
+  },
+  "resources": [
+    {
+      "id": "east-lane-1",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "East",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "east-lane-2",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "East",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "west-lane-1",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "West",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "west-lane-2",
+      "kind": "gate_lane",
+      "capacity": 1,
+      "gate": "West",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "scale-1",
+      "kind": "scale",
+      "capacity": 1,
+      "gate": "Any",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "yard-crew",
+      "kind": "crew",
+      "capacity": 2,
+      "gate": "Any",
+      "provenance": "synthetic"
+    },
+    {
+      "id": "reefer-tech",
+      "kind": "reefer_technician",
+      "capacity": 1,
+      "gate": "Any",
+      "provenance": "synthetic"
+    }
+  ],
+  "duration_models": {
+    "gate_handoff": {
+      "distribution": "triangular",
+      "minutes": [
+        3,
+        5,
+        9
+      ]
+    },
+    "weight_check": {
+      "distribution": "triangular",
+      "minutes": [
+        6,
+        10,
+        16
+      ]
+    },
+    "reefer_check": {
+      "distribution": "triangular",
+      "minutes": [
+        5,
+        8,
+        14
+      ]
+    }
+  },
+  "events": [
+    {
+      "event_id": "terminal_data_disruption_2017-1",
+      "type": "provider.connectivity",
+      "published_at_min": 20,
+      "observed_at_min": 20,
+      "applies_at_min": 20,
+      "provenance": "synthetic",
+      "provider_id": "terminal49_simulated",
+      "scope": "synthetic-terminal",
+      "state": "offline"
+    },
+    {
+      "event_id": "terminal_data_disruption_2017-2",
+      "type": "resource.availability",
+      "published_at_min": 35,
+      "observed_at_min": 35,
+      "applies_at_min": 35,
+      "provenance": "synthetic",
+      "resource_ids": [
+        "east-lane-1",
+        "east-lane-2"
+      ],
+      "state": "closed",
+      "capacity": 0
+    },
+    {
+      "event_id": "terminal_data_disruption_2017-3",
+      "type": "evidence.update",
+      "published_at_min": 10,
+      "observed_at_min": 70,
+      "applies_at_min": 10,
+      "provenance": "synthetic",
+      "container_id": "TRXU7731902",
+      "namespace": "provider",
+      "evidence_id": "late-old-clearance",
+      "patch": {
+        "holds_at_pod_terminal": []
+      }
+    },
+    {
+      "event_id": "terminal_data_disruption_2017-4",
+      "type": "evidence.update",
+      "published_at_min": 15,
+      "observed_at_min": 70,
+      "applies_at_min": 15,
+      "provenance": "synthetic",
+      "container_id": "TRXU7731902",
+      "namespace": "provider",
+      "evidence_id": "late-hold",
+      "patch": {
+        "holds_at_pod_terminal": [
+          {
+            "name": "customs",
+            "status": "hold",
+            "description": "Synthetic retained hold"
+          }
+        ]
+      }
+    },
+    {
+      "event_id": "terminal_data_disruption_2017-5",
+      "type": "evidence.update",
+      "published_at_min": 10,
+      "observed_at_min": 70,
+      "applies_at_min": 10,
+      "provenance": "synthetic",
+      "container_id": "TRXU7731902",
+      "namespace": "provider",
+      "evidence_id": "late-old-clearance",
+      "patch": {
+        "holds_at_pod_terminal": []
+      }
+    },
+    {
+      "event_id": "terminal_data_disruption_2017-6",
+      "type": "provider.connectivity",
+      "published_at_min": 100,
+      "observed_at_min": 100,
+      "applies_at_min": 100,
+      "provenance": "synthetic",
+      "provider_id": "terminal49_simulated",
+      "scope": "synthetic-terminal",
+      "state": "partial"
+    },
+    {
+      "event_id": "terminal_data_disruption_2017-7",
+      "type": "resource.availability",
+      "published_at_min": 130,
+      "observed_at_min": 130,
+      "applies_at_min": 130,
+      "provenance": "synthetic",
+      "resource_ids": [
+        "east-lane-1",
+        "east-lane-2"
+      ],
+      "state": "restricted",
+      "capacity": 1
+    },
+    {
+      "event_id": "terminal_data_disruption_2017-8",
+      "type": "provider.connectivity",
+      "published_at_min": 160,
+      "observed_at_min": 160,
+      "applies_at_min": 160,
+      "provenance": "synthetic",
+      "provider_id": "terminal49_simulated",
+      "scope": "synthetic-terminal",
+      "state": "online"
+    },
+    {
+      "event_id": "terminal_data_disruption_2017-9",
+      "type": "resource.availability",
+      "published_at_min": 160,
+      "observed_at_min": 160,
+      "applies_at_min": 160,
+      "provenance": "synthetic",
+      "resource_ids": [
+        "east-lane-1",
+        "east-lane-2"
+      ],
+      "state": "open",
+      "capacity": 2
+    }
+  ],
+  "expected_invariants": [
+    "Known holds remain blocking through outages and road recovery.",
+    "Verification never implies clearance or cargo quality acceptance.",
+    "Only valid completed gate handoffs count as throughput.",
+    "No future observations are exposed to policies."
+  ]
+}

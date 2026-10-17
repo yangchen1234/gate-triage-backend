@@ -222,7 +222,7 @@ def test_previous_workspace_state_upgrades_without_resetting_progress_or_mutatin
     updated = apply_command(old, {"command": "feed", "action": "duplicate"})
     assert updated["clock_min"] == 15
     assert len(updated["completed"]) == 6
-    assert updated["engine_revision"] == 3
+    assert updated["engine_revision"] == 4
     assert updated["feed"]["duplicates_ignored"] == 1
 
 

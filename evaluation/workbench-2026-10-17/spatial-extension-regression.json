@@ -1,0 +1,246 @@
+{
+  "scope": "Representative deterministic FIFO/priority gate-trace equivalence after adding independent vessel work. Not a rerun of the 30-seed CP matrix.",
+  "cases": [
+    {
+      "scenario_id": "normal_operations",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 40,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "normal_operations",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "normal_operations",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 39,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "normal_operations",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "battery_truck_access_2024",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 31,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "battery_truck_access_2024",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "battery_truck_access_2024",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 30,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "battery_truck_access_2024",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "terminal_data_disruption_2017",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 24,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "terminal_data_disruption_2017",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "terminal_data_disruption_2017",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 24,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "terminal_data_disruption_2017",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "long_dwell_backlog_2021",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 40,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "long_dwell_backlog_2021",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "long_dwell_backlog_2021",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 41,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "long_dwell_backlog_2021",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "weather_warning_no_closure_2023",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 40,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "weather_warning_no_closure_2023",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "weather_warning_no_closure_2023",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 39,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "weather_warning_no_closure_2023",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 51,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "equal_service_control",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 36,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "equal_service_control",
+      "strategy": "fifo",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 96,
+      "vessel_workorders_completed": 12
+    },
+    {
+      "scenario_id": "equal_service_control",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 90,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 36,
+      "vessel_workorders_completed": 9
+    },
+    {
+      "scenario_id": "equal_service_control",
+      "strategy": "priority",
+      "seed": 17,
+      "horizon_minutes": 240,
+      "identical_completed_trace": true,
+      "identical_gate_candidate_inputs": true,
+      "completed_handoffs": 96,
+      "vessel_workorders_completed": 12
+    }
+  ],
+  "passed": 24
+}

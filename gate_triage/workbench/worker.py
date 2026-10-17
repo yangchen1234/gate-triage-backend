@@ -17,7 +17,7 @@ import uuid
 from concurrent.futures import Future, ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 
-from sqlalchemy import or_, select, update
+from sqlalchemy import case, or_, select, update
 
 from .db import Job, Workspace, get_database, utcnow
 
@@ -85,6 +85,9 @@ def _claim() -> dict | None:
 def _execute(job: dict) -> dict:
     from .api import engine
     payload = job["payload"]
+    if job["kind"] == "scale_seed":
+        from .scale import seed_scale
+        return seed_scale(job)
     if job["kind"] == "plan":
         result = engine().plan(job["state"], profile=payload.get("profile", "throughput"), strategy=payload.get("strategy", "optimized"))
         return {**result, "id": job["id"], "plan_id": job["id"], "input_revision": job["input_revision"], "scope": "simulation_cohort_only"}
@@ -125,25 +128,20 @@ def _finish(job: dict, future: Future) -> None:
         result = None
         error = {"code": "JOB_FAILED", "message": "The computation could not finish. The workspace is unchanged; submit a new request or inspect server logs.", "retryable": True}
     with database.write_lock, database.session() as session:
-        row = session.get(Job, job["id"])
-        if not row or row.lease_owner != _owner or row.status != "running":
+        now = utcnow()
+        committed = session.execute(update(Job).where(Job.id == job["id"], Job.lease_owner == _owner, Job.status == "running", Job.lease_until > now).values(status="failed" if error else "succeeded", result=result, error=error, progress=100, finished_at=now, lease_until=None), execution_options={"synchronize_session": False})
+        if committed.rowcount != 1:
             return
-        row.status = "failed" if error else "succeeded"
-        row.result = result
-        row.error = error
-        row.progress = 100
-        row.finished_at = utcnow()
-        row.lease_until = None
-        workspace = session.get(Workspace, row.workspace_id)
+        workspace = session.get(Workspace, job["workspace_id"])
         if workspace:
-            audit(session, workspace, f"{row.kind}.{row.status}", {"job_id": row.id, "input_revision": row.input_revision, "current_revision": workspace.revision}, "worker")
+            audit(session, workspace, f"{job['kind']}.{'failed' if error else 'succeeded'}", {"job_id": job["id"], "input_revision": job["input_revision"], "current_revision": workspace.revision}, "worker")
 
 
 def _playback_tick() -> None:
     from .api import audit, commit_state, engine
     database = get_database()
     with database.write_lock, database.session() as session:
-        for workspace in session.scalars(select(Workspace).where(Workspace.mode == "SIMULATION").with_for_update(skip_locked=True)):
+        for workspace in session.scalars(select(Workspace).where(Workspace.mode == "SIMULATION", Workspace.playback["playing"].as_boolean().is_(True)).with_for_update(skip_locked=True)):
             playback = dict(workspace.playback or {})
             if not playback.get("playing"):
                 continue
@@ -196,7 +194,7 @@ def _run() -> None:
                     running = None
                 if running and time.monotonic() - last_renewal > 10:
                     with get_database().write_lock, get_database().session() as session:
-                        session.execute(update(Job).where(Job.id == running[0]["id"], Job.lease_owner == _owner, Job.status == "running").values(lease_until=utcnow() + timedelta(seconds=120), progress=50))
+                        session.execute(update(Job).where(Job.id == running[0]["id"], Job.lease_owner == _owner, Job.status == "running").values(lease_until=utcnow() + timedelta(seconds=120), progress=case((Job.progress < 50, 50), else_=Job.progress)))
                     last_renewal = time.monotonic()
                 if running is None:
                     job = _claim()

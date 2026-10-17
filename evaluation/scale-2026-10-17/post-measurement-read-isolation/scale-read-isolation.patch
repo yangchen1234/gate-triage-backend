@@ -1,0 +1,35 @@
+--- measured-build/gate_triage/workbench/scale.py
++++ post-measurement/gate_triage/workbench/scale.py
+@@ -12,7 +12,7 @@
+ from sqlalchemy.orm import Mapped, mapped_column
+ 
+ from .api import ApiError, authorized_workspace, check_revision, envelope, increment_request_revision, job_data, respond, retry_receipt, save_receipt
+-from .db import Base, Job, Workspace, get_database, utcnow
++from .db import Base, Job, Workspace, begin_read_snapshot, get_database, utcnow
+ 
+ router = APIRouter(prefix="/api/v1", tags=["relational synthetic port scale"])
+ TERMINALS = ("terminal-fenix", "terminal-apm", "terminal-everport", "terminal-trapac", "terminal-yusen", "terminal-wbct-cs", "terminal-wbct-latil")
+@@ -133,6 +133,7 @@
+ @router.get("/workspaces/{workspace_id}/scale")
+ def get_scale(workspace_id: str, x_workspace_token: str | None = Header(None)):
+     with get_database().session() as session:
++        begin_read_snapshot(session)
+         workspace = authorized_workspace(session, workspace_id, x_workspace_token)
+         run = latest_run(session, workspace_id)
+         return respond(envelope({"profiles": profiles(), "run": run_data(run), "summary": summary(session, run), "mode": "SYNTHETIC_SCALE", "decision_window_limit": WINDOW_LIMIT, "clock_independent_from_precision": True, "notice": "Official annual TEU calibrates synthetic movement volume; allocation, dwell and service capacity are assumptions. No whole-port CP-SAT plan or real inventory is claimed."}, workspace))
+@@ -222,6 +223,7 @@
+ @router.get("/workspaces/{workspace_id}/scale/containers")
+ def get_scale_containers(workspace_id: str, offset: int = Query(0, ge=0, le=200000), limit: int = Query(50, ge=1, le=100), terminal_id: str | None = None, status: str | None = None, query: str = Query("", max_length=100), x_workspace_token: str | None = Header(None)):
+     with get_database().session() as session:
++        begin_read_snapshot(session)
+         workspace = authorized_workspace(session, workspace_id, x_workspace_token)
+         run = latest_run(session, workspace_id, required=True)
+         if terminal_id is not None and terminal_id not in TERMINALS or status is not None and status not in STATUSES:
+@@ -241,6 +243,7 @@
+ @router.get("/workspaces/{workspace_id}/scale/events")
+ def get_scale_events(workspace_id: str, offset: int = Query(0, ge=0), limit: int = Query(50, ge=1, le=100), x_workspace_token: str | None = Header(None)):
+     with get_database().session() as session:
++        begin_read_snapshot(session)
+         workspace = authorized_workspace(session, workspace_id, x_workspace_token)
+         run = latest_run(session, workspace_id, required=True)
+         count = session.scalar(select(func.count()).select_from(ScaleEvent).where(ScaleEvent.run_id == run.id))

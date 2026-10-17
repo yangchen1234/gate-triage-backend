@@ -50,6 +50,9 @@ For frontend hot reload use `pnpm dev` in `apps/web`; Vite proxies `/api` to the
 5. Submit explicitly simulated verification evidence. A normal temperature does not remove a customs hold or authorize a movement.
 6. Run Experiments. Compare FIFO, priority and constraint optimization with the same fixture, seed, information and capacity. Results may tie or get worse; the app does not invent improvement percentages.
 7. Search the source library. This is local source retrieval without an LLM. Historical sources explain scenarios, not present port conditions.
+8. Toggle the geographic operations map. Zoom or pan the real OpenStreetMap basemap, inspect sourced terminal reference points, then select a synthetic operational zone to see its actual simulated progress and resources.
+9. Open the map's **Emergency workflow**. Choose a disaster and scope, inspect its specific dispatcher strategy, and inject a synthetic report. Ownership acknowledgement and recovery are separate actions. A recovery does not remove another active restriction.
+10. Open **Port-scale data** to generate a PostgreSQL workload calibrated to official 2025 TEU flow. Average-day, July-peak-month average-day and seven-day profiles contain about 17,000, 20,000 and 119,000 synthetic movement records. Inspect the exact calibration and assumptions, filter SQL pages, and advance the independent scale clock. This is not a whole-port equipment optimization claim.
 
 The Operations layout takes interaction cues from the supplied Port Optimizer screenshot: scope selection, dense sortable worklists, row selection, column preferences and a request dialog. Select containers to save an internal coordination request and track its status. Requests are database records inside this rehearsal; they do not send messages, create bookings or remove holds.
 
@@ -63,6 +66,8 @@ Use **Change scenario → Recent rehearsals → Resume** to return to earlier wo
 - Server-side playback and discrete-event world; independent, observed-time evidence updates.
 - OR-Tools CP-SAT optional intervals and resource constraints, with solver status and plan validation.
 - Local BM25 source retrieval; no cloud generation is required or claimed.
+- Leaflet / OpenStreetMap reference geography, state-derived simulated zones, hazard-specific playbooks and durable internal human escalation.
+- Separate relational movement/event tables for seven-terminal volume rehearsal, bounded SQL pagination and local decision windows; large datasets never enter the browser or precision-world snapshot in full.
 
 The worker is part of the local application process. Playback pauses after a server restart, avoiding invisible catch-up. This is a local demonstration deployment, not a high-availability port control system.
 
@@ -84,3 +89,7 @@ pnpm build
 ```
 
 See [the technical specification](docs/gate-triage-technical-specification.zh-CN.md), [the realtime decision contract](docs/realtime-decision-contract.zh-CN.md), [reference fixtures](docs/reference-pack/README.md) and [the verification record](docs/workbench-verification.md).
+
+Read [the map, emergency and scale design](docs/spatial-emergency-and-scale.zh-CN.md), [mature-solution comparison](docs/mature-solution-comparison.zh-CN.md), [engineering audit](docs/engineering-audit.md) and [reproducible synthetic evaluation](docs/simulation-evaluation.zh-CN.md). The evaluation preserves ties, losses, censored waits, raw seed-level records and source hashes; it does not benchmark commercial products.
+
+The [port-scale evaluation](docs/scale-evaluation.zh-CN.md) records the actual 119,014-row PostgreSQL run, SQL checks, paged-query measurements and explicit workload assumptions. **Auto advance while open** controls real, serialized scale API requests; navigating away stops that panel controller. It is separate from the durable precision-world server playback.

@@ -1,0 +1,156 @@
+{
+  "type": "FeatureCollection",
+  "source_url": "https://ww2.arb.ca.gov/sites/default/files/2022-05/Los%20Angeles%20-%20Original%20Plan%20%28non-ADA%29.pdf",
+  "source_date": "2021-12",
+  "checked_at": "2026-10-17",
+  "reference_notice": "Published reference coordinates, not surveyed terminal boundaries, truck navigation, current gate positions or real operational status.",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "terminal-apm",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.252544383,
+          33.722090887
+        ]
+      },
+      "properties": {
+        "id": "terminal-apm",
+        "name": "APM Terminals Pacific",
+        "kind": "terminal",
+        "berths": "401–406",
+        "modeled": false,
+        "source_url": "https://ww2.arb.ca.gov/sites/default/files/2022-05/Los%20Angeles%20-%20Original%20Plan%20%28non-ADA%29.pdf",
+        "geometry_provenance": "Published reference coordinate in December 2021 Port of Los Angeles At-Berth Port Plan, p. 2 (CARB). Point only; not a lease boundary.",
+        "name_provenance": "Current name/berths: Port of Los Angeles container directory, checked 2026-10-17."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "terminal-everport",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.264681189,
+          33.74319965
+        ]
+      },
+      "properties": {
+        "id": "terminal-everport",
+        "name": "Everport Terminal Services",
+        "kind": "terminal",
+        "berths": "226–236",
+        "modeled": false,
+        "source_url": "https://ww2.arb.ca.gov/sites/default/files/2022-05/Los%20Angeles%20-%20Original%20Plan%20%28non-ADA%29.pdf",
+        "geometry_provenance": "Published reference coordinate in December 2021 Port of Los Angeles At-Berth Port Plan, p. 2 (CARB). Point only; not a lease boundary.",
+        "name_provenance": "Current name/berths: Port of Los Angeles container directory, checked 2026-10-17."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "terminal-fenix",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.253312987,
+          33.741347269
+        ]
+      },
+      "properties": {
+        "id": "terminal-fenix",
+        "name": "Fenix Marine Services",
+        "kind": "terminal",
+        "berths": "302–305",
+        "modeled": true,
+        "source_url": "https://ww2.arb.ca.gov/sites/default/files/2022-05/Los%20Angeles%20-%20Original%20Plan%20%28non-ADA%29.pdf",
+        "geometry_provenance": "Published reference coordinate in December 2021 Port of Los Angeles At-Berth Port Plan, p. 2 (CARB). Point only; not a lease boundary.",
+        "name_provenance": "Current name/berths: Port of Los Angeles container directory, checked 2026-10-17."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "terminal-trapac",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.26734023,
+          33.770567548
+        ]
+      },
+      "properties": {
+        "id": "terminal-trapac",
+        "name": "TraPac",
+        "kind": "terminal",
+        "berths": "136–147",
+        "modeled": false,
+        "source_url": "https://ww2.arb.ca.gov/sites/default/files/2022-05/Los%20Angeles%20-%20Original%20Plan%20%28non-ADA%29.pdf",
+        "geometry_provenance": "Published reference coordinate in December 2021 Port of Los Angeles At-Berth Port Plan, p. 2 (CARB). Point only; not a lease boundary.",
+        "name_provenance": "Current name/berths: Port of Los Angeles container directory, checked 2026-10-17."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "terminal-yusen",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.256951735,
+          33.754804704
+        ]
+      },
+      "properties": {
+        "id": "terminal-yusen",
+        "name": "Yusen Terminals",
+        "kind": "terminal",
+        "berths": "212–225",
+        "modeled": false,
+        "source_url": "https://ww2.arb.ca.gov/sites/default/files/2022-05/Los%20Angeles%20-%20Original%20Plan%20%28non-ADA%29.pdf",
+        "geometry_provenance": "Published reference coordinate in December 2021 Port of Los Angeles At-Berth Port Plan, p. 2 (CARB). Point only; not a lease boundary.",
+        "name_provenance": "Current name/berths: Port of Los Angeles container directory, checked 2026-10-17."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "terminal-wbct-cs",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.288365671,
+          33.756491978
+        ]
+      },
+      "properties": {
+        "id": "terminal-wbct-cs",
+        "name": "WBCT · China Shipping",
+        "kind": "terminal",
+        "berths": "100–103",
+        "modeled": false,
+        "source_url": "https://ww2.arb.ca.gov/sites/default/files/2022-05/Los%20Angeles%20-%20Original%20Plan%20%28non-ADA%29.pdf",
+        "geometry_provenance": "Published reference coordinate in December 2021 Port of Los Angeles At-Berth Port Plan, p. 2 (CARB). Point only; not a lease boundary.",
+        "name_provenance": "Current name/berths: Port of Los Angeles container directory, checked 2026-10-17."
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "terminal-wbct-latil",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.287916073,
+          33.759357364
+        ]
+      },
+      "properties": {
+        "id": "terminal-wbct-latil",
+        "name": "WBCT · LA TiL",
+        "kind": "terminal",
+        "berths": "121–127",
+        "modeled": false,
+        "source_url": "https://ww2.arb.ca.gov/sites/default/files/2022-05/Los%20Angeles%20-%20Original%20Plan%20%28non-ADA%29.pdf",
+        "geometry_provenance": "Published reference coordinate in December 2021 Port of Los Angeles At-Berth Port Plan, p. 2 (CARB). Point only; not a lease boundary.",
+        "name_provenance": "Current terminal names/berths checked against Port of Los Angeles container directory 2026-10-17. Historical Everglades (WBCT) point is an approximate WBCT LA TiL reference, not verified current gate coordinates."
+      }
+    }
+  ]
+}

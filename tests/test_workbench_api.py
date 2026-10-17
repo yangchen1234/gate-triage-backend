@@ -5,20 +5,26 @@ import hashlib
 import hmac
 import json
 import copy
+import os
+import subprocess
+import sys
 import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import Future
 from datetime import timedelta
 from contextlib import contextmanager
 
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from sqlalchemy import select
+from sqlalchemy import create_engine, inspect, select, text
+from sqlalchemy.engine import make_url
+from sqlalchemy.exc import IntegrityError
 
 from gate_triage.workbench.api import install_handlers, router
 from gate_triage.workbench.connector import Terminal49Connector, verify_webhook
-from gate_triage.workbench.db import AuditEvent, CoordinationRequest, CoordinationTask, Job, ProviderInbox, Workspace, configure_database, get_database, utcnow
+from gate_triage.workbench.db import AuditEvent, Base, CoordinationRequest, CoordinationTask, Database, IdempotencyRecord, Job, ProviderInbox, Workspace, configure_database, get_database, utcnow
 from gate_triage.workbench.worker import start_worker, stop_worker
 
 
@@ -399,3 +405,250 @@ def test_coordination_requests_reject_unknown_containers_quota_and_fact_patch(cl
     assert forbidden.status_code == 422
     stale = client.patch(url + "/" + row["id"], json={"status": "in_progress"}, headers=headers(workspace))
     assert stale.status_code == 412
+
+
+@pytest.mark.parametrize("command", [
+    {"command": []}, {"command": "select_plan", "plan": ["invalid"]},
+    {"command": "pause", "extra": float("nan")},
+    {"command": "advance", "minutes": 1, "strategy": []},
+    {"command": "incident", "status": "closed", "gate": "west"},
+    {"command": "evidence", "values": {"temp_c": float("nan")}},
+])
+def test_malformed_commands_return_validation_error_without_writes(client, command):
+    workspace = create(client)
+    response = client.post(f"/api/v1/workspaces/{workspace['id']}/commands", content=json.dumps(command), headers={**headers(workspace), "Content-Type": "application/json"})
+    assert response.status_code == 422
+    with get_database().session() as session:
+        assert session.get(Workspace, workspace["id"]).revision == 1
+        assert len(list(session.scalars(select(AuditEvent).where(AuditEvent.workspace_id == workspace["id"])))) == 1
+
+
+def test_failed_request_transaction_rolls_back_row_revision_and_retry_receipt(client, monkeypatch):
+    import gate_triage.workbench.api as api
+    workspace = create(client)
+    original_audit = api.audit
+    def fail_audit(*args, **kwargs):
+        raise RuntimeError("Injected transaction failure")
+    monkeypatch.setattr(api, "audit", fail_audit)
+    url = f"/api/v1/workspaces/{workspace['id']}/requests"
+    key = str(uuid.uuid4())
+    body = {"title": "Atomic request", "owner_role": "terminal_operations", "service_kind": "general", "container_ids": []}
+    with pytest.raises(RuntimeError, match="Injected transaction failure"):
+        client.post(url, json=body, headers=headers(workspace, key=key))
+    with get_database().session() as session:
+        assert session.get(Workspace, workspace["id"]).revision == 1
+        assert not list(session.scalars(select(CoordinationRequest).where(CoordinationRequest.workspace_id == workspace["id"])))
+        assert not list(session.scalars(select(IdempotencyRecord).where(IdempotencyRecord.key == key)))
+    monkeypatch.setattr(api, "audit", original_audit)
+    assert client.post(url, json=body, headers=headers(workspace, key=key)).status_code == 201
+
+
+def check_expired_completion_fence(client):
+    import gate_triage.workbench.worker as worker
+    workspace = create(client)
+    queued = client.post(f"/api/v1/workspaces/{workspace['id']}/plan-jobs", json={}, headers=headers(workspace)).json()["data"]
+    with get_database().session() as session:
+        row = session.get(Job, queued["id"])
+        row.status = "running"
+        row.lease_owner = worker._owner
+        row.lease_until = utcnow() - timedelta(seconds=5)
+        row.attempts = 1
+    future = Future()
+    future.set_result({"solver_status": "FEASIBLE"})
+    job = {"id": queued["id"], "workspace_id": workspace["id"], "kind": "plan", "input_revision": 1}
+    worker._finish(job, future)
+    with get_database().session() as session:
+        expired = session.get(Job, queued["id"])
+        assert expired.status == "running"
+        assert expired.result is None
+    recovered = worker._claim()
+    assert recovered["id"] == queued["id"]
+    worker._finish(recovered, future)
+    worker._finish(recovered, future)
+    with get_database().session() as session:
+        assert session.get(Job, queued["id"]).status == "succeeded"
+        assert len(list(session.scalars(select(AuditEvent).where(AuditEvent.workspace_id == workspace["id"], AuditEvent.action == "plan.succeeded")))) == 1
+
+
+def test_expired_completion_cannot_commit_before_recovery(client):
+    check_expired_completion_fence(client)
+
+
+def test_current_metadata_schema_can_be_adopted_and_reopened(tmp_path):
+    database = Database(f"sqlite:///{tmp_path / 'adopt.db'}")
+    Base.metadata.create_all(database.engine)
+    database.initialize()
+    database.initialize()
+    with database.session() as session:
+        assert session.execute(text("SELECT version_num FROM wb_alembic_version")).scalar_one() == "wb_0003"
+    database.engine.dispose()
+
+
+def assert_request_foreign_key_enforced():
+    with pytest.raises(IntegrityError):
+        with get_database().session() as session:
+            session.add(CoordinationRequest(id=str(uuid.uuid4()), workspace_id="nonexistent-workspace", status="open", owner_role="terminal_operations", service_kind="general", title="Must not become an orphan", comment="", container_ids=[], payload={}, revision=1, created_at=utcnow(), updated_at=utcnow()))
+
+
+def test_sqlite_enforces_declared_request_foreign_key(client):
+    assert_request_foreign_key_enforced()
+
+
+def test_result_specific_route_and_run_id_are_not_silently_ignored(client):
+    workspace = create(client)
+    prefix = f"/api/v1/workspaces/{workspace['id']}"
+    wrong_run = client.post(prefix + "/plan-jobs", json={"run_id": "a-different-run"}, headers=headers(workspace))
+    assert wrong_run.status_code == 404
+    queued = client.post(prefix + "/plan-jobs", json={}, headers=headers(workspace)).json()["data"]
+    assert client.get(prefix + "/experiments/" + queued["id"], headers=headers(workspace)).status_code == 404
+    assert client.get(prefix + "/plans/" + queued["id"], headers=headers(workspace)).status_code == 200
+
+
+def test_signature_rejects_non_ascii_without_crashing():
+    assert verify_webhook(b"{}", "ç" * 64, "secret") is False
+
+
+@pytest.mark.parametrize("invalid", [{"horizon_minutes": 480}, {"seeds": [17, 17]}, {"seeds": [-1]}])
+def test_invalid_experiment_parameters_rejected_before_queueing(client, invalid):
+    workspace = create(client)
+    response = client.post(f"/api/v1/workspaces/{workspace['id']}/experiments", json=invalid, headers=headers(workspace))
+    assert response.status_code == 422
+    with get_database().session() as session:
+        assert not list(session.scalars(select(Job).where(Job.workspace_id == workspace["id"])))
+
+
+@pytest.mark.parametrize("kind,values", [
+    ("customs", {"holds": ["invalid"]}),
+    ("customs", {"holds": [], "availability_known": "true", "available_for_pickup": "false"}),
+    ("customs", {"holds": [{"name": "customs", "status": []}]}),
+    ("weight", {"measurement_verified": "false"}),
+    ("reefer", {"temp_c": True}),
+])
+def test_simulated_evidence_cannot_bypass_types_or_crash_projection(client, kind, values):
+    workspace = create(client)
+    command = {"command": "evidence", "container_id": workspace["snapshot"]["hero_id"], "kind": kind, "values": values}
+    response = client.post(f"/api/v1/workspaces/{workspace['id']}/commands", json=command, headers=headers(workspace))
+    assert response.status_code == 422
+    with get_database().session() as session:
+        assert session.get(Workspace, workspace["id"]).revision == 1
+
+
+@pytest.fixture
+def postgres_client():
+    url = os.getenv("WORKBENCH_TEST_POSTGRES_URL")
+    if not url:
+        pytest.skip("Set WORKBENCH_TEST_POSTGRES_URL for isolated real-PostgreSQL checks")
+    stop_worker()
+    schema = "wb_audit_" + uuid.uuid4().hex
+    admin = create_engine(url)
+    with admin.begin() as connection:
+        connection.execute(text(f'CREATE SCHEMA "{schema}"'))
+    scoped = make_url(url).update_query_dict({"options": f"-csearch_path={schema}"}).render_as_string(hide_password=False)
+    configure_database(scoped)
+    app = FastAPI()
+    install_handlers(app)
+    app.include_router(router)
+    try:
+        with TestClient(app) as test_client:
+            yield test_client, scoped
+    finally:
+        stop_worker()
+        configure_database("sqlite:///:memory:")
+        with admin.begin() as connection:
+            connection.execute(text(f'DROP SCHEMA "{schema}" CASCADE'))
+        admin.dispose()
+
+
+def test_real_postgres_migration_constraints_and_expired_lease(postgres_client):
+    client, url = postgres_client
+    assert get_database().engine.dialect.name == "postgresql"
+    with get_database().session() as session:
+        assert session.execute(text("SELECT version_num FROM wb_alembic_version")).scalar_one() == "wb_0003"
+    assert_request_foreign_key_enforced()
+    check_expired_completion_fence(client)
+
+
+def test_real_postgres_playback_advances_persisted_world_then_stays_paused(postgres_client):
+    from gate_triage.workbench.worker import _playback_tick
+    client, url = postgres_client
+    workspace = create(client)
+    prefix = f"/api/v1/workspaces/{workspace['id']}"
+    response = client.post(prefix + "/playback", json={"playing": True, "speed": 1}, headers=headers(workspace))
+    assert response.status_code == 200
+    with get_database().session() as session:
+        row = session.get(Workspace, workspace["id"])
+        row.playback = {**row.playback, "last_tick_at": (utcnow() - timedelta(seconds=2)).isoformat()}
+    _playback_tick()
+    current = client.get(prefix, headers=headers(workspace)).json()["data"]
+    assert current["snapshot"]["clock_min"] >= 2
+    assert current["revision"] == 3
+    current["token"] = workspace["token"]
+    paused = client.post(prefix + "/playback", json={"playing": False, "speed": 1}, headers=headers(current))
+    assert paused.status_code == 200
+    _playback_tick()
+    with get_database().session() as session:
+        row = session.get(Workspace, workspace["id"])
+        assert row.state["clock_min"] == current["snapshot"]["clock_min"]
+        assert row.revision == 4
+
+
+def test_real_postgres_cross_process_idempotency_and_revision_lock(postgres_client):
+    client, url = postgres_client
+    code = '''
+import json,os,sys,time
+from fastapi import FastAPI
+from fastapi.testclient import TestClient
+from gate_triage.workbench.api import router,install_handlers
+from gate_triage.workbench.db import configure_database
+configure_database(os.environ["WORKBENCH_TEST_PG_SCOPED_URL"])
+app=FastAPI();install_handlers(app);app.include_router(router)
+request=json.load(sys.stdin)
+while time.time()<request["start_at"]:time.sleep(.01)
+with TestClient(app) as client:
+ response=client.post(request["path"],json=request["body"],headers=request["headers"])
+ payload=response.json();data=payload.get("data",{})
+ print(json.dumps({"status":response.status_code,"id":data.get("id"),"token":data.get("token"),"revision":payload.get("meta",{}).get("revision")}))
+'''
+    def race(requests):
+        start_at = time.time() + 2
+        children = [subprocess.Popen([sys.executable, "-c", code], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, env={**os.environ, "WORKBENCH_TEST_PG_SCOPED_URL": url}) for request in requests]
+        for child, request in zip(children, requests):
+            child.stdin.write(json.dumps({**request, "start_at": start_at}))
+            child.stdin.close()
+            child.stdin = None
+        results = []
+        for child in children:
+            stdout, stderr = child.communicate(timeout=30)
+            assert child.returncode == 0, stderr
+            results.append(json.loads(stdout))
+        return results
+    key = str(uuid.uuid4())
+    request = {"path": "/api/v1/workspaces", "body": {"mode": "SIMULATION", "scenario_id": "normal_operations", "name": "Cross-process retry", "seed": 17}, "headers": {"Idempotency-Key": key}}
+    created = race([request, request])
+    assert [item["status"] for item in created] == [201, 201]
+    assert created[0]["id"] == created[1]["id"]
+    assert created[0]["token"] == created[1]["token"]
+    shared = created[0]
+    updates = [{"path": f"/api/v1/workspaces/{shared['id']}/commands", "body": {"command": "feed", "action": action}, "headers": {"X-Workspace-Token": shared["token"], "If-Match": "1", "Idempotency-Key": str(uuid.uuid4())}} for action in ["delay", "recover"]]
+    responses = race(updates)
+    assert sorted(item["status"] for item in responses) == [200, 412]
+    with get_database().session() as session:
+        assert session.get(Workspace, shared["id"]).revision == 2
+        assert len(list(session.scalars(select(Workspace)))) == 1
+
+
+def test_provider_lfd_fee_api_update_preserves_independent_hold(client):
+    workspace = create(client)
+    number = workspace['snapshot']['hero_id']
+    before = next(row for row in workspace['snapshot']['containers'] if row['number'] == number)
+    command = {'command': 'evidence', 'container_id': number, 'kind': 'provider', 'published_at_min': 0, 'values': {'pickup_lfd': '2026-10-17', 'fees_at_pod_terminal': [{'name': 'Synthetic exposure', 'amount': 75.5, 'currency': 'USD'}], 'import_deadlines': {'pickup_lfd_line': '2026-10-17'}}}
+    response = client.post(f"/api/v1/workspaces/{workspace['id']}/commands", json=command, headers=headers(workspace))
+    assert response.status_code == 200, response.text
+    row = next(row for row in response.json()['data']['snapshot']['containers'] if row['number'] == number)
+    assert row['lfd'] == '2026-10-17'
+    assert row['fees'][0]['amount'] == 75.5
+    assert row['departure']['status'] == before['departure']['status']
+    with get_database().session() as session:
+        assert session.get(Workspace, workspace['id']).state['containers'][number]['provider']['holds_at_pod_terminal']
+    invalid = {**command, 'values': {'available_for_pickup': 'false'}}
+    assert client.post(f"/api/v1/workspaces/{workspace['id']}/commands", json=invalid, headers=headers(workspace, revision=2)).status_code == 422
