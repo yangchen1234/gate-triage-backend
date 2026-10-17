@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: gate-triage-backend
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    numInstances: 1
