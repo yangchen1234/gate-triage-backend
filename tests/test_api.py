@@ -117,7 +117,7 @@ def test_partial_scenario_updates_merge_current_state_and_return_direct_array(ma
         assert second.status_code == 200
         assert_ranked(second.json())
         assert second.json() == client.get("/containers").json()
-        expected = {"lanes_open": 4, "customs_online": True, "power_zone_b": False}
+        expected = {**DEFAULT_SCENARIO, "lanes_open": 4, "power_zone_b": False}
         assert client.get("/stats").json()["scenario"] == expected
         assert client.get("/health").json()["scenario"] == expected
         assert client.post("/scenario", json={}).json() == second.json()
@@ -262,7 +262,7 @@ def test_concurrent_scenario_writes_preserve_both_partial_changes(make_settings)
         second.result(timeout=5)
     final = service.snapshot()
     assert final.generation == 3
-    assert final.scenario == {"lanes_open": 4, "customs_online": True, "power_zone_b": False}
+    assert final.scenario == {**DEFAULT_SCENARIO, "lanes_open": 4, "power_zone_b": False}
     assert final.stats["scenario"] == final.scenario
 
 

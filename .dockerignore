@@ -6,3 +6,7 @@ __pycache__
 .pytest_cache
 tests
 *.log
+**/node_modules
+**/dist
+**/*.tsbuildinfo
+.local

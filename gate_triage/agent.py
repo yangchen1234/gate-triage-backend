@@ -28,7 +28,8 @@ from __future__ import annotations
 import json
 import os
 from datetime import datetime, timezone
-from time import perf_counter
+from contextlib import suppress
+from time import perf_counter, monotonic
 from typing import Any
 
 from gate_triage.score import BLOCKERS, next_actions, simulate_fix, score_all  # noqa: F401
@@ -58,7 +59,14 @@ def _llm_source(cfg: dict | None) -> str:
 
 
 def _client(cfg: dict):
-    return OpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"])
+    return OpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"], timeout=20.0, max_retries=0)
+
+
+def _close_client(client):
+    close = getattr(client, "close", None)
+    if callable(close):
+        with suppress(Exception):
+            close()
 
 
 def _is_anthropic(cfg: dict) -> bool:
@@ -73,10 +81,28 @@ def _sampling(cfg: dict, temperature: float) -> dict:
     return {"temperature": temperature}
 
 
+_FROM_ENV = object()
+
+
+def _complete(client, cfg: dict, **kwargs):
+    """A plan has a shared request/deadline budget; SDK retries are disabled."""
+    if cfg.get("_cancel") is not None and cfg["_cancel"].is_set():
+        raise RuntimeError("model invocation cancelled")
+    if monotonic() >= cfg.get("_deadline", float("inf")):
+        raise RuntimeError("model deadline reached")
+    if cfg.get("_calls", 0) >= cfg.get("_max_calls", 6):
+        raise RuntimeError("model request budget reached")
+    cfg["_calls"] = cfg.get("_calls", 0) + 1
+    kwargs["timeout"] = min(20.0, max(0.1, cfg.get("_deadline", monotonic() + 20) - monotonic()))
+    return client.chat.completions.create(max_tokens=800, **kwargs)
+
+
 def _extract_json(text: str) -> dict:
     """Pull the first {...} object out of a reply that may include prose or code fences.
     从可能带说明文字或代码块的回复里抠出第一个 JSON 对象。"""
     text = (text or "").strip()
+    if len(text) > 64000:
+        raise ValueError("model reply too large")
     if text.startswith("```"):
         text = text.strip("`")
         if text.lower().startswith("json"):
@@ -84,7 +110,10 @@ def _extract_json(text: str) -> dict:
     start, end = text.find("{"), text.rfind("}")
     if start < 0 or end <= start:
         raise ValueError("no JSON object in reply")
-    return json.loads(text[start:end + 1])
+    result = json.loads(text[start:end + 1])
+    if not isinstance(result, dict):
+        raise ValueError("model reply must be an object")
+    return result
 
 
 class Trace:
@@ -124,14 +153,14 @@ def _template_draft_zh(action: dict) -> dict:
                 f"请问需要补充哪些单证可以今日放行？\n\n谢谢，\n闸口调度")
     elif b == "source_conflict":
         subject = f"申报重量不符 — {cid}"
-        body = (f"船公司您好：\n\n码头地磅称重与贵司申报的 {cid} 重量不一致。请重新确认申报状态和毛重，以便免开箱放行。"
+        body = (f"船公司您好：\n\n码头地磅称重与贵司申报的 {cid} 重量不一致。请重新确认申报状态和毛重，并核对柜号、称重口径、自重和复称结果。后续检查或放行须由有权限人员确认。"
                 f"当前滞箱费 {fee}。\n\n谢谢，\n闸口调度")
     elif b == "reefer_silent":
         subject = f"冷藏箱传感器检查 — {cid}"
         body = f"冷藏技工：{cid}（{cargo}）已超过 90 分钟未上报温度，请确认供电和传感器状态。货物对温度敏感。"
     else:
         subject = f"转移至有电堆场 — {cid}"
-        body = f"堆场调度：B 区断电，请将冷藏箱 {cid}（{cargo}）转移至 A 区有电箱位并确认插电。优先级：高。"
+        body = f"堆场调度：B 区断电，请评估冷藏箱 {cid}（{cargo}）的供电、授权通道和可用有电箱位；取得现场许可后安排转移并确认插电。优先级：高。"
     return {"to": who, "subject": subject, "body": body, "source": "template", "language": "zh"}
 
 
@@ -151,7 +180,7 @@ def _template_draft(action: dict) -> dict:
     elif action["blocker"] == "source_conflict":
         subject = f"Declaration mismatch — {cid}"
         body = (f"Hello,\n\nOur terminal scale reads a different weight than your declaration for {cid}. "
-                f"Please re-confirm the declared status and gross weight so we can release without a physical inspection. "
+                f"Please re-confirm the declared status and gross weight and verify container identity, weighing basis, tare and any reweigh result. Authorized staff must decide any inspection or release. "
                 f"Current demurrage: {fee}.\n\nThank you,\nGate Planner")
     elif action["blocker"] == "reefer_silent":
         subject = f"Reefer sensor check — {cid}"
@@ -159,8 +188,8 @@ def _template_draft(action: dict) -> dict:
                 f"Please verify the unit is powered and the sensor is online. Cargo is temperature-sensitive.")
     else:  # zone_power
         subject = f"Move to powered zone — {cid}"
-        body = (f"Yard ops: Zone B is unpowered. Please relocate reefer {cid} ({cargo}) to a powered slot in Zone A "
-                f"and confirm plug-in. Priority: high.")
+        body = (f"Yard ops: Zone B is unpowered. Please assess powered-slot availability, safe access and authorization for reefer {cid} ({cargo}). "
+                f"Arrange a permitted transfer and confirm plug-in only after on-site approval. Priority: high.")
     return {"to": who, "subject": subject, "body": body, "source": "template", "language": "en"}
 
 
@@ -170,9 +199,13 @@ def make_tools(containers: list[dict], scenario: dict):
     """Bind tools to the current queue. Returns (schemas, implementations)."""
 
     def get_plan(top_n: int = 5) -> dict:
+        if type(top_n) is not int or not 1 <= top_n <= 10:
+            return {"error": "top_n must be an integer between 1 and 10"}
         return next_actions(containers, scenario, top_n=top_n)
 
     def simulate(container_id: str, blocker: str) -> dict:
+        if not isinstance(container_id, str) or len(container_id) > 32 or not isinstance(blocker, str):
+            return {"error": "invalid tool arguments"}
         raw = next((c for c in containers if c["container_id"] == container_id), None)
         if raw is None:
             return {"error": f"unknown container {container_id}"}
@@ -186,7 +219,7 @@ def make_tools(containers: list[dict], scenario: dict):
         {"type": "function", "function": {
             "name": "get_plan",
             "description": "Today's top blockers worth resolving, ranked by demurrage unlocked. Numbers are authoritative.",
-            "parameters": {"type": "object", "properties": {"top_n": {"type": "integer", "default": 5}}}}},
+            "parameters": {"type": "object", "properties": {"top_n": {"type": "integer", "minimum": 1, "maximum": 10, "default": 5}}}}},
         {"type": "function", "function": {
             "name": "simulate_fix",
             "description": "What happens if one blocker on one container is resolved: action, rank and $ before vs after.",
@@ -230,17 +263,23 @@ def draft_outreach(action: dict, cfg: dict | None) -> dict:
         kwargs = _sampling(cfg, 0.3)
         if not _is_anthropic(cfg):
             kwargs["response_format"] = {"type": "json_object"}
-        resp = _client(cfg).chat.completions.create(
-            model=cfg["model"],
-            messages=[{"role": "system", "content": DRAFT_SYSTEM},
-                      {"role": "user", "content": json.dumps(facts)}],
-            **kwargs,
-        )
+        client = _client(cfg)
+        try:
+            resp = _complete(client, cfg,
+                model=cfg["model"],
+                messages=[{"role": "system", "content": DRAFT_SYSTEM},
+                          {"role": "user", "content": json.dumps(facts)}],
+                **kwargs,
+            )
+        finally:
+            _close_client(client)
         out = _extract_json(resp.choices[0].message.content)
-        return {"to": action["who"], "subject": out["subject"], "body": out["body"], "source": _llm_source(cfg), "language": action.get("language", "en")}
-    except Exception as e:  # any failure → template ｜ 任何失败都回退模板
+        if not isinstance(out.get("subject"), str) or not out["subject"].strip() or not isinstance(out.get("body"), str) or not out["body"].strip():
+            raise ValueError("invalid draft structure")
+        return {"to": action["who"], "subject": out["subject"].strip()[:200], "body": out["body"].strip()[:2400], "source": _llm_source(cfg), "language": action.get("language", "en")}
+    except Exception:  # any failure → template ｜ 任何失败都回退模板
         d = _template_draft(action)
-        d["fallback_reason"] = str(e)[:120]
+        d["fallback_reason"] = "Model drafting unavailable; template retained"
         return d
 
 
@@ -268,37 +307,49 @@ def _summ(name: str, args: dict, result: dict) -> str:
     return f"{name} → {str(result)[:80]}"
 
 
-def _run_loop(client, cfg: dict, schemas, impl, top_n: int, trace: Trace, max_steps: int = 8) -> dict:
+def _run_loop(client, cfg: dict, schemas, impl, top_n: int, trace: Trace, max_steps: int = 3) -> dict:
     messages = [{"role": "system", "content": AGENT_SYSTEM},
                 {"role": "user", "content": f"Build today's action list with up to {top_n} items."}]
     for _ in range(max_steps):
-        resp = client.chat.completions.create(model=cfg["model"], messages=messages,
+        resp = _complete(client, cfg, model=cfg["model"], messages=messages,
                                               tools=schemas, tool_choice="auto", **_sampling(cfg, 0.2))
         msg = resp.choices[0].message
         if msg.tool_calls:
             trace.add("llm", f"Model ({cfg['model']}) requested {len(msg.tool_calls)} tool call(s)")
             messages.append({"role": "assistant", "content": msg.content or "",
                              "tool_calls": [tc.model_dump() if hasattr(tc, "model_dump") else tc for tc in msg.tool_calls]})
+            if len(msg.tool_calls) > 4:
+                raise ValueError("too many tool calls")
             for tc in msg.tool_calls:
                 name = tc.function.name
-                args = json.loads(tc.function.arguments or "{}")
-                result = impl[name](**args) if name in impl else {"error": f"unknown tool {name}"}
+                raw_args = tc.function.arguments or "{}"
+                if len(raw_args) > 2048:
+                    raise ValueError("tool arguments too large")
+                args = json.loads(raw_args)
+                allowed = {"get_plan": {"top_n"}, "simulate_fix": {"container_id", "blocker"}}
+                if not isinstance(args, dict) or name not in allowed or set(args) - allowed[name]:
+                    raise ValueError("invalid tool arguments")
+                result = impl[name](**args)
                 trace.add("tool", _summ(name, args, result), tool=name, args=args)
                 messages.append({"role": "tool", "tool_call_id": tc.id, "content": json.dumps(result)})
             continue
         text = (msg.content or "").strip()
         trace.add("llm", "Model returned final plan")
-        try:
-            return _extract_json(text)
-        except ValueError:
-            return {"summary": text[:300], "actions": []}
+        result = _extract_json(text)
+        if not isinstance(result.get("summary"), str) or not result["summary"].strip() or not isinstance(result.get("actions"), list):
+            raise ValueError("invalid model plan structure")
+        return result
     raise RuntimeError("agent did not finish within max_steps")
 
 
-def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
+def run_agent(containers: list[dict], scenario: dict, top_n: int = 5, *, cfg: dict | None | object = _FROM_ENV) -> dict:
     """Entry point. Always returns a usable plan; degrades gracefully without an LLM.
     入口。没有 LLM 也能返回可用的清单。"""
-    cfg = _llm_config()
+    cfg = _llm_config() if cfg is _FROM_ENV else cfg
+    if cfg is not None:
+        cfg = dict(cfg)
+        cfg.update({"_calls": 0, "_max_calls": 6, "_deadline": monotonic() + 65})
+    top_n = max(1, min(top_n, 10))
     trace = Trace()
     sym = {"USD": "$", "EUR": "€", "CNY": "¥"}
 
@@ -308,14 +359,13 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
     by_id = {a["container_id"]: a for a in plan["actions"]}
     cur = sym.get(plan.get("currency", "USD"), "$")
     cands = plan.get("all_candidates", [])
-    per_sim_ms = plan_ms * 0.9 / max(1, len(cands))   # simulation dominates next_actions ｜ 推演占大头
 
     # Observe → simulate → rank, as the deterministic backbone always does
     # 观察 → 推演 → 排序，这是确定性主干每次都走的步骤
     blocked = len({c["container_id"] for c in cands})
     trace.add("observe", f"Observed queue at {plan.get('port_name')}: {len(containers)} boxes, "
                          f"{blocked} blocked, gate capacity {plan['gate_capacity_today']} today",
-              ms=plan_ms * 0.1, port=plan.get("port"), scenario=scenario)
+              ms=plan_ms, port=plan.get("port"), scenario=scenario, timing_kind="measured_total_deterministic_plan")
     shown = 0
     for c in cands:
         if shown >= 8:
@@ -323,10 +373,10 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
         b, a = c["before"], c["after"]
         trace.add("simulate", f"If {c['who']} resolves {c['container_id']} ({c['blocker'].replace('_', ' ')}): "
                               f"{b['action']} #{b['rank']} → {a['action']} #{a['rank']}, +{cur}{c['unlocks_per_day']}/day",
-                  ms=per_sim_ms, container_id=c["container_id"], blocker=c["blocker"], unlocks=c["unlocks_per_day"])
+                  ms=0, container_id=c["container_id"], blocker=c["blocker"], unlocks=c["unlocks_per_day"], timing_kind="explanatory_not_individually_timed")
         shown += 1
     if len(cands) > shown:
-        trace.add("simulate", f"… {len(cands) - shown} more fixes simulated", ms=per_sim_ms * (len(cands) - shown))
+        trace.add("simulate", f"… {len(cands) - shown} more fixes simulated", ms=0, timing_kind="explanatory_not_individually_timed")
     trace.add("rank", f"Ranked {len(cands)} candidate fixes by {plan.get('currency')} unlocked; "
                       f"{len(plan['actions'])} actually clear today's gate, {len(cands) - len(plan['actions'])} would not move")
 
@@ -336,24 +386,39 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
     if cfg is not None:
         try:
             schemas, impl = make_tools(containers, scenario)
-            out = _run_loop(_client(cfg), cfg, schemas, impl, top_n, trace)
+            client = _client(cfg)
+            try:
+                out = _run_loop(client, cfg, schemas, impl, top_n, trace)
+            finally:
+                _close_client(client)
             summary = out.get("summary")
+            summary = summary[:600] if isinstance(summary, str) else None
             # Keep only container_ids the tools actually proposed; the LLM cannot add boxes.
             # 只保留工具给出的柜子，LLM 不能自己加。
-            for item in out.get("actions", []):
-                if item.get("container_id") in by_id:
-                    whys[item["container_id"]] = item.get("why", "")
+            proposed = out.get("actions", [])
+            if not isinstance(proposed, list):
+                raise ValueError("invalid model actions")
+            if len(proposed) > top_n or (by_id and not proposed):
+                raise ValueError("model action set does not match deterministic candidates")
+            for item in proposed:
+                if not isinstance(item, dict):
+                    raise ValueError("invalid model action")
+                cid = item.get("container_id")
+                if not isinstance(cid, str) or cid not in by_id or item.get("blocker") != by_id[cid]["blocker"] or not isinstance(item.get("why"), str) or not item["why"].strip() or cid in whys:
+                    raise ValueError("invalid model action")
+                whys[cid] = item["why"][:600]
             agent_mode = _llm_source(cfg)
-        except Exception as e:
+        except Exception:
             summary = None
-            agent_mode = f"deterministic (agent error: {str(e)[:80]})"
-            trace.add("llm", f"Model unavailable ({str(e)[:60]}); continuing with deterministic plan")
+            agent_mode = "deterministic (model unavailable)"
+            trace.add("llm", "Model unavailable; continuing with deterministic plan")
+            whys = {}
 
     actions_out = []
     for a in plan["actions"]:
         item = dict(a)
         item["why"] = whys.get(a["container_id"]) or f"{a['fix']} — unlocks {cur}{a['unlocks_per_day']}/day."
-        item["draft"] = draft_outreach(a, cfg)
+        item["draft"] = draft_outreach(a, cfg if agent_mode in ("cloud", "local") else None)
         item["requires_human_approval"] = True
         item["approval"] = {"status": "pending"}
         actions_out.append(item)
@@ -382,6 +447,8 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
         "nothing_is_sent_automatically": True,
         "trace": trace.steps,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "estimate_notice": plan.get("estimate_notice"),
+        "model_requests": cfg.get("_calls", 0) if cfg else 0,
     }
 
 

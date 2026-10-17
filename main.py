@@ -3,9 +3,12 @@
 import asyncio
 from contextlib import asynccontextmanager
 import logging
+from pathlib import Path
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from gate_triage.config import Settings
 from gate_triage.models import ApprovalDecision, ScenarioPatch
@@ -13,11 +16,13 @@ from gate_triage.service import QueueService, ReasonFunction, ScoreFunction
 
 
 logger = logging.getLogger(__name__)
+WEB_DIST = Path(__file__).resolve().parent / "apps" / "web" / "dist"
 
 
 def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None = None,
                reasoner: ReasonFunction | None = None) -> FastAPI:
     config = settings or Settings.from_env()
+    console_store = None
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -26,16 +31,39 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
         task = None
         if service.has_reasoner:
             task = asyncio.create_task(asyncio.to_thread(service.enrich_reasons, 1))
-        yield
-        if task:
-            await task
+        try:
+            yield
+        finally:
+            if console_store is not None:
+                console_store.close()
+            if task:
+                await task
 
     app = FastAPI(
-        title="Gate Triage API", version="0.1.0", lifespan=lifespan,
+        title="Gate Triage API", version="0.2.0", lifespan=lifespan,
         description="Advisory port container triage and FIFO-vs-priority fee simulation. Demo data is synthetic.",
     )
     app.add_middleware(CORSMiddleware, allow_origins=list(config.cors_origins),
-                       allow_credentials=False, allow_methods=["GET", "POST"], allow_headers=["*"])
+                       allow_credentials=False, allow_methods=["GET", "POST", "PUT", "DELETE"], allow_headers=["*"])
+
+    @app.middleware("http")
+    async def browser_headers(request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["Referrer-Policy"] = "no-referrer"
+        response.headers["X-Frame-Options"] = "DENY"
+        if request.url.path.startswith("/api/console"):
+            response.headers["Cache-Control"] = "no-store"
+        elif request.url.path == "/":
+            response.headers["Cache-Control"] = "no-store"
+            response.headers["Content-Security-Policy"] = (
+                "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+                "connect-src 'self'; img-src 'self' data:; font-src 'self'; "
+                "object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+            )
+        elif request.url.path.startswith("/assets/"):
+            response.headers["Cache-Control"] = "public, max-age=31536000, immutable"
+        return response
 
     @app.get("/containers", summary="Current queue in descending priority order")
     def containers() -> list[dict]:
@@ -66,9 +94,11 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
         service = app.state.service
         snapshot = service.snapshot()
         try:
-            result = run_agent(service._raw, snapshot.scenario, top_n=max(1, min(top_n, 10)))
-        except Exception as exc:
-            logger.warning("Agent failed: %s", exc)
+            # Public legacy reads never spend deployment credentials. Paid generation
+            # is explicit and authenticated through the isolated console session.
+            result = run_agent(service._raw, snapshot.scenario, top_n=max(1, min(top_n, 10)), cfg=None)
+        except Exception:
+            logger.warning("Legacy planner failed; provider details withheld")
             raise HTTPException(status_code=503, detail="Planner agent unavailable") from None
         # Overlay planner decisions so a refresh keeps approved/rejected state ｜ 叠加人工批准状态
         approvals = getattr(app.state, "approvals", {})
@@ -111,6 +141,19 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
             "scoring_ms": snapshot.scoring_ms, "scenario": snapshot.scenario,
             "scorer": config.scorer,
         }
+
+    from gate_triage.console import install_console
+    console_store = install_console(app, config)
+
+    if (WEB_DIST / "assets").is_dir():
+        app.mount("/assets", StaticFiles(directory=WEB_DIST / "assets"), name="web-assets")
+
+    @app.get("/", include_in_schema=False)
+    def web_console():
+        index = WEB_DIST / "index.html"
+        if not index.is_file():
+            raise HTTPException(503, "Build the web console: cd apps/web && pnpm install && pnpm build")
+        return FileResponse(index)
 
     return app
 

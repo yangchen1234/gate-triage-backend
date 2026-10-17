@@ -1,13 +1,16 @@
-# Gate Triage Backend
+# Gate Triage
 
 Gate Triage is a Ports & Logistics hackathon prototype for terminal planners. When carrier declarations, scale readings, customs records and reefer sensors disagree, it ranks containers and recommends `release`, `slow`, `inspect` or `reroute` actions for human review. Scenario switches show how the queue changes when lanes close, customs systems go offline or Zone B loses power.
 
+The web console now adapts the existing Workbench design to Ryan's 100-container dataset and planner. Switch among **Los Angeles (LAX), Shanghai (SHA), and Rotterdam (RTM)**, inspect source evidence, generate a plan, and review draft outreach before recording an internal decision. Each browser session has its own scenario. The separate PostgreSQL Workbench, map, and time-stepped simulation remain outside this release.
+
 - **Repository:** <https://github.com/yangchen1234/gate-triage-backend>
 - **Hosted API:** <https://gate-triage-backend.onrender.com>
+- **Web console:** <https://gate-triage-backend.onrender.com/>
 - **Interactive API documentation:** <https://gate-triage-backend.onrender.com/docs>
 - **Frontend examples:** [JavaScript and curl guide](docs/api-usage.md)
 
-The repository now includes Ryan's scoring engine and **100 synthetic containers**. It does not use live Terminal49 data or execute real port operations. Cloud LLM explanations are optional and are not configured by default. A GitHub update does not update the hosted service until a new Render deployment completes; check `/health` for the running container count and scorer.
+The repository includes Ryan's scoring engine and **100 synthetic containers**, re-evaluated under three port profiles. These are what-if configurations of one dataset, not live containers in three ports. It does not use live Terminal49 data or execute real port operations. Rules-only mode works without a key. To use Claude, open **Connection settings** in the console and paste a project-specific API key and exact model ID. The key stays in this expiring server session's memory, is never returned or stored in the browser, and is cleared on disconnect/expiry/restart. Configuration is not a live model-access check; the generation result reports the actual mode and any fallback. See the [agent and credential contract](docs/agent-console.md).
 
 ## Run locally
 
@@ -26,6 +29,16 @@ Open <http://localhost:8000/docs> to try the endpoints. Run the automated tests 
 python -m pytest -q
 ```
 
+To build the web console (Node 24 and pnpm 11.25.0):
+
+```bash
+cd apps/web
+pnpm install --frozen-lockfile
+pnpm build
+```
+
+Start the Python server from the repository root as above and open <http://localhost:8000/>. For a full production-equivalent build, use `docker build -t gate-triage .` then `docker run --rm -p 127.0.0.1:8000:8000 gate-triage`.
+
 With the server running, verify the real HTTP flow using the smoke-test CLI originally implemented by IBM Bob:
 
 ```bash
@@ -43,6 +56,11 @@ The script checks the endpoints, all four scenario presets, queue ordering, acti
 | `POST` | `/scenario` | Merge scenario fields, rescore and return the new container array |
 | `GET` | `/stats` | Action counts, FIFO and priority-queue fees, savings and current scenario |
 | `GET` | `/health` | Status, scorer, container count, scoring time and explanation mode |
+| `GET` | `/plan` | Legacy rules-only action list, independent single-fix estimates, and draft outreach |
+| `POST` | `/plan/approve` | Legacy shared in-memory decision; no message is sent |
+| `GET` | `/plan/approvals` | Legacy shared decisions |
+
+The web console uses isolated authenticated endpoints under `/api/console`, not the legacy shared scenario. Create a session, configure a session-only key if desired, explicitly dispatch a plan, poll the returned job, then record a decision. See [the full flow](docs/agent-console.md#agent-api-flow) and `/docs`. Model calls require a console token, a configured session key, an explicit generation request, and the current revision. Page refresh and job polling do not trigger new model calls.
 
 Container records retain their original data fields, including `container_id`, `cargo_type`, `consignee_type`, `sources`, `demurrage_usd_per_day`, `free_days_left`, `zone` and `arrived_at`. The scorer adds source `trust` values and the fields `priority`, `urgency`, `conflict_score`, `action` and `reason`. Scores range from 0 to 1. Non-refrigerated containers have `sources.reefer: null`.
 
@@ -91,7 +109,7 @@ All four action types participate in this simplified capacity calculation. A sim
 
 These are synthetic scenario estimates, not measured savings or validated operational forecasts. The calculation does not model every restriction of a real terminal.
 
-With the current 100-container dataset and default capacity, Normal saves $770/day in the simulation and Lanes −50% saves $4,249/day. The independent Customs down and Zone B power out presets each save $770/day: they change recommendations but do not further reduce lane capacity in this fee model. These values are calculated, not preset targets.
+Amounts depend on the selected port profile, scoring version, and scenario. The console shows modeled queue fees separately from the agent's independent single-fix estimates. Neither number proves jointly feasible departures or realized savings. Profile tariffs and approximate FX are synthetic demonstration assumptions, not live quotes or an actual port invoice.
 
 ## Configuration and extensions
 
@@ -112,7 +130,7 @@ A replacement scorer may return only computed fields or a complete container. Th
 
 ### Optional cloud explanations
 
-No cloud provider adapter or credentials are included. To connect the team's API, implement a synchronous `explain_many(containers, scenario)` function and set `CLOUD_REASONER=your_module:explain_many`. The adapter owns authentication, request timeouts, retries and cost limits. It must return `{container_id: explanation}` for every selected container; each explanation must be non-empty and at most 2,000 characters.
+No legacy `CLOUD_REASONER` adapter or credentials are included. This optional extension is separate from the console's session-scoped Claude planner. To connect a protected legacy explanation service, implement a synchronous `explain_many(containers, scenario)` function and set `CLOUD_REASONER=your_module:explain_many`. The adapter owns authentication, request timeouts, retries and cost limits. It must return `{container_id: explanation}` for every selected container; each explanation must be non-empty and at most 2,000 characters.
 
 The API returns the scorer's explanations immediately, then enriches only the top-ranked containers in the background. Cloud output can change explanation text, but cannot change actions or rankings. The original text is retained as `rule_reason`; stale results from an earlier scenario are discarded. On failure, the API keeps the scoring explanations.
 
@@ -126,15 +144,15 @@ Frontend code must support template mode and cloud fallback. There is no built-i
 
 ## Deployment
 
-The hosted demo runs on Render at <https://gate-triage-backend.onrender.com>. This service was connected using the public repository URL; deploy new commits through the Render service's **Manual Deploy** menu. Confirm the new deployment is live before relying on its data or behavior.
+The hosted demo runs on Render at <https://gate-triage-backend.onrender.com>. The service is connected to GitHub and follows `main` with **On Commit** automatic builds and deployments. Confirm the new deployment is live before relying on its data or behavior.
 
 The repository includes a [Dockerfile](Dockerfile) and [Render Blueprint](render.yaml). The Blueprint requests a free instance, listens on `0.0.0.0:$PORT` and uses `/health` for health checks. The same Dockerfile can be used with another compatible hosting platform.
 
 Render's free service may sleep while idle. Open `/health` before the demo and allow time for it to wake up. See [Render's free service documentation](https://render.com/docs/free).
 
-Run **one worker and one instance**. The queue and scenario live in process memory, are shared by all visitors and reset on restart or redeployment. Independent demo sessions or multiple instances require session handling and shared storage.
+Run **one worker and one instance**. The new web console has isolated expiring process-memory sessions; its keys, scenarios, jobs, and decisions reset on restart or redeployment. Legacy endpoints retain their shared process-memory scenario and approvals. Durable storage and multi-instance session routing are outside this release. The independent local Workbench branch retains its PostgreSQL implementation.
 
-CORS allows all origins by default, with credentials disabled. Set `CORS_ORIGINS` to restrict access to the frontend's origin. The public demo has no scenario authentication, so visitors can change the shared state.
+CORS allows all origins by default, with credentials disabled. Set `CORS_ORIGINS` to restrict legacy frontend origins. New console operations require `X-Console-Token`; CORS is not authentication. Legacy scenario writes remain public, so existing legacy clients share state. Public `GET /plan` is rules-only and never uses a deployment's model key. Do not enable a paid legacy `CLOUD_REASONER` on the public demo without separately protecting the legacy routes.
 
 After deployment, run:
 

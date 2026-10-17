@@ -96,11 +96,13 @@ def test_fixture_annotations_do_not_drive_scoring_decisions():
         assert after[field] == before[field]
 
 
+# Fee fixtures were independently recomputed from the committed rows and LAX
+# profile tiers (2026-10-17 snapshot), retaining original-order FIFO ties.
 @pytest.mark.parametrize("changes,baseline,optimized", [
-    ({}, 2182, 1412),
-    ({"lanes_open": 4}, 24886, 20637),
-    ({"customs_online": False}, 2182, 1412),
-    ({"power_zone_b": False}, 2182, 1412),
+    ({}, 1934, 1412),
+    ({"lanes_open": 4}, 24562, 20125),
+    ({"customs_online": False}, 1934, 1412),
+    ({"power_zone_b": False}, 1934, 1412),
 ])
 def test_default_service_uses_ryans_scorer_and_original_order_for_fifo_ties(changes, baseline, optimized):
     service = QueueService(Settings())
