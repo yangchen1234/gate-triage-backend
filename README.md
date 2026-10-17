@@ -15,6 +15,14 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --workers 1
 
 交互接口文档：<http://localhost:8000/docs>。测试：`python -m pytest -q`。
 
+服务启动后，也可以运行 IBM Bob 编写的真实 HTTP 验证脚本：
+
+```bash
+python scripts/smoke_api.py http://127.0.0.1:8000
+```
+
+将地址替换为部署后的 URL，即可检查接口、四种场景和费用公式。脚本会临时改变共享场景，并在结束时恢复原场景；恢复失败也会报错退出。
+
 环境变量示例见 `.env.example`。本项目不会自动读取 `.env`；可以在部署平台设置变量，或在本地 shell 中导出后启动。真实 API key 只放本地环境或部署平台的 Secret 中。
 
 ## 前端接入
@@ -79,8 +87,15 @@ CORS 默认允许所有来源，凭据关闭；部署时可以通过逗号分隔
 
 公开仓库链接可直接发给组员，他们可以查看并 clone。共同推送代码时，在 GitHub 仓库 **Settings → Collaborators → Add people** 邀请其 GitHub 用户名，组员接受后即可推送。
 
+仓库地址：<https://github.com/yangchen1234/gate-triage-backend>
+
+```bash
+git clone https://github.com/yangchen1234/gate-triage-backend.git
+cd gate-triage-backend
+```
+
 建议各自使用分支，通过 Pull Request 合并，避免同时修改 `main`。前端可以独立部署，只需要配置后端 base URL。
 
 ## AI 开发工具记录
 
-当前代码由 Codex 协助实现。IBM Bob 已安装，登录和实际开发使用尚待完成；在产生真实贡献前，不声称已经用 Bob 构建。后续记录保存在 [docs/ibm-bob.md](docs/ibm-bob.md)。
+Codex 协助实现 API、临时打分、统计、部署配置和测试。IBM Bob 通过 IDE 实际编写 `scripts/smoke_api.py`，用于部署后的接口和场景验证；随后由 Codex 审查并修复异步说明比较、恢复失败处理等问题。95 项测试和本地真实 HTTP 验证通过。任务、贡献与验证记录见 [docs/ibm-bob.md](docs/ibm-bob.md)。
