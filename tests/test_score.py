@@ -136,3 +136,16 @@ def test_status_matches_action_and_localizes():
             if c["action"] == "slow":
                 assert st["owner"] in ("customs", None)
     assert set(STATUS_TEXT["en"]) == set(STATUS_TEXT["zh"])
+
+
+def test_unlocked_dollars_only_count_boxes_already_paying_demurrage():
+    """A box still inside its free time has nothing to unlock, whatever its tariff rate."""
+    from gate_triage.score import next_actions, score_all
+    import json, pathlib
+    data = json.loads(pathlib.Path("data/containers.json").read_text())
+    for lanes in (8, 4):
+        scenario = {"lanes_open": lanes, "customs_online": True, "power_zone_b": True, "port": "LAX"}
+        by_id = {c["container_id"]: c for c in score_all(data, scenario)}
+        plan = next_actions(data, scenario, top_n=10)
+        for a in plan["actions"]:
+            assert by_id[a["container_id"]]["free_days_left"] < 0, a["container_id"]

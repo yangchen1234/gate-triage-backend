@@ -396,8 +396,10 @@ def simulate_fix(container, blocker, containers, scenario=None, before_q=None):
     was_out = _out_today(cid, before_q, scenario)
     now_out = _out_today(cid, after_q, scenario)
     profile = get_profile(scenario.get("port"))
-    unlocked_local = before["demurrage_per_day"] if (now_out and not was_out) else 0
-    unlocked_usd = before["demurrage_usd_per_day"] if (now_out and not was_out) else 0
+    # Only a box already past its free time is paying anything to unlock. ｜ 还在免费期的柜子没在交钱，不算解锁金额
+    paying = before["free_days_left"] < 0
+    unlocked_local = before["demurrage_per_day"] if (now_out and not was_out and paying) else 0
+    unlocked_usd = before["demurrage_usd_per_day"] if (now_out and not was_out and paying) else 0
 
     r = container["sources"]["reefer"]
     if profile["language"] == "zh":   # localized action text ｜ 行动文案本地化
