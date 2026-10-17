@@ -12,9 +12,11 @@ Division of labour ｜ 分工:
   Sending  (email, release)            → never automated                    ｜ 永远不自动发
 
 LLM config (env) ｜ 环境变量:
-  LLM_BASE_URL   e.g. https://api.openai.com/v1   or   http://<her-tailscale-ip>:11434/v1  (Ollama)
-  LLM_API_KEY    any string for Ollama
-  LLM_MODEL      e.g. gpt-4o-mini  or  qwen2.5:7b
+  LLM_BASE_URL   https://api.anthropic.com/v1/   (Claude, via its OpenAI-compatible layer)
+                 https://api.openai.com/v1        (OpenAI)
+                 http://<her-tailscale-ip>:11434/v1  (Ollama, on-prem)
+  LLM_API_KEY    the provider key; any string for Ollama
+  LLM_MODEL      e.g. claude-haiku-5-5  /  gpt-4o-mini  /  qwen2.5:7b
   If unset → template mode (no LLM calls; drafts come from templates). ｜ 没配就用模板
 
 Usage ｜ 用法:
@@ -50,11 +52,39 @@ def _llm_config() -> dict | None:
 def _llm_source(cfg: dict | None) -> str:
     if cfg is None:
         return "template"
-    return "local" if ("11434" in cfg["base_url"] or "localhost" in cfg["base_url"] or "100." in cfg["base_url"]) else "cloud"
+    if "11434" in cfg["base_url"] or "localhost" in cfg["base_url"] or "100." in cfg["base_url"]:
+        return "local"
+    return "cloud"
 
 
 def _client(cfg: dict):
     return OpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"])
+
+
+def _is_anthropic(cfg: dict) -> bool:
+    return "anthropic.com" in cfg["base_url"]
+
+
+def _sampling(cfg: dict, temperature: float) -> dict:
+    """Claude's OpenAI-compat layer rejects temperature < 1 on current models and ignores response_format,
+    so omit both there. ｜ Claude 兼容层不接受 temperature<1、忽略 response_format，用 Claude 时不传。"""
+    if _is_anthropic(cfg):
+        return {}
+    return {"temperature": temperature}
+
+
+def _extract_json(text: str) -> dict:
+    """Pull the first {...} object out of a reply that may include prose or code fences.
+    从可能带说明文字或代码块的回复里抠出第一个 JSON 对象。"""
+    text = (text or "").strip()
+    if text.startswith("```"):
+        text = text.strip("`")
+        if text.lower().startswith("json"):
+            text = text[4:]
+    start, end = text.find("{"), text.rfind("}")
+    if start < 0 or end <= start:
+        raise ValueError("no JSON object in reply")
+    return json.loads(text[start:end + 1])
 
 
 class Trace:
@@ -197,14 +227,16 @@ def draft_outreach(action: dict, cfg: dict | None) -> dict:
         "if_fixed": action["after"]["action"],
     }
     try:
+        kwargs = _sampling(cfg, 0.3)
+        if not _is_anthropic(cfg):
+            kwargs["response_format"] = {"type": "json_object"}
         resp = _client(cfg).chat.completions.create(
             model=cfg["model"],
             messages=[{"role": "system", "content": DRAFT_SYSTEM},
                       {"role": "user", "content": json.dumps(facts)}],
-            temperature=0.3,
-            response_format={"type": "json_object"},
+            **kwargs,
         )
-        out = json.loads(resp.choices[0].message.content)
+        out = _extract_json(resp.choices[0].message.content)
         return {"to": action["who"], "subject": out["subject"], "body": out["body"], "source": _llm_source(cfg), "language": action.get("language", "en")}
     except Exception as e:  # any failure → template ｜ 任何失败都回退模板
         d = _template_draft(action)
@@ -241,7 +273,7 @@ def _run_loop(client, cfg: dict, schemas, impl, top_n: int, trace: Trace, max_st
                 {"role": "user", "content": f"Build today's action list with up to {top_n} items."}]
     for _ in range(max_steps):
         resp = client.chat.completions.create(model=cfg["model"], messages=messages,
-                                              tools=schemas, tool_choice="auto", temperature=0.2)
+                                              tools=schemas, tool_choice="auto", **_sampling(cfg, 0.2))
         msg = resp.choices[0].message
         if msg.tool_calls:
             trace.add("llm", f"Model ({cfg['model']}) requested {len(msg.tool_calls)} tool call(s)")
@@ -256,8 +288,10 @@ def _run_loop(client, cfg: dict, schemas, impl, top_n: int, trace: Trace, max_st
             continue
         text = (msg.content or "").strip()
         trace.add("llm", "Model returned final plan")
-        start, end = text.find("{"), text.rfind("}")
-        return json.loads(text[start:end + 1]) if start >= 0 else {"summary": text, "actions": []}
+        try:
+            return _extract_json(text)
+        except ValueError:
+            return {"summary": text[:300], "actions": []}
     raise RuntimeError("agent did not finish within max_steps")
 
 
