@@ -35,6 +35,8 @@ PROFILES = {
         "who": {"customs": "CBP", "carrier": "Carrier", "reefer_tech": "Reefer tech", "yard": "Yard ops"},
         "hold_labels": {"manifest": "manifest hold", "document_review": "document review", "intensive": "intensive exam"},
         "zone_powered": "Zone A",
+        "tariff_basis": "Example tariffs, 40' import, 2026: terminal storage from Port of Los Angeles Tariff No. 4 (Section 10); carrier demurrage/detention from Maersk US import tariff. One example carrier, not a port-wide price; no contract rates, reefer plug-in or weekend/holiday rules.",
+        "data_note": "Synthetic LA-shaped dataset. Zones A/B are simulated yard zones, not a terminal map.",
     },
     "SHA": {
         "code": "SHA", "name": "Port of Shanghai (Yangshan)", "country": "CN",
@@ -49,6 +51,8 @@ PROFILES = {
         "who": {"customs": "海关", "carrier": "船公司", "reefer_tech": "冷藏技工", "yard": "堆场调度"},
         "hold_labels": {"manifest": "舱单核查", "document_review": "单证审核", "intensive": "开箱查验"},
         "zone_powered": "A 区",
+        "tariff_basis": "Example tariff, 40' import, 2026: Emirates Line China import demurrage ('other ports' incl. Shanghai), storage bundled into the carrier rate — port storage shows 0 because this source bundles it, not because the port charges nothing. One example carrier, not a port-wide price.",
+        "data_note": "Parameter demo: the same synthetic LA-shaped dataset re-priced under this tariff; not Shanghai data. Zones A/B are simulated yard zones, not a Yangshan terminal map.",
     },
     "RTM": {
         "code": "RTM", "name": "Port of Rotterdam", "country": "NL",
@@ -63,6 +67,8 @@ PROFILES = {
         "who": {"customs": "Dutch Customs", "carrier": "Carrier", "reefer_tech": "Reefer tech", "yard": "Yard ops"},
         "hold_labels": {"manifest": "manifest hold", "document_review": "document review", "intensive": "physical inspection"},
         "zone_powered": "Zone A",
+        "tariff_basis": "Example tariff, 40' import, 2026: Maersk Netherlands import demurrage/detention, calendar days, 'compensation includes terminal storage costs', i.e. storage is bundled into the carrier rate, so port storage shows 0. One example carrier, not a port-wide price.",
+        "data_note": "Parameter demo: the same synthetic LA-shaped dataset re-priced under this tariff; not Rotterdam data. Zones A/B are simulated yard zones, not a terminal map.",
     },
 }
 

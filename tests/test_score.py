@@ -150,3 +150,19 @@ def test_unlocked_dollars_only_count_boxes_already_paying_demurrage():
         plan = next_actions(data, scenario, top_n=10)
         for a in plan["actions"]:
             assert by_id[a["container_id"]]["free_days_left"] <= 0, a["container_id"]
+
+
+def test_every_port_declares_tariff_basis_and_data_note():
+    """Rates are example tariffs; every port must say whose, for what, and that the dataset is synthetic."""
+    from gate_triage.port_profiles import PROFILES
+    from gate_triage.score import next_actions, score
+    import json, pathlib
+    data = json.loads(pathlib.Path("data/containers.json").read_text())
+    for code, p in PROFILES.items():
+        assert "xample" in p["tariff_basis"] and "not a port-wide price" in p["tariff_basis"], code
+        assert "ynthetic" in p["data_note"] and "simulated" in p["data_note"], code
+        if p["port_tiers"] == [(None, 0.0)]:
+            assert "bundle" in p["tariff_basis"], f"{code}: a 0 port rate must be explained"
+        plan = next_actions(data, {"lanes_open": 8, "customs_online": True, "power_zone_b": False, "port": code}, top_n=1)
+        assert plan["tariff_basis"] == p["tariff_basis"] and plan["data_note"] == p["data_note"]
+        assert score(data[0], {"port": code})["decision_trace"]["tariff_basis"] == p["tariff_basis"]

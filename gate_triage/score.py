@@ -301,6 +301,7 @@ def score(container, scenario=None):
         "release_threshold": 0.25,
         "weights": dict(WEIGHTS_CRISIS if is_crisis(scenario) else WEIGHTS_NORMAL),
         "port": profile["code"],
+        "tariff_basis": profile["tariff_basis"],
     }
     c.pop("_profile", None)
     return c
@@ -479,6 +480,8 @@ def next_actions(containers, scenario=None, top_n=5):
         "port": profile["code"],
         "port_name": profile["name"],
         "currency": profile["currency"],
+        "tariff_basis": profile["tariff_basis"],   # where the rates come from and what they are not ｜ 费率出处与适用范围
+        "data_note": profile["data_note"],         # what this dataset is and is not ｜ 数据集说明
         "gate_capacity_today": capacity,
         "actions": plan,
         "all_candidates": candidates,   # every simulated fix, for the agent trace ｜ 全部推演结果，给轨迹用

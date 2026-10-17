@@ -9,6 +9,7 @@ The web console now adapts the existing Workbench design to Ryan's 100-container
 - **Web console:** <https://gate-triage-backend.onrender.com/>
 - **Interactive API documentation:** <https://gate-triage-backend.onrender.com/docs>
 - **Frontend examples:** [JavaScript and curl guide](docs/api-usage.md)
+- **Where the money figures come from:** [Tariff assumptions](docs/tariff-assumptions.md) — one example public tariff per port, what it covers and what it does not. Also returned as `tariff_basis` / `data_note` on `/plan` and in every `decision_trace`.
 
 The repository includes Ryan's scoring engine and **100 synthetic containers**, re-evaluated under three port profiles. These are what-if configurations of one dataset, not live containers in three ports. It does not use live Terminal49 data or execute real port operations. Rules-only mode works without a key. For a shared team Claude connection, the service owner sets `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, and a private `CONSOLE_TEAM_ACCESS_CODE` in **Render → Environment**. Teammates enter only that access code in the web console; the API key never enters the browser. All three values are required, and a key alone does not enable public model use. Per-session personal keys remain an advanced option. Configuration is not a live model-access check; generation reports the actual mode and any fallback. See the [agent and credential contract](docs/agent-console.md).
 
