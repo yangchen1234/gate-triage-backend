@@ -20,3 +20,14 @@ class ScenarioPatch(BaseModel):
         if value is None:
             raise ValueError("Omit an unchanged field instead of sending null")
         return value
+
+
+class ApprovalDecision(BaseModel):
+    """A human decision on one agent-proposed action ｜ 人对一条 agent 建议的决定"""
+    model_config = ConfigDict(extra="forbid")
+
+    container_id: StrictStr
+    blocker: StrictStr = Field(pattern="^(customs_hold|source_conflict|reefer_silent|zone_power)$")
+    decision: StrictStr = Field(pattern="^(approved|rejected)$")
+    planner: StrictStr | None = None
+    note: StrictStr | None = None

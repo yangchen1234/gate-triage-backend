@@ -25,6 +25,8 @@ from __future__ import annotations
 
 import json
 import os
+from datetime import datetime, timezone
+from time import perf_counter
 from typing import Any
 
 from gate_triage.score import BLOCKERS, next_actions, simulate_fix, score_all  # noqa: F401
@@ -53,6 +55,28 @@ def _llm_source(cfg: dict | None) -> str:
 
 def _client(cfg: dict):
     return OpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"])
+
+
+class Trace:
+    """Step-by-step record of what the agent did, for the UI to replay.
+    agent 每一步的记录，前端逐行回放用。"""
+
+    def __init__(self):
+        self.steps: list[dict] = []
+        self._t0 = perf_counter()
+        self._last = self._t0
+
+    def add(self, kind: str, text: str, ms: float | None = None, **detail):
+        now = perf_counter()
+        self.steps.append({
+            "step": len(self.steps) + 1,
+            "kind": kind,                       # observe | simulate | rank | llm | tool | draft | done
+            "text": text,
+            "ms": round((now - self._last) * 1000, 1) if ms is None else round(ms, 1),
+            "t_ms": round((now - self._t0) * 1000, 1),
+            **({"detail": detail} if detail else {}),
+        })
+        self._last = now
 
 
 # ---------- Draft templates (fallback) ｜ 模板草稿（兜底） ----------
@@ -200,7 +224,19 @@ AGENT_SYSTEM = (
 )
 
 
-def _run_loop(client, cfg: dict, schemas, impl, top_n: int, max_steps: int = 8) -> dict:
+def _summ(name: str, args: dict, result: dict) -> str:
+    """One line per tool call for the trace ｜ 每次工具调用一行"""
+    if name == "get_plan":
+        n = len(result.get("actions", [])); c = result.get("candidates_considered", 0)
+        return f"get_plan → {c} blocked boxes simulated, {n} clear today's gate"
+    if name == "simulate_fix":
+        b, a = result.get("before", {}), result.get("after", {})
+        return (f"simulate_fix {args.get('container_id')} / {args.get('blocker')} → "
+                f"{b.get('action')} #{b.get('rank')} → {a.get('action')} #{a.get('rank')}, +{result.get('unlocks_per_day', 0)}/day")
+    return f"{name} → {str(result)[:80]}"
+
+
+def _run_loop(client, cfg: dict, schemas, impl, top_n: int, trace: Trace, max_steps: int = 8) -> dict:
     messages = [{"role": "system", "content": AGENT_SYSTEM},
                 {"role": "user", "content": f"Build today's action list with up to {top_n} items."}]
     for _ in range(max_steps):
@@ -208,15 +244,18 @@ def _run_loop(client, cfg: dict, schemas, impl, top_n: int, max_steps: int = 8) 
                                               tools=schemas, tool_choice="auto", temperature=0.2)
         msg = resp.choices[0].message
         if msg.tool_calls:
+            trace.add("llm", f"Model ({cfg['model']}) requested {len(msg.tool_calls)} tool call(s)")
             messages.append({"role": "assistant", "content": msg.content or "",
                              "tool_calls": [tc.model_dump() if hasattr(tc, "model_dump") else tc for tc in msg.tool_calls]})
             for tc in msg.tool_calls:
                 name = tc.function.name
                 args = json.loads(tc.function.arguments or "{}")
                 result = impl[name](**args) if name in impl else {"error": f"unknown tool {name}"}
+                trace.add("tool", _summ(name, args, result), tool=name, args=args)
                 messages.append({"role": "tool", "tool_call_id": tc.id, "content": json.dumps(result)})
             continue
         text = (msg.content or "").strip()
+        trace.add("llm", "Model returned final plan")
         start, end = text.find("{"), text.rfind("}")
         return json.loads(text[start:end + 1]) if start >= 0 else {"summary": text, "actions": []}
     raise RuntimeError("agent did not finish within max_steps")
@@ -226,8 +265,36 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
     """Entry point. Always returns a usable plan; degrades gracefully without an LLM.
     入口。没有 LLM 也能返回可用的清单。"""
     cfg = _llm_config()
+    trace = Trace()
+    sym = {"USD": "$", "EUR": "€", "CNY": "¥"}
+
+    t0 = perf_counter()
     plan = next_actions(containers, scenario, top_n=top_n)   # ground truth ｜ 数字基准
+    plan_ms = (perf_counter() - t0) * 1000
     by_id = {a["container_id"]: a for a in plan["actions"]}
+    cur = sym.get(plan.get("currency", "USD"), "$")
+    cands = plan.get("all_candidates", [])
+    per_sim_ms = plan_ms * 0.9 / max(1, len(cands))   # simulation dominates next_actions ｜ 推演占大头
+
+    # Observe → simulate → rank, as the deterministic backbone always does
+    # 观察 → 推演 → 排序，这是确定性主干每次都走的步骤
+    blocked = len({c["container_id"] for c in cands})
+    trace.add("observe", f"Observed queue at {plan.get('port_name')}: {len(containers)} boxes, "
+                         f"{blocked} blocked, gate capacity {plan['gate_capacity_today']} today",
+              ms=plan_ms * 0.1, port=plan.get("port"), scenario=scenario)
+    shown = 0
+    for c in cands:
+        if shown >= 8:
+            break
+        b, a = c["before"], c["after"]
+        trace.add("simulate", f"If {c['who']} resolves {c['container_id']} ({c['blocker'].replace('_', ' ')}): "
+                              f"{b['action']} #{b['rank']} → {a['action']} #{a['rank']}, +{cur}{c['unlocks_per_day']}/day",
+                  ms=per_sim_ms, container_id=c["container_id"], blocker=c["blocker"], unlocks=c["unlocks_per_day"])
+        shown += 1
+    if len(cands) > shown:
+        trace.add("simulate", f"… {len(cands) - shown} more fixes simulated", ms=per_sim_ms * (len(cands) - shown))
+    trace.add("rank", f"Ranked {len(cands)} candidate fixes by {plan.get('currency')} unlocked; "
+                      f"{len(plan['actions'])} actually clear today's gate, {len(cands) - len(plan['actions'])} would not move")
 
     summary = None
     whys: dict[str, str] = {}
@@ -235,7 +302,7 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
     if cfg is not None:
         try:
             schemas, impl = make_tools(containers, scenario)
-            out = _run_loop(_client(cfg), cfg, schemas, impl, top_n)
+            out = _run_loop(_client(cfg), cfg, schemas, impl, top_n, trace)
             summary = out.get("summary")
             # Keep only container_ids the tools actually proposed; the LLM cannot add boxes.
             # 只保留工具给出的柜子，LLM 不能自己加。
@@ -246,19 +313,24 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
         except Exception as e:
             summary = None
             agent_mode = f"deterministic (agent error: {str(e)[:80]})"
+            trace.add("llm", f"Model unavailable ({str(e)[:60]}); continuing with deterministic plan")
 
     actions_out = []
     for a in plan["actions"]:
         item = dict(a)
-        sym = {"USD": "$", "EUR": "€", "CNY": "¥"}.get(a.get("currency", "USD"), "$")
-        item["why"] = whys.get(a["container_id"]) or f"{a['fix']} — unlocks {sym}{a['unlocks_per_day']}/day."
+        item["why"] = whys.get(a["container_id"]) or f"{a['fix']} — unlocks {cur}{a['unlocks_per_day']}/day."
         item["draft"] = draft_outreach(a, cfg)
         item["requires_human_approval"] = True
+        item["approval"] = {"status": "pending"}
         actions_out.append(item)
+        trace.add("draft", f"Drafted outreach to {a['who']} for {a['container_id']} ({item['draft']['source']})",
+                  container_id=a["container_id"], to=a["who"], source=item["draft"]["source"])
+
+    trace.add("done", f"{len(actions_out)} action(s) ready, {cur}{plan['total_unlocked_per_day']}/day unlocked — awaiting planner approval; nothing sent")
 
     if summary is None:
         n = len(actions_out)
-        sym = {"USD": "$", "EUR": "€", "CNY": "¥"}.get(plan.get("currency", "USD"), "$")
+        sym = cur
         summary = (f"{n} action{'s' if n != 1 else ''} worth making today at {plan.get('port_name', 'the port')}: "
                    f"unlock {sym}{plan['total_unlocked_per_day']}/day against a gate capacity of {plan['gate_capacity_today']} boxes.")
 
@@ -274,6 +346,8 @@ def run_agent(containers: list[dict], scenario: dict, top_n: int = 5) -> dict:
         "total_unlocked_usd_per_day": plan["total_unlocked_usd_per_day"],
         "agent_mode": agent_mode,
         "nothing_is_sent_automatically": True,
+        "trace": trace.steps,
+        "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
 
 

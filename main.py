@@ -8,7 +8,7 @@ from fastapi import BackgroundTasks, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 from gate_triage.config import Settings
-from gate_triage.models import ScenarioPatch
+from gate_triage.models import ApprovalDecision, ScenarioPatch
 from gate_triage.service import QueueService, ReasonFunction, ScoreFunction
 
 
@@ -60,16 +60,42 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
             background_tasks.add_task(service.enrich_reasons, updated.generation)
         return updated.queue
 
-    @app.get("/plan", summary="Agent: today's action list — blockers worth resolving, with drafted outreach")
+    @app.get("/plan", summary="Agent: today's action list — blockers worth resolving, with drafted outreach and trace")
     def plan(top_n: int = 5) -> dict:
         from gate_triage.agent import run_agent
         service = app.state.service
         snapshot = service.snapshot()
         try:
-            return run_agent(service._raw, snapshot.scenario, top_n=max(1, min(top_n, 10)))
+            result = run_agent(service._raw, snapshot.scenario, top_n=max(1, min(top_n, 10)))
         except Exception as exc:
             logger.warning("Agent failed: %s", exc)
             raise HTTPException(status_code=503, detail="Planner agent unavailable") from None
+        # Overlay planner decisions so a refresh keeps approved/rejected state ｜ 叠加人工批准状态
+        approvals = getattr(app.state, "approvals", {})
+        for item in result["actions"]:
+            key = f"{item['container_id']}:{item['blocker']}"
+            if key in approvals:
+                item["approval"] = approvals[key]
+        return result
+
+    @app.post("/plan/approve", summary="Planner approves or rejects one action. Nothing is ever sent automatically.")
+    def approve(decision: ApprovalDecision) -> dict:
+        from datetime import datetime, timezone
+        if not hasattr(app.state, "approvals"):
+            app.state.approvals = {}
+        record = {
+            "status": decision.decision,                       # approved | rejected
+            "by": decision.planner or "planner",
+            "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "note": decision.note,
+            "dispatch": "queued_for_human_send" if decision.decision == "approved" else "none",
+        }
+        app.state.approvals[f"{decision.container_id}:{decision.blocker}"] = record
+        return {"container_id": decision.container_id, "blocker": decision.blocker, "approval": record}
+
+    @app.get("/plan/approvals", summary="All planner decisions so far")
+    def approvals() -> dict:
+        return getattr(app.state, "approvals", {})
 
     @app.get("/stats", summary="Action counts and one-day fee simulation")
     def stats() -> dict:

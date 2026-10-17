@@ -425,6 +425,7 @@ def next_actions(containers, scenario=None, top_n=5):
         "currency": profile["currency"],
         "gate_capacity_today": capacity,
         "actions": plan,
+        "all_candidates": candidates,   # every simulated fix, for the agent trace ｜ 全部推演结果，给轨迹用
         "total_unlocked_per_day": sum(a["unlocks_per_day"] for a in plan),
         "total_unlocked_usd_per_day": sum(a["unlocks_usd_per_day"] for a in plan),
         "candidates_considered": len(candidates),
