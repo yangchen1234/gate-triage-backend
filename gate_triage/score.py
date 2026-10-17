@@ -214,6 +214,42 @@ def build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carr
     return f"{verb}: {why}."
 
 
+# ---------- 5b. Status ｜ 状态 ----------
+# Human-readable state per rule, for the UI and the planner. `action` stays the machine value
+# (release/slow/inspect/reroute); `status` says what that means today and who, if anyone, acts.
+# 每条规则对应一个人能看懂的状态。action 仍是机器值；status 说明今天意味着什么、谁要动手。
+STATUS_TEXT = {
+    "en": {
+        "R1_source_conflict":       ("Held for inspection",            "Sources disagree; an inspector verifies before the box moves.",            "inspector"),
+        "R2_customs_hold":          ("Queued · customs hold",          "Waiting for customs to clear the hold. Nothing to do at the gate.",        "customs"),
+        "R3_customs_offline":       ("Held for inspection",            "Customs system offline; hold cannot be verified, so paperwork is checked by hand.", "inspector"),
+        "R3_clearance_unverified":  ("Queued · clearance unverified",  "Customs system offline; waits until clearance can be confirmed.",          "customs"),
+        "R4_zone_power_loss":       ("Reroute to powered zone",        "Zone B has no power; move before the reefer warms.",                       "yard"),
+        "R5_reefer_warming":        ("Eligible for release · review",  "Reefer warming; planner confirms, gate releases today.",                   "gate"),
+        "R6_urgency_threshold":     ("Eligible for release · review",  "Above the urgency bar; planner confirms, gate releases today.",            "gate"),
+        "R7_default_queue":         ("Queued · not urgent",            "Below the urgency bar; stays in the yard and is re-scored next run.",     None),
+    },
+    "zh": {
+        "R1_source_conflict":       ("待查验",            "数据来源不一致，查验员核实后才能动。",            "inspector"),
+        "R2_customs_hold":          ("排队 · 海关扣留",    "等海关解除扣留，闸口无需操作。",                  "customs"),
+        "R3_customs_offline":       ("待查验",            "海关系统离线，扣留无法核实，人工查单。",          "inspector"),
+        "R3_clearance_unverified":  ("排队 · 放行未核实",  "海关系统离线，等能确认放行再说。",                "customs"),
+        "R4_zone_power_loss":       ("转移到有电区",       "B 区断电，冷藏柜升温前转移。",                    "yard"),
+        "R5_reefer_warming":        ("可放行 · 待复核",    "冷藏柜升温，调度确认后今天出闸。",                "gate"),
+        "R6_urgency_threshold":     ("可放行 · 待复核",    "紧急度达标，调度确认后今天出闸。",                "gate"),
+        "R7_default_queue":         ("排队 · 不紧急",      "紧急度未达标，留在场内，下次重新打分。",          None),
+    },
+}
+
+
+def build_status(rule, profile):
+    """Status card for one container: label, what happens next, who acts (None = nobody).
+    一个柜子的状态卡：标签、接下来发生什么、谁动手（None = 没人）。"""
+    lang = profile.get("language", "en")
+    label, next_step, owner = STATUS_TEXT.get(lang, STATUS_TEXT["en"])[rule]
+    return {"label": label, "next": next_step, "owner": owner, "language": lang}
+
+
 # ---------- Entry points ｜ 入口 ----------
 
 def score(container, scenario=None):
@@ -249,6 +285,7 @@ def score(container, scenario=None):
     c["conflict_score"] = round(conflict_score, 3)
     c["action"] = action
     c["reason"] = reason
+    c["status"] = build_status(rule, profile)   # human-readable state ｜ 人能看懂的状态
     # Audit record: what fired, under which scenario, with what trust. For compliance / funding reviews.
     # 可审计记录：命中哪条规则、什么场景、当时各来源信任分多少。给监管和资助方看的。
     c["decision_trace"] = {

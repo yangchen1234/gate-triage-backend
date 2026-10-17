@@ -112,3 +112,27 @@ def test_default_service_uses_ryans_scorer_and_original_order_for_fifo_ties(chan
     assert snapshot.stats["optimized_demurrage_usd_per_day"] == optimized
     assert snapshot.stats["savings_usd_per_day"] == baseline - optimized
     assert sum(snapshot.stats[action] for action in ("release", "slow", "inspect", "reroute")) == 100
+
+
+def test_status_matches_action_and_localizes():
+    """`status` is a human-readable view of the fired rule; it never contradicts `action`."""
+    from gate_triage.score import score_all, STATUS_TEXT
+    import json, pathlib
+    data = json.loads(pathlib.Path("data/containers.json").read_text())
+    for scenario in ({"lanes_open": 8, "customs_online": True, "power_zone_b": True, "port": "LAX"},
+                     {"lanes_open": 4, "customs_online": False, "power_zone_b": False, "port": "SHA"}):
+        for c in score_all(data, scenario):
+            st = c["status"]
+            assert set(st) == {"label", "next", "owner", "language"}
+            assert st["language"] == ("zh" if scenario["port"] == "SHA" else "en")
+            rule = c["decision_trace"]["rule_fired"]
+            assert st["label"] == STATUS_TEXT[st["language"]][rule][0]
+            if c["action"] == "release":
+                assert st["owner"] == "gate"
+            if c["action"] == "inspect":
+                assert st["owner"] == "inspector"
+            if c["action"] == "reroute":
+                assert st["owner"] == "yard"
+            if c["action"] == "slow":
+                assert st["owner"] in ("customs", None)
+    assert set(STATUS_TEXT["en"]) == set(STATUS_TEXT["zh"])
