@@ -2,7 +2,7 @@
 score.py — Gate Triage scoring engine ｜ 打分引擎
 
 Usage ｜ 用法:
-    from gate_triage.score import score, score_all
+    from score import score, score_all
     result = score(container, scenario)
     ranked = score_all(containers, scenario)   # sorted by priority desc ｜ 按 priority 降序
 
@@ -137,41 +137,34 @@ def decide_action(c, scenario, conflict_score, urgency, temp_drift, customs_trus
     lanes = scenario.get("lanes_open", 8)
     power_b = scenario.get("power_zone_b", True)
     # With half the lanes, the bar for release goes up ｜ 车道减半，放行门槛提高
-    release_threshold = 0.25 if lanes >= 8 else 0.50
+    release_threshold = 0.25 if lanes >= 8 else 0.35
     has_reefer = s["reefer"] is not None
     hold = s["customs"]["hold"]
 
     if conflict_score >= 0.5:
-        return "inspect", "data conflict"                       # sources contradict → a human looks ｜ 数据打架，人看
+        return "inspect", "data conflict", "R1_source_conflict"          # sources contradict → a human looks ｜ 数据打架，人看
     if hold and customs_trust >= 0.5:
-        return "slow", f"customs {s['customs']['hold_type']} hold, ~{s['customs']['est_days_to_clear']}d"
+        return "slow", f"customs {s['customs']['hold_type']} hold, ~{s['customs']['est_days_to_clear']}d", "R2_customs_hold"
     if hold and customs_trust < 0.5:
-        return "inspect", "customs offline, hold unverified"    # can't trust the hold flag ｜ 海关宕机，hold 不可信
+        return "inspect", "customs offline, hold unverified", "R3_customs_offline"   # 海关宕机，hold 不可信
     if has_reefer and c["zone"] == "B" and not power_b:
-        return "reroute", "zone B unpowered"                    # every reefer in B will warm ｜ B 区冷藏柜迟早升温
-    if not scenario.get("customs_online", True):
-        return "slow", "customs offline, clearance unverified"
+        return "reroute", "zone B unpowered", "R4_zone_power_loss"        # every reefer in B will warm ｜ B 区冷藏柜迟早升温
     if has_reefer and temp_drift > 0.3:
-        return "release", "reefer warming"                      # get it out before it spoils ｜ 坏之前赶紧走
+        return "release", "reefer warming", "R5_reefer_warming"           # get it out before it spoils ｜ 坏之前赶紧走
     if urgency >= release_threshold:
-        return "release", "high urgency"
-    return "slow", "below threshold"
+        return "release", "high urgency", "R6_urgency_threshold"
+    return "slow", "below threshold", "R7_default_queue"
 
 
 # ---------- 5. Reason ｜ 理由 ----------
 
-def build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carrier_trust, scenario=None):
+def build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carrier_trust):
     """One plain-English line a planner can read. Template for now; LLM polish later.
     一句接线员能看懂的英文。先用模板，之后可让 LLM 润色。"""
     s = c["sources"]
     r = s["reefer"]
-    scenario = scenario or DEFAULT_SCENARIO
     parts = []
 
-    if not scenario.get("customs_online", True):
-        parts.append("customs offline; verify clearance before any gate release")
-    if r is not None and c["zone"] == "B" and not scenario.get("power_zone_b", True):
-        parts.append("zone B unpowered; arrange authorized powered storage")
     if conflict_notes:
         parts.append("; ".join(conflict_notes).capitalize() + f" (carrier trust {carrier_trust:.1f})")
     if r is not None and temp_drift > 0.3:
@@ -179,7 +172,7 @@ def build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carr
     if r is not None and reefer_silent > 0.3:
         parts.append(f"reefer sensor silent {r['last_ping_min']} min")
     if s["customs"]["hold"]:
-        parts.append(f"customs {s['customs']['hold_type'].replace('_', ' ')} hold; do not release")
+        parts.append(f"customs {s['customs']['hold_type'].replace('_', ' ')} hold")
     if c["free_days_left"] < 0:
         parts.append(f"{-c['free_days_left']}d overdue at ${c['demurrage_usd_per_day']}/day")
 
@@ -206,11 +199,11 @@ def score(container, scenario=None):
     carrier_t, scale_t, customs_t, reefer_t = compute_trust(c, scenario)
     conflict_score, conflict_notes = compute_conflicts(c, carrier_t, scale_t)
     urgency, temp_drift, reefer_silent = compute_urgency(c, reefer_t if reefer_t is not None else 0.0, scenario)
-    action, why = decide_action(c, scenario, conflict_score, urgency, temp_drift, customs_t)
+    action, why, rule = decide_action(c, scenario, conflict_score, urgency, temp_drift, customs_t)
     # Conflicts rank high too — someone needs to look at them soon
     # 冲突也要排前面，因为需要人赶紧看
     priority = 0.65 * urgency + 0.35 * conflict_score
-    reason = build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carrier_t, scenario)
+    reason = build_reason(c, action, why, conflict_notes, temp_drift, reefer_silent, carrier_t)
 
     c["sources"]["carrier"]["trust"] = round(carrier_t, 2)
     c["sources"]["scale"]["trust"] = round(scale_t, 2)
@@ -223,6 +216,21 @@ def score(container, scenario=None):
     c["conflict_score"] = round(conflict_score, 3)
     c["action"] = action
     c["reason"] = reason
+    # Audit record: what fired, under which scenario, with what trust. For compliance / funding reviews.
+    # 可审计记录：命中哪条规则、什么场景、当时各来源信任分多少。给监管和资助方看的。
+    c["decision_trace"] = {
+        "rule_fired": rule,
+        "mode": "crisis" if is_crisis(scenario) else "normal",
+        "scenario": dict(scenario),
+        "trust_at_decision": {
+            "carrier": round(carrier_t, 2),
+            "scale": round(scale_t, 2),
+            "customs": round(customs_t, 2),
+            "reefer": round(reefer_t, 2) if reefer_t is not None else None,
+        },
+        "release_threshold": 0.25 if scenario.get("lanes_open", 8) >= 8 else 0.35,
+        "weights": dict(WEIGHTS_CRISIS if is_crisis(scenario) else WEIGHTS_NORMAL),
+    }
     return c
 
 
@@ -234,15 +242,155 @@ def score_all(containers, scenario=None):
     return scored
 
 
+# ---------- Next best actions ｜ 下一步最值得做的事 ----------
+#
+# Counterfactual: for every box with a blocker, pretend the blocker is fixed, re-score,
+# and measure what that unlocks. The agent calls this; the LLM never computes the numbers.
+# 反事实推演：对每个有卡点的柜子，假设卡点解决了，重打分，看解锁了多少。
+# agent 调这个工具拿数字，LLM 不算钱。
+
+BLOCKERS = {
+    # key: (detect, apply_fix, fix_label, who)
+    "customs_hold": (
+        lambda c, sc: c["sources"]["customs"]["hold"],
+        lambda c: c["sources"]["customs"].update({"hold": False, "hold_type": "none", "est_days_to_clear": 0}),
+        "Chase CBP to clear the {hold_type} hold",
+        "CBP",
+    ),
+    "source_conflict": (
+        lambda c, sc: c["conflict_score"] >= 0.5,
+        lambda c: c["sources"]["carrier"].update({
+            "declared_status": "laden" if c["sources"]["scale"]["weight_kg"] > 8000 else "empty",
+            "declared_weight_kg": c["sources"]["scale"]["weight_kg"],
+        }),
+        "Ask carrier to re-declare; scale reads {scale_t}t",
+        "Carrier",
+    ),
+    "reefer_silent": (
+        lambda c, sc: c["sources"]["reefer"] is not None and c["sources"]["reefer"]["last_ping_min"] > 90,
+        lambda c: c["sources"]["reefer"].update({"last_ping_min": 5}),
+        "Dispatch reefer tech; sensor silent {ping} min",
+        "Reefer tech",
+    ),
+    "zone_power": (
+        lambda c, sc: c["sources"]["reefer"] is not None and c["zone"] == "B" and not sc.get("power_zone_b", True),
+        lambda c: c.update({"zone": "A"}),
+        "Move to powered Zone A",
+        "Yard ops",
+    ),
+}
+
+
+CONTAINERS_PER_LANE_PER_DAY = 12   # matches backend Settings ｜ 和后端配置一致
+
+
+def _rank_of(container_id, ranked):
+    for i, c in enumerate(ranked):
+        if c["container_id"] == container_id:
+            return i + 1
+    return None
+
+
+def _out_today(container_id, ranked, scenario):
+    """Does this box actually leave the gate today? Must be 'release' AND within the day's lane capacity.
+    今天能不能真的出闸：必须是放行，而且排在当天车道容量之内。"""
+    capacity = scenario.get("lanes_open", 8) * CONTAINERS_PER_LANE_PER_DAY
+    releases = [c["container_id"] for c in ranked if c["action"] == "release"]
+    return container_id in releases[:capacity]
+
+
+def simulate_fix(container, blocker, containers, scenario=None):
+    """Pretend `blocker` is resolved on this container; re-score the whole queue; report the delta.
+    假设这个柜子的卡点已解决，整队重打分，返回前后差异。"""
+    scenario = scenario or DEFAULT_SCENARIO
+    detect, apply_fix, label, who = BLOCKERS[blocker]
+
+    before_q = score_all(containers, scenario)
+    before = next(c for c in before_q if c["container_id"] == container["container_id"])
+
+    fixed = deepcopy(container)
+    apply_fix(fixed)
+    others = [c for c in containers if c["container_id"] != container["container_id"]]
+    after_q = score_all(others + [fixed], scenario)
+    after = next(c for c in after_q if c["container_id"] == container["container_id"])
+
+    # $ unlocked: fixing the blocker gets the box out the gate today when it otherwise wouldn't.
+    # Capacity-aware, so under lane shortage only fixes that win a real slot count.
+    # 解锁多少钱：修好之后今天能出闸、不修就出不去。按容量算，车道减半时只有真能抢到名额的才算。
+    cid = container["container_id"]
+    was_out = _out_today(cid, before_q, scenario)
+    now_out = _out_today(cid, after_q, scenario)
+    unlocked = container["demurrage_usd_per_day"] if (now_out and not was_out) else 0
+
+    r = container["sources"]["reefer"]
+    fix_text = label.format(
+        hold_type=container["sources"]["customs"]["hold_type"].replace("_", " "),
+        scale_t=f"{container['sources']['scale']['weight_kg'] / 1000:.1f}",
+        ping=r["last_ping_min"] if r else 0,
+    )
+    return {
+        "container_id": container["container_id"],
+        "cargo_type": container["cargo_type"],
+        "consignee_type": container["consignee_type"],
+        "blocker": blocker,
+        "fix": fix_text,
+        "who": who,
+        "before": {"action": before["action"], "rank": _rank_of(cid, before_q), "priority": before["priority"], "out_today": was_out},
+        "after":  {"action": after["action"],  "rank": _rank_of(cid, after_q),  "priority": after["priority"], "out_today": now_out},
+        "unlocks_usd_per_day": unlocked,
+        "demurrage_usd_per_day": container["demurrage_usd_per_day"],
+    }
+
+
+def next_actions(containers, scenario=None, top_n=5):
+    """The planner's morning list: which blockers are worth resolving first, by $ unlocked.
+    值班员的行动清单：先解决哪个卡点最值，按解锁金额排序。"""
+    scenario = scenario or DEFAULT_SCENARIO
+    scored = score_all(containers, scenario)
+    by_id = {c["container_id"]: c for c in scored}
+
+    candidates = []
+    for raw in containers:
+        c = by_id[raw["container_id"]]
+        for blocker, (detect, *_rest) in BLOCKERS.items():
+            if detect(c, scenario):
+                candidates.append(simulate_fix(raw, blocker, containers, scenario))
+
+    # Primary sort: money unlocked. Tie-break: how far the box climbs, then its own demurrage.
+    # 先按解锁金额，再按排名提升，再按自身滞港费。
+    candidates.sort(key=lambda a: (
+        a["unlocks_usd_per_day"],
+        (a["before"]["rank"] or 999) - (a["after"]["rank"] or 999),
+        a["demurrage_usd_per_day"],
+    ), reverse=True)
+
+    # One action per container — don't list the same box twice.
+    seen, plan = set(), []
+    for a in candidates:
+        if a["container_id"] in seen:
+            continue
+        seen.add(a["container_id"])
+        plan.append(a)
+        if len(plan) == top_n:
+            break
+
+    capacity = scenario.get("lanes_open", 8) * CONTAINERS_PER_LANE_PER_DAY
+    return {
+        "scenario": dict(scenario),
+        "gate_capacity_today": capacity,
+        "actions": plan,
+        "total_unlocked_usd_per_day": sum(a["unlocks_usd_per_day"] for a in plan),
+        "candidates_considered": len(candidates),
+    }
+
+
 # ---------- Self-test ｜ 自测 ----------
 
 if __name__ == "__main__":
     import json
     from collections import Counter
-    from pathlib import Path
 
-    data_path = Path(__file__).resolve().parents[1] / "data" / "containers.json"
-    data = json.loads(data_path.read_text(encoding="utf-8"))
+    data = json.load(open("containers.json"))
     HERO = "TRXU7731902"   # demo hero: hospital vaccine reefer, Zone B, warming ｜ demo 主角
 
     scenarios = {
