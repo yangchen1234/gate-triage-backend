@@ -13,7 +13,7 @@ export function ActionBadge({ action }: { action: Action }) {
 export function Empty({ title, children }: { title: string; children: ReactNode }) {
   return <div className="empty-state"><div className="empty-icon"><Check size={22} /></div><h3>{title}</h3><p>{children}</p></div>;
 }
-export function Modal({ title, subtitle, children, onClose, drawer = false }: { title: string; subtitle?: string; children: ReactNode; onClose: () => void; drawer?: boolean }) {
+export function Modal({ title, subtitle, children, onClose, drawer = false, kicker = 'GATE TRIAGE WORKSPACE', closeLabel = 'Close dialog' }: { title: string; subtitle?: string; children: ReactNode; onClose: () => void; drawer?: boolean; kicker?: string; closeLabel?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const closeRef = useRef(onClose); closeRef.current = onClose;
   useEffect(() => {
@@ -35,7 +35,7 @@ export function Modal({ title, subtitle, children, onClose, drawer = false }: { 
   }, []);
   return <div className={`modal-backdrop ${drawer ? 'drawer-backdrop' : ''}`} onMouseDown={event => { if (event.target === event.currentTarget) onClose(); }}>
     <div className={`modal ${drawer ? 'drawer' : ''}`} role="dialog" aria-modal="true" aria-label={title} ref={ref}>
-      <header className="modal-heading"><div><span className="section-kicker">GATE TRIAGE WORKSPACE</span><h2>{title}</h2>{subtitle && <p>{subtitle}</p>}</div><button className="icon-button" aria-label="Close dialog" onClick={onClose}><X size={20} /></button></header>
+      <header className="modal-heading"><div><span className="section-kicker">{kicker}</span><h2>{title}</h2>{subtitle && <p>{subtitle}</p>}</div><button className="icon-button" aria-label={closeLabel} onClick={onClose}><X size={20} /></button></header>
       <div className="modal-body">{children}</div>
     </div>
   </div>;
