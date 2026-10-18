@@ -9,6 +9,7 @@ Generating…|Bezig met genereren…
 Generate suggested actions and a fault email from the current evidence.|Genereer voorgestelde acties en een storingsmail op basis van de actuele gegevens.
 Problem|Probleem
 Perishable goods|Bederfelijke goederen
+Delayed perishables · priority raised|Bederfelijke lading vertraagd · hogere prioriteit
 Perishable cargo|Bederfelijke lading
 Fresh produce|Verse producten
 Seafood|Vis en zeevruchten
@@ -619,6 +620,8 @@ departed|vertrokken
 
 // Parameterized messages use explicit whole-message templates, not word replacement.
 const templates: [string, string][] = [
+  ['{n} temperature / power alerts across tiers', '{n} temperatuur- / stroommeldingen in de stapel'],
+  ['{n} perishable containers delayed · queue priority raised', '{n} bederfelijke containers vertraagd · hogere wachtrijprioriteit'],
   ['{n} high-priority containers', '{n} containers met hoge prioriteit'],
   ['{n} do first', '{n} hoogste prioriteit'],
   ['Demo delay {delay} min versus pickup window {window} min; remaining margin {margin} min.', 'Demovertraging {delay} min tegenover ophaalvenster {window} min; resterende marge {margin} min.'],

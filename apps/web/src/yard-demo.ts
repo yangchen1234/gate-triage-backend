@@ -181,11 +181,26 @@ export function summarize(blocks: DemoBlock[], scenario: DemoScenario) {
   return { containers: containers.length, capacity: blocks.reduce((n, b) => n + b.capacity, 0), exceptions: containers.filter(c => primaryIssue(c, scenario) !== 'clear').length, urgent: containers.filter(c => actionsFor(c, scenario).some(a => a.quadrant === 'do')).length };
 }
 export const PERISHABLE_COLOR = '#e7bf55';
+export const ACCESS_COLOR = '#c68b56';
+export const PHYSICAL_ALERT_COLOR = '#d36a58';
 export function exceptionColor(c: DemoContainer, scenario: DemoScenario) {
-  const issue = primaryIssue(c, scenario);
-  if (issue === 'clear') return isPerishable(c) ? PERISHABLE_COLOR : ISSUE.clear.color;
+  const issues = issuesFor(c, scenario), issue = primaryIssue(c, scenario);
+  if (issues.includes('temperature') || issues.includes('power')) return PHYSICAL_ALERT_COLOR;
+  if (isPerishable(c) && issues.includes('congestion') && congestionExposure(c, scenario).affected) return PERISHABLE_COLOR;
+  if (issue === 'clear') return ISSUE.clear.color;
+  if (issue === 'congestion') return ACCESS_COLOR;
   if (issue === 'customs') return '#729cb6';
   return issuePresentation(c, issue).color;
+}
+// One map unit represents every occupied tier at a bay/row. A higher-scored
+// delayed box must never hide a temperature/power alert on a different tier.
+export function stackExceptionState(containers: DemoContainer[], scenario: DemoScenario) {
+  const present = containers.filter(c => c.yardStatus === 'in-yard');
+  const delayedPerishables = present.filter(c => isPerishable(c) && issuesFor(c, scenario).includes('congestion') && congestionExposure(c, scenario).affected).length;
+  const physicalAlerts = present.filter(c => issuesFor(c, scenario).some(i => i === 'temperature' || i === 'power')).length;
+  const representative = [...present].sort((a, b) => compareAttention(a, b, scenario))[0];
+  const color = physicalAlerts ? PHYSICAL_ALERT_COLOR : delayedPerishables ? PERISHABLE_COLOR : representative ? exceptionColor(representative, scenario) : '#f0f3f4';
+  return { color, delayedPerishables, physicalAlerts };
 }
 export const CARGO_COLOR: Record<Cargo, string> = { dry: '#86bbae', reefer: '#7ca9d1', hazmat: '#ac91b8', empty: '#b8c2cb' };
 

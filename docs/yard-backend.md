@@ -252,9 +252,13 @@ means faster liaison follow-up, not permission to bypass customs.
 The four quadrants use importance ≥70 / urgency ≥60. Within the queue, sort by urgency,
 then importance, then the tighter window for tied perishable cases, then stable ID.
 The same comparator drives inventory and stack representatives, so urgent perishable
-records become visible on the map as well as in Actions. Yellow labels identify
-perishables; red indicates an active urgent care / perishable-delay problem. Customs
-has a separate blue map color. Problem, proposed action and evidence remain distinct.
+records become visible on the map as well as in Actions. In the Exceptions layer, individual stack units turn yellow when any occupied tier
+contains a congestion-delayed perishable. Routine stock returns to its usual exception
+color. Red takes precedence whenever any tier has an active temperature or power alert.
+The Cargo layer still uses yellow for perishable identity. Dashed orange block borders
+mark directly restricted access, without a competing yellow region fill. Customs has a
+separate blue map color. Stack tooltips state the delayed-perishable count and queue
+priority change; selecting a stack still opens every tier in order. Problem, proposed action and evidence remain distinct.
 Scenario changes update the map, queue and inspector directly. The queue marks newly
 high-priority actions with their current scores; there is no duplicate scenario-summary
 card above the map.
