@@ -42,6 +42,9 @@ export function loadSession(): Promise<Snapshot> {
   return bootstrap;
 }
 
+// A scoped session capability, never the provider API key.
+export const consoleSessionHeaders = (): Record<string,string> => token ? { 'X-Console-Token': token } : {};
+
 export const api = {
   session: () => request<Snapshot>('/session'),
   ports: () => request<{ ports: Port[]; tariff_notice: string }>('/ports'),

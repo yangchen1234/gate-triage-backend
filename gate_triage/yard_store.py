@@ -59,6 +59,11 @@ CREATE TABLE IF NOT EXISTS yard_commands (
 CREATE TABLE IF NOT EXISTS yard_audit (
  seq INTEGER PRIMARY KEY AUTOINCREMENT, run TEXT NOT NULL REFERENCES yard_runs(id) ON DELETE CASCADE,
  revision INTEGER NOT NULL, type TEXT NOT NULL, at TEXT NOT NULL, container TEXT, data TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS yard_advisories (
+ id TEXT PRIMARY KEY, workspace TEXT NOT NULL REFERENCES yard_workspaces(id) ON DELETE CASCADE,
+ run TEXT NOT NULL REFERENCES yard_runs(id) ON DELETE CASCADE, port TEXT NOT NULL,
+ request_key TEXT NOT NULL, fingerprint TEXT NOT NULL, data TEXT NOT NULL,
+ UNIQUE(workspace,port,request_key));
 '''
 
 
@@ -69,9 +74,9 @@ class YardStore:
         db = sqlite3.connect(self.path, timeout=5, isolation_level=None)
         try:
             version = db.execute('PRAGMA user_version').fetchone()[0]
-            if version > 1: raise RuntimeError('Yard database schema is newer than this application')
+            if version > 2: raise RuntimeError('Yard database schema is newer than this application')
             db.execute('PRAGMA journal_mode=WAL')
-            db.executescript(SCHEMA + '\nPRAGMA user_version=1;')
+            db.executescript(SCHEMA + '\nPRAGMA user_version=2;')
         finally:
             db.close()
         self.path.chmod(0o600)
@@ -272,3 +277,62 @@ class YardStore:
             run = self._run(db, workspace, port)
             if not run: return []
             return [dict(id=r['seq'], runId=r['run'], revision=r['revision'], type=r['type'], at=r['at'], containerId=r['container'], data=json.loads(r['data'])) for r in db.execute('SELECT a.* FROM yard_audit a JOIN yard_runs r ON r.id=a.run WHERE r.workspace=? AND r.port=? ORDER BY a.seq DESC LIMIT ?', (workspace, port, limit))]
+
+    def reserve_advisory(self, token, port, event, expected, key, build_context):
+        fingerprint = sha256(encode(dict(event=event, expected=expected)).encode()).hexdigest()
+        with self.connection(True) as db:
+            workspace = self._workspace(db, token)
+            prior = db.execute('SELECT data,fingerprint FROM yard_advisories WHERE workspace=? AND port=? AND request_key=?', (workspace, port, key)).fetchone()
+            if prior:
+                if prior['fingerprint'] != fingerprint: raise YardError(409, 'This request key belongs to a different advisory.')
+                return self._advisory_view(db, json.loads(prior['data'])), False
+            run = self._run(db, workspace, port)
+            if not run or expected != self.etag(run): raise YardError(412, 'The yard changed. Refresh before asking Claude.')
+            if db.execute('SELECT count(*) FROM yard_advisories WHERE workspace=?', (workspace,)).fetchone()[0] >= 24:
+                raise YardError(429, 'Advisory history limit reached for this demo workspace.')
+            context = build_context(self._snapshot(db, run), event)
+            job = dict(id=str(uuid4()), requestId=key, runId=run['id'], inputRevision=run['revision'], port=port,
+                       containerId=event['containerId'], issue=event['issue'], question=event['question'],
+                       status='running', createdAt=stamp(), completedAt=None, result=None, error=None, context=context)
+            db.execute('INSERT INTO yard_advisories VALUES (?,?,?,?,?,?,?)', (job['id'], workspace, run['id'], port, key, fingerprint, encode(job)))
+            return self._advisory_view(db, job), True
+
+    def _advisory_view(self, db, data):
+        current = db.execute('SELECT id,revision FROM yard_runs WHERE workspace=(SELECT workspace FROM yard_runs WHERE id=?) AND port=? AND active=1', (data['runId'], data['port'])).fetchone()
+        return dict(data, stale=not current or current['id'] != data['runId'] or current['revision'] != data['inputRevision'])
+
+    def advisory(self, token, port, job_id):
+        with self.connection() as db:
+            workspace = self._workspace(db, token)
+            row = db.execute('SELECT data FROM yard_advisories WHERE workspace=? AND port=? AND id=?', (workspace, port, job_id)).fetchone()
+            if not row: raise YardError(404, 'Advisory not found in this workspace.')
+            return self._advisory_view(db, json.loads(row['data']))
+
+    def latest_advisory(self, token, port, container_id, issue):
+        with self.connection() as db:
+            workspace = self._workspace(db, token)
+            run = self._run(db, workspace, port)
+            if not run: return None
+            for row in db.execute('SELECT data FROM yard_advisories WHERE workspace=? AND port=? AND run=? ORDER BY rowid DESC', (workspace, port, run['id'])):
+                data = json.loads(row['data'])
+                if data['containerId'] == container_id and data['issue'] == issue:
+                    return self._advisory_view(db, data)
+            return None
+
+    def finish_advisory(self, job_id, result=None, error=None):
+        with self.connection(True) as db:
+            row = db.execute('SELECT data FROM yard_advisories WHERE id=?', (job_id,)).fetchone()
+            if not row: return
+            job = json.loads(row['data'])
+            if job['status'] != 'running': return
+            job.update(status='failed' if error else 'succeeded', result=result, error=error, completedAt=stamp())
+            db.execute('UPDATE yard_advisories SET data=? WHERE id=?', (encode(job), job_id))
+
+    def interrupt_advisories(self):
+        # A restart must never silently repeat a potentially paid request.
+        with self.connection(True) as db:
+            for row in db.execute('SELECT id,data FROM yard_advisories').fetchall():
+                job = json.loads(row['data'])
+                if job['status'] == 'running':
+                    job.update(status='failed', error='Generation was interrupted by a server restart. Generate again explicitly.', completedAt=stamp())
+                    db.execute('UPDATE yard_advisories SET data=? WHERE id=?', (encode(job), row['id']))

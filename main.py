@@ -29,6 +29,8 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
     async def lifespan(app: FastAPI):
         from gate_triage.yard_store import YardStore
         app.state.yard_store = YardStore(config.yard_database_path)
+        from gate_triage.yard_assistant import YardAssistant
+        app.state.yard_assistant = YardAssistant(app.state.yard_store, console_store)
         service = QueueService(config, scorer=scorer, reasoner=reasoner)
         app.state.service = service
         task = None
@@ -39,6 +41,7 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
         finally:
             if console_store is not None:
                 console_store.close()
+            app.state.yard_assistant.close()
             if task:
                 await task
 
@@ -149,6 +152,9 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
 
     from gate_triage.yard_api import install_yard
     install_yard(app)
+
+    from gate_triage.yard_assistant import install_yard_assistant
+    install_yard_assistant(app)
 
     from gate_triage.console import install_console
     console_store = install_console(app, config)

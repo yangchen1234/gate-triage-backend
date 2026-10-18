@@ -5,7 +5,7 @@ export type YardCommand = Omit<Extract<WorkflowEvent, {type:'review'}>, 'at'> | 
 export class YardApiError extends Error { status: number; constructor(status: number, message: string) { super(message); this.status=status; } }
 let session: Promise<{workspaceId:string}> | null = null;
 let workspace = '';
-async function request(path: string, init: RequestInit = {}) {
+export async function yardRequest(path: string, init: RequestInit = {}) {
   const headers = new Headers(init.headers); headers.set('X-Yard-Request', '1');
   if (init.body) headers.set('Content-Type','application/json');
   let response: Response;
@@ -16,6 +16,7 @@ async function request(path: string, init: RequestInit = {}) {
   if (!response.ok) throw new YardApiError(response.status, typeof data?.detail === 'string' ? data.detail : `Yard request failed (${response.status}).`);
   return {data,etag:response.headers.get('ETag')||''};
 }
+const request = yardRequest;
 export async function ensureYardSession() {
   if (!session) session = request('/session',{method:'POST'}).then(({data})=>{ if (typeof data?.workspaceId !== 'string') throw new YardApiError(502,'The yard server returned an invalid workspace.'); workspace=data.workspaceId; return data; }).catch(error=>{session=null;throw error;});
   return session;

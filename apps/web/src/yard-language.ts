@@ -3,6 +3,54 @@ import type { DemoPort } from './yard-demo.ts';
 // English source keys keep the existing LA interface unchanged. Dutch labels are explicit,
 // with parameterized messages for IDs/counts; user-entered notes are never translated.
 const dutch: Record<string, string> = Object.fromEntries(`
+Claude fault assistant|Claude-assistent voor storingen
+Claude assistant|Claude-assistent
+DRAFT ONLY|ALLEEN CONCEPT
+Ask about this exception or draft a fault email from the recorded evidence.|Stel een vraag over deze afwijking of maak een storingsmail op basis van geregistreerde gegevens.
+Claude connected|Claude verbonden
+Team access required|Teamtoegang vereist
+Connect Claude|Claude verbinden
+Claude connection|Claude-verbinding
+Refresh Claude connection|Claude-verbinding vernieuwen
+Team key stays on the server.|De teamsleutel blijft op de server.
+Personal key is held in temporary server memory.|De persoonlijke sleutel wordt tijdelijk in het servergeheugen bewaard.
+Disconnect Claude|Claude loskoppelen
+Team access code|Teamtoegangscode
+Connect team Claude|Team-Claude verbinden
+Team Claude needs ANTHROPIC_API_KEY, ANTHROPIC_MODEL and CONSOLE_TEAM_ACCESS_CODE on the server.|Team-Claude vereist ANTHROPIC_API_KEY, ANTHROPIC_MODEL en CONSOLE_TEAM_ACCESS_CODE op de server.
+Use a temporary personal key|Een tijdelijke persoonlijke sleutel gebruiken
+Claude API key|Claude-API-sleutel
+Exact model ID|Exact model-ID
+Connect temporarily|Tijdelijk verbinden
+Credentials are cleared on submit and never saved in browser storage. Access lasts up to 15 minutes.|Inloggegevens worden na verzenden gewist en niet in browseropslag bewaard. Toegang duurt maximaal 15 minuten.
+Use HTTPS or localhost to connect Claude.|Gebruik HTTPS of localhost om Claude te verbinden.
+Question or drafting request|Vraag of verzoek voor een concept
+What should we verify first?|Wat moeten we eerst controleren?
+Claude is drafting…|Claude schrijft een concept…
+Generate a new draft|Nieuw concept genereren
+Generate with Claude|Met Claude genereren
+Connect Claude above to generate. Opening this panel makes no model call.|Verbind Claude hierboven om te genereren. Het openen van dit paneel start geen modelaanroep.
+Check the same request|Hetzelfde verzoek controleren
+Could not load the Claude connection.|De Claude-verbinding kon niet worden geladen.
+Could not load saved drafts.|Opgeslagen concepten konden niet worden geladen.
+Draft status is unavailable. Reconnect to check; generation is not repeated.|Conceptstatus is niet beschikbaar. Verbind opnieuw om te controleren; genereren wordt niet herhaald.
+Claude connection failed.|Claude-verbinding mislukt.
+Draft request failed.|Conceptverzoek mislukt.
+Select and copy the draft text manually.|Selecteer en kopieer de concepttekst handmatig.
+Yard data changed. This draft is out of date; generate again before using it.|Terreingegevens zijn gewijzigd. Dit concept is verouderd; genereer opnieuw voordat u het gebruikt.
+Assistant output|Assistentresultaat
+Suggestions|Aanbevelingen
+Fault email|Storingsmail
+Source facts|Brongegevens
+Escalate to supervisor now|Nu escaleren naar supervisor
+Coordinate with responsible team|Afstemmen met verantwoordelijk team
+Still needs verification|Nog te controleren
+To role|Aan rol
+Subject|Onderwerp
+Email draft|E-mailconcept
+Copied|Gekopieerd
+Copy draft|Concept kopiëren
+Advisory only. No email is sent and no container status is changed.|Alleen advies. Er wordt geen e-mail verzonden en geen containerstatus gewijzigd.
 YARD DECISION SUPPORT|BESLISONDERSTEUNING CONTAINERTERREIN
 Server rules|Serverregels
 Observation version|Waarnemingsversie
