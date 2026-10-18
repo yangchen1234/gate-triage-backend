@@ -180,7 +180,7 @@ def test_restart_preserves_completed_drafts_and_interrupts_running_ones(connecte
     restarted=YardStore(store.path);restarted.interrupt_advisories()
     assert restarted.advisory(token,'la',done['id'])['result']==done['result']
     assert restarted.advisory(token,'la',pending['id'])['status']=='failed'
-    with sqlite3.connect(store.path) as db:assert db.execute('PRAGMA user_version').fetchone()[0]==2
+    with sqlite3.connect(store.path) as db:assert db.execute('PRAGMA user_version').fetchone()[0]==3
 
 
 @pytest.mark.parametrize('corruption',['evidence','subject','identity','truncated','secret'])

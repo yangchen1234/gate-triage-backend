@@ -209,3 +209,78 @@ Validation for this integration: **180 backend tests, 43 frontend tests, and the
 TypeScript/production build passed**. Backup tests include live WAL contents,
 overwrite protection and cleanup of failed backups. This is a local synthetic demo;
 these counts are functional validation, not evidence of production throughput.
+
+## Congestion policy v2 and direct Agent generation
+
+The yard preview uses `yard-v2-congestion`. This is a demo decision policy, not a
+validated terminal SOP. The legacy Ryan `/containers` and `/plan` interfaces remain
+independent. The same physical inventories and original measurements are retained.
+
+The deterministic `demo_profile_v2` enrichment adds `perishable`, `commodity`,
+`outboundRoute` and `cargoProfileSource` to snapshot containers. It consumes no
+additional random draws. Four out of every five modeled reefers carry fresh produce
+or seafood; the fifth models pharmaceuticals and is not labeled perishable. This is
+an explicit fixture assumption, not a deduction from refrigeration alone. Existing v1
+SQLite observations receive the same read-time enrichment; `original_data` is not
+rewritten or presented as newly observed cargo documentation.
+
+Congestion adds **120 minutes of modeled pickup delay**. PICKUP-1 connects A01/A02,
+B01/B02/C01 and C03 to the constrained outbound corridor; EMPTY-2 connects C04.
+C03/C04 have direct access exceptions. Perishable stock in dependent reefer blocks
+also receives its own congestion action, even while it remains powered in storage.
+Unrelated exports, empty storage, DG and inspection areas do not become affected
+merely because the scenario is enabled. A verified alternate access applies only to
+that container, not the corridor or other units. No movement or spoilage is inferred.
+
+Scoring is server-owned, with a TypeScript reference verified against it:
+
+| Action / condition | Importance | Urgency |
+|---|---:|---:|
+| Power interruption | 98 | 98 |
+| Temperature excursion | 95 | 95 |
+| Perishable pickup delay | 90; 94 for critical cargo | 96 when margin ≤0 min; 90 when ≤60; 78 when ≤180; otherwise 65 |
+| Perishable customs / weight / telemetry prerequisite under congestion | At least 88; 92 for critical cargo | At least 92 when margin ≤60 min; otherwise 78 |
+| Nonperishable pickup in C03 | 78 | 82 |
+| Empty pickup in C04 | 65 | 75 |
+
+Margin is `handlingWindowMinutes - modeledDelayMinutes`. It is an appointment / demo
+handling-window margin, never remaining safe shelf life. Thresholds are configurable
+code constants for demonstration, not food safety limits. Gate-out still requires all
+independent controls and accepted work to be resolved. A raised customs priority
+means faster liaison follow-up, not permission to bypass customs.
+
+The four quadrants use importance ≥70 / urgency ≥60. Within the queue, sort by urgency,
+then importance, then the tighter window for tied perishable cases, then stable ID.
+The same comparator drives inventory and stack representatives, so urgent perishable
+records become visible on the map as well as in Actions. Yellow labels identify
+perishables; red indicates an active urgent care / perishable-delay problem. Customs
+has a separate blue map color. Problem, proposed action and evidence remain distinct.
+The scenario impact panel compares current, whole-yard server scores against routine;
+it counts each container once and separately shows newly high-priority stock.
+
+Fresh deterministic fixture results (no operational throughput claim):
+
+| Port | Inventory | Perishable | Routine do-first | Congestion do-first | Combined do-first |
+|---|---:|---:|---:|---:|---:|
+| LA | 1,780 | 131 | 14 | 248 | 276 |
+| Rotterdam | 1,142 | 113 | 10 | 211 | 235 |
+
+A workspace with prior resolutions or departures legitimately shows different counts.
+The benchmark uses identical identities, positions and measurements across scenarios.
+Python and TypeScript fingerprints independently match for four port/seed combinations;
+the legacy physical-fixture fingerprint remains independently asserted.
+
+SQLite schema version **3** records one policy-upgrade audit event per active existing
+run and increments its revision once. This invalidates cached ETags and old advisory
+inputs without resetting stock, jobs, decisions or departures. Restarts do not repeat
+this upgrade. Back up before applying it to an existing local demo database.
+
+The Agent panel has no question input: **Generate** submits an empty optional question
+and the server supplies current authoritative evidence. It includes cargo/route/delay
+facts (F10), independent controls, scores and task history; no API key is sent to the
+browser. Connection metadata is rechecked on focus and every minute. Opening the panel
+or checking credentials makes no provider-generation call. Only explicit Generate does.
+A green/connected state means credentials are available; a successful generated result
+is the actual end-to-end provider check. Drafts can be stale after a scenario change.
+Congestion blocks pickup, not every stationary maintenance or coordination task.
+No email, equipment action or gate-out is executed by generation.

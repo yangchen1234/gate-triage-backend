@@ -11,7 +11,7 @@ import sqlite3
 import time
 from uuid import uuid4
 
-from gate_triage.yard_data import PORTS, LABEL, issues_for, assess, make_yard, project
+from gate_triage.yard_data import PORTS, LABEL, POLICY_VERSION, issues_for, assess, make_yard, project
 
 
 def encode(value): return json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=False)
@@ -74,9 +74,18 @@ class YardStore:
         db = sqlite3.connect(self.path, timeout=5, isolation_level=None)
         try:
             version = db.execute('PRAGMA user_version').fetchone()[0]
-            if version > 2: raise RuntimeError('Yard database schema is newer than this application')
+            if version > 3: raise RuntimeError('Yard database schema is newer than this application')
             db.execute('PRAGMA journal_mode=WAL')
-            db.executescript(SCHEMA + '\nPRAGMA user_version=2;')
+            db.executescript(SCHEMA)
+            db.execute('BEGIN IMMEDIATE')
+            if db.execute('PRAGMA user_version').fetchone()[0] < 3:
+                at = stamp()
+                for rid, revision in db.execute('SELECT id,revision FROM yard_runs WHERE active=1').fetchall():
+                    db.execute('UPDATE yard_runs SET revision=?,updated_at=? WHERE id=?', (revision + 1, at, rid))
+                    db.execute('INSERT INTO yard_audit(run,revision,type,at,data) VALUES (?,?,?,?,?)',
+                               (rid, revision + 1, 'policy_upgrade', at, encode(dict(policyVersion=POLICY_VERSION, source='demo_profile_v2'))))
+                db.execute('PRAGMA user_version=3')
+            db.commit()
         finally:
             db.close()
         self.path.chmod(0o600)
@@ -173,7 +182,7 @@ class YardStore:
         blocks = [dict(json.loads(r['data']), containers=by_block.get(r['id'], [])) for r in db.execute('SELECT id,data FROM yard_blocks WHERE run=? ORDER BY rowid', (rid,))]
         run_data = dict(version=1, port=run['port'], seed=run['seed'], decisions=self._records(db, 'yard_decisions', rid), jobs=jobs, resolutions=fixed, departures=departures)
         return dict(workspaceId=run['workspace'], runId=rid, revision=run['revision'], scenario=scenario, updatedAt=run['updated_at'], run=run_data,
-                    blocks=blocks, catalog=catalog, database='sqlite', persisted=True, synthetic=True, policyVersion='yard-v1', agentEnabled=False)
+                    blocks=blocks, catalog=catalog, database='sqlite', persisted=True, synthetic=True, policyVersion=POLICY_VERSION, agentEnabled=False)
 
     def command(self, token, port, event, expected, key):
         fingerprint = sha256(encode(dict(event=event, expected=expected)).encode()).hexdigest()

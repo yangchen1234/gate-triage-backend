@@ -10,7 +10,7 @@ export type Cargo = 'dry' | 'reefer' | 'hazmat' | 'empty';
 export type Quadrant = 'do' | 'plan' | 'coordinate' | 'monitor';
 export type PowerCircuit = 'R1' | 'R2';
 export type ActionAssessment = { issue: Exclude<Issue, 'clear'>; importance: number; urgency: number; quadrant: Quadrant; reasons: string[] };
-export type DemoContainer = { observationVersion?: number; lastObservedAt?: string; lastObservedSource?: string; assessments?: Partial<Record<DemoScenario, ActionAssessment[]>>; id: string; block: string; bay: number; row: number; tier: number; cargo: Cargo; carrier: string; yardStatus: 'in-yard' | 'departed'; issue: Issue; priority: number; temperature: number; setpoint: number; reported: number; weight: number; declared: number; handlingWindowMinutes: number; criticalCargo: boolean; verifiedUnitBackup?: boolean; verifiedAlternateAccess?: boolean; plug: { id: string; circuit: PowerCircuit } | null };
+export type DemoContainer = { perishable?: boolean; commodity?: string; outboundRoute?: string | null; cargoProfileSource?: string; observationVersion?: number; lastObservedAt?: string; lastObservedSource?: string; assessments?: Partial<Record<DemoScenario, ActionAssessment[]>>; id: string; block: string; bay: number; row: number; tier: number; cargo: Cargo; carrier: string; yardStatus: 'in-yard' | 'departed'; issue: Issue; priority: number; temperature: number; setpoint: number; reported: number; weight: number; declared: number; handlingWindowMinutes: number; criticalCargo: boolean; verifiedUnitBackup?: boolean; verifiedAlternateAccess?: boolean; plug: { id: string; circuit: PowerCircuit } | null };
 export type ZoneSpec = { id: string; purpose: string; short: string; maxTiers: number; pluggedRows: number; circuit: PowerCircuit | null; flow: string };
 export type DemoBlock = ZoneSpec & { group: string; col: number; row: number; capacity: number; plugCapacity: number; containers: DemoContainer[] };
 export type DemoDecision = { observationVersion?: number; id: string; scenario: DemoScenario; issue: Issue; choice: 'accepted' | 'dismissed'; note: string; at: string };
@@ -46,8 +46,8 @@ export function zoneFor(id: string, port: DemoPort = 'la') { return zonesFor(por
 export const SCENARIOS: Record<DemoScenario, { name: string; detail: string }> = {
   routine: { name: 'Routine operations', detail: 'Normal conditions · review day-to-day exceptions' },
   power: { name: 'Reefer circuit R1 outage', detail: 'Only connected reefers in B01/B02 lose supply; circuit R2 in C01 remains energized' },
-  congestion: { name: 'Outbound congestion', detail: 'Synthetic access restriction affects blocks C03 and C04' },
-  combined: { name: 'Combined disruption', detail: 'R1 power loss + C03/C04 outbound restriction · separate care from pickup' },
+  congestion: { name: 'Outbound congestion', detail: '120 min demo pickup delay · C03/C04 access and dependent perishable cargo are affected' },
+  combined: { name: 'Combined disruption', detail: 'R1 power loss + 120 min demo pickup delay · separate cargo care from release' },
 };
 export const ISSUE: Record<Issue, { label: string; short: string; color: string; level: number; owner: string; action: string; prerequisite: string }> = {
   clear: { label: 'No flagged exception', short: 'Routine', color: '#86bbae', level: 0, owner: 'Terminal coordinator', action: 'Review pickup readiness', prerequisite: 'Verify line release, customs clearance, appointment and receiving arrangements.' },
@@ -59,6 +59,24 @@ export const ISSUE: Record<Issue, { label: string; short: string; color: string;
   congestion: { label: 'Outbound access constrained', short: 'Access', color: '#dfb566', level: 2, owner: 'Gate / trucking coordinator', action: 'Review pickup sequence and appointments', prerequisite: 'Confirm which access is affected and coordinate a valid pickup window. Do not assume all gates are closed.' },
 };
 function random(seed: number) { let n = seed >>> 0; return () => { n = (Math.imul(n, 1664525) + 1013904223) >>> 0; return n / 4294967296; }; }
+export const CONGESTION_DELAY_MINUTES = 120;
+export function cargoProfile(c: Pick<DemoContainer, 'id' | 'cargo' | 'block'>) {
+  const serial = Number(c.id.replace(/\D/g, '') || '0'), perishable = c.cargo === 'reefer' && serial % 5 !== 0;
+  const commodity = perishable ? serial % 2 ? 'Fresh produce' : 'Seafood' : c.cargo === 'reefer' ? 'Pharmaceuticals' : c.cargo === 'empty' ? 'Empty equipment' : 'General cargo';
+  const outboundRoute = ['A01', 'A02', 'B01', 'B02', 'C01', 'C03'].includes(c.block) ? 'PICKUP-1' : c.block === 'C04' ? 'EMPTY-2' : null;
+  return { perishable, commodity, outboundRoute, cargoProfileSource: 'demo_profile_v2' };
+}
+export function isPerishable(c: DemoContainer) { return c.perishable ?? cargoProfile(c).perishable; }
+export function congestionExposure(c: DemoContainer, scenario: DemoScenario) {
+  const profile = cargoProfile(c), route = c.outboundRoute === undefined ? profile.outboundRoute : c.outboundRoute;
+  const affected = ['congestion', 'combined'].includes(scenario) && Boolean(route) && !c.verifiedAlternateAccess && c.yardStatus === 'in-yard';
+  const delayMinutes = affected ? CONGESTION_DELAY_MINUTES : 0;
+  return { affected, route, delayMinutes, windowMinutes: c.handlingWindowMinutes, remainingMinutes: c.handlingWindowMinutes - delayMinutes, direct: ['C03', 'C04'].includes(c.block), perishable: isPerishable(c) };
+}
+export function issuePresentation(c: DemoContainer, issue: Issue) {
+  if (issue === 'congestion' && isPerishable(c)) return { ...ISSUE[issue], label: 'Perishable pickup delayed', short: 'Perishable delay', action: 'Prioritize pickup and confirm cold-chain care', owner: 'Gate / trucking + reefer coordinator', color: '#ce654e', level: 3 };
+  return ISSUE[issue];
+}
 export function makeDemo(seed?: number, port: DemoPort = 'la'): DemoBlock[] {
   const profile = PORTS[port], rand = random(seed ?? profile.seed); let serial: number = profile.serial;
   return zonesFor(port).map((zone, index) => {
@@ -78,7 +96,7 @@ export function makeDemo(seed?: number, port: DemoPort = 'la'): DemoBlock[] {
           plug: equipped ? { id: `${id}-${bay}-${lane}-${tier}`, circuit: zone.circuit! } : null });
       }
     }
-    return { ...zone, group: id[0], col: index % 4, row: Math.floor(index / 4), capacity: 18 * 4 * zone.maxTiers, plugCapacity: 18 * zone.pluggedRows * zone.maxTiers, containers };
+    return { ...zone, group: id[0], col: index % 4, row: Math.floor(index / 4), capacity: 18 * 4 * zone.maxTiers, plugCapacity: 18 * zone.pluggedRows * zone.maxTiers, containers: containers.map(c => ({ ...c, ...cargoProfile(c) })) };
   });
 }
 export function circuitOffline(circuit: PowerCircuit | null, scenario: DemoScenario) { return circuit === 'R1' && (scenario === 'power' || scenario === 'combined'); }
@@ -88,15 +106,26 @@ export function plugSummary(b: DemoBlock, scenario: DemoScenario) {
   return { capacity: b.plugCapacity, connected, affected: b.containers.filter(c => supplyFor(c, scenario) === 'interrupted').length, offline: offline ? b.plugCapacity : 0, available: offline ? 0 : b.plugCapacity - connected };
 }
 export function issuesFor(c: DemoContainer, scenario: DemoScenario): Issue[] {
+  if (c.yardStatus !== 'in-yard') return [];
   if (c.assessments?.[scenario]) return c.assessments[scenario]!.map(a => a.issue);
   const issues: Issue[] = c.issue === 'clear' ? [] : [c.issue];
   if (c.cargo === 'reefer' && supplyFor(c, scenario) === 'interrupted') issues.push('power');
-  if (['congestion', 'combined'].includes(scenario) && ['C03', 'C04'].includes(c.block) && !c.verifiedAlternateAccess) issues.push('congestion');
+  const exposure = congestionExposure(c, scenario);
+  if (exposure.affected && (exposure.direct || exposure.perishable)) issues.push('congestion');
   return issues.sort((a, b) => ISSUE[b].level - ISSUE[a].level || a.localeCompare(b));
 }
-export function primaryIssue(c: DemoContainer, scenario: DemoScenario): Issue { return issuesFor(c, scenario)[0] || 'clear'; }
-export function attention(c: DemoContainer, scenario: DemoScenario): number { return Math.min(99, c.priority + (primaryIssue(c, scenario) === 'power' ? 18 : primaryIssue(c, scenario) === 'congestion' ? 9 : 0)); }
-export function compareAttention(a: DemoContainer, b: DemoContainer, scenario: DemoScenario): number { return ISSUE[primaryIssue(b, scenario)].level - ISSUE[primaryIssue(a, scenario)].level || attention(b, scenario) - attention(a, scenario) || a.id.localeCompare(b.id); }
+export function primaryIssue(c: DemoContainer, scenario: DemoScenario): Issue { return actionsFor(c, scenario).sort(compareActions)[0]?.issue || 'clear'; }
+export function attention(c: DemoContainer, scenario: DemoScenario): number { return Math.max(c.priority, ...actionsFor(c, scenario).map(a => a.urgency)); }
+export function compareAttention(a: DemoContainer, b: DemoContainer, scenario: DemoScenario): number {
+  const aa = actionsFor(a, scenario).sort(compareActions)[0], ba = actionsFor(b, scenario).sort(compareActions)[0];
+  return aa && ba ? compareActions(aa, ba) : aa ? -1 : ba ? 1 : b.priority - a.priority || a.id.localeCompare(b.id);
+}
+export function priorityChange(c: DemoContainer, scenario: DemoScenario) {
+  const now = actionsFor(c, scenario).sort(compareActions)[0], routine = actionsFor(c, 'routine').sort(compareActions)[0];
+  const routineImportance = routine?.importance || 0, routineUrgency = routine?.urgency || 0;
+  return { now, routine, importanceDelta: (now?.importance || 0) - routineImportance, urgencyDelta: (now?.urgency || 0) - routineUrgency,
+    promoted: scenario !== 'routine' && now?.quadrant === 'do' && routine?.quadrant !== 'do' };
+}
 export const QUADRANTS: Record<Quadrant, { name: string; instruction: string; axes: string; color: string }> = {
   do: { name: 'Do first', instruction: 'Urgent human coordination', axes: 'Important + urgent', color: '#b75849' },
   plan: { name: 'Plan & unblock', instruction: 'Assign an owner and next review', axes: 'Important · less urgent', color: '#356d91' },
@@ -116,21 +145,47 @@ export function actionFor(c: DemoContainer, issue: Exclude<Issue, 'clear'>, scen
     case 'weight': importance = 85; urgency = !blocked && c.handlingWindowMinutes <= 60 ? 85 : 40; reasons.push('Identity / weight evidence must be reconciled before dependent handling.'); break;
     case 'customs': importance = 80; urgency = !blocked && c.handlingWindowMinutes <= 60 ? 80 : 30; reasons.push('Authorized clearance is a hard prerequisite; this action is follow-up, not release.'); break;
     case 'sensor': importance = c.criticalCargo ? 80 : 45; urgency = c.reported >= 90 ? 75 : 35; reasons.push(`${c.reported} min without a report; ${c.criticalCargo ? 'higher-sensitivity' : 'standard'} demo cargo.`, 'Telemetry follow-up only; missing data does not establish loss of power.'); if (supplyFor(c, scenario) === 'interrupted') { importance = 90; urgency = 95; reasons.push('Scenario circuit outage raises verification impact and urgency.'); } break;
-    case 'congestion': importance = 88; urgency = 90; reasons.push('Affected outbound block needs prompt coordination to contain queue spillback.'); break;
+    case 'congestion': {
+      const exposure = congestionExposure(c, scenario);
+      if (exposure.perishable) {
+        importance = c.criticalCargo ? 94 : 90;
+        urgency = exposure.remainingMinutes <= 0 ? 96 : exposure.remainingMinutes <= 60 ? 90 : exposure.remainingMinutes <= 180 ? 78 : 65;
+        reasons.push('Perishable cargo depends on the congested pickup corridor, including units still in reefer storage.',
+          `Demo delay ${exposure.delayMinutes} min versus pickup window ${exposure.windowMinutes} min; remaining margin ${exposure.remainingMinutes} min.`,
+          'Confirm cold-chain care and coordinate an authorized pickup alternative; delay alone does not establish spoilage.');
+      } else {
+        importance = c.cargo === 'empty' ? 65 : 78; urgency = c.cargo === 'empty' ? 75 : 82;
+        reasons.push('Affected outbound block needs prompt coordination to contain queue spillback.');
+      }
+      break;
+    }
+  }
+  const exposure = congestionExposure(c, scenario);
+  if (exposure.affected && exposure.perishable && ['customs', 'weight', 'sensor'].includes(issue)) {
+    importance = Math.max(importance, c.criticalCargo ? 92 : 88);
+    urgency = Math.max(urgency, exposure.remainingMinutes <= 60 ? 92 : 78);
+    reasons.push('Congestion raises the consequence and urgency of this perishable prerequisite; responsible staff must reconcile it without bypassing the control.');
   }
   if (issue === 'customs' || issue === 'weight') reasons.push(blocked ? 'Pickup is also blocked by this scenario; plan prerequisite work while access/care is addressed.' : `Synthetic next handling window: ${c.handlingWindowMinutes} min (not an operational deadline).`);
   const quadrant: Quadrant = importance >= 70 ? urgency >= 60 ? 'do' : 'plan' : urgency >= 60 ? 'coordinate' : 'monitor';
   return { id: `${c.id}:${issue}`, container: c, issue, importance, urgency, quadrant, reasons };
 }
 export function actionsFor(c: DemoContainer, scenario: DemoScenario): DemoAction[] { return issuesFor(c, scenario).filter((i): i is Exclude<Issue, 'clear'> => i !== 'clear').map(i => actionFor(c, i, scenario)); }
-export function compareActions(a: DemoAction, b: DemoAction) { return b.urgency - a.urgency || b.importance - a.importance || a.id.localeCompare(b.id); }
+export function compareActions(a: DemoAction, b: DemoAction) { return b.urgency - a.urgency || b.importance - a.importance || (isPerishable(a.container) && isPerishable(b.container) ? a.container.handlingWindowMinutes - b.container.handlingWindowMinutes : 0) || a.id.localeCompare(b.id); }
 export function selectContainers(containers: DemoContainer[], scenario: DemoScenario, query: string, block: string, exceptions: boolean): DemoContainer[] {
   const text = query.toLowerCase().trim();
   return containers.filter(c => (block === 'all' || c.block === block) && (!exceptions || primaryIssue(c, scenario) !== 'clear') && (!text || `${c.id} ${c.block} ${c.carrier} ${c.cargo} ${issuesFor(c, scenario).map(i => ISSUE[i].label).join(' ')}`.toLowerCase().includes(text))).sort((a, b) => compareAttention(a, b, scenario));
 }
 export function summarize(blocks: DemoBlock[], scenario: DemoScenario) {
   const containers = blocks.flatMap(b => b.containers);
-  return { containers: containers.length, capacity: blocks.reduce((n, b) => n + b.capacity, 0), exceptions: containers.filter(c => primaryIssue(c, scenario) !== 'clear').length, urgent: containers.filter(c => ISSUE[primaryIssue(c, scenario)].level === 3).length };
+  return { containers: containers.length, capacity: blocks.reduce((n, b) => n + b.capacity, 0), exceptions: containers.filter(c => primaryIssue(c, scenario) !== 'clear').length, urgent: containers.filter(c => actionsFor(c, scenario).some(a => a.quadrant === 'do')).length };
+}
+export const PERISHABLE_COLOR = '#e7bf55';
+export function exceptionColor(c: DemoContainer, scenario: DemoScenario) {
+  const issue = primaryIssue(c, scenario);
+  if (issue === 'clear') return isPerishable(c) ? PERISHABLE_COLOR : ISSUE.clear.color;
+  if (issue === 'customs') return '#729cb6';
+  return issuePresentation(c, issue).color;
 }
 export const CARGO_COLOR: Record<Cargo, string> = { dry: '#86bbae', reefer: '#7ca9d1', hazmat: '#ac91b8', empty: '#b8c2cb' };
 

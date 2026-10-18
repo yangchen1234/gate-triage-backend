@@ -9,7 +9,7 @@ from fastapi import APIRouter, Header, HTTPException, Query, Request
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 from gate_triage.yard_api import Input, Issue, LimitedRoute, Port
-from gate_triage.yard_data import CARRIERS, LABEL, PORTS
+from gate_triage.yard_data import CARRIERS, LABEL, PORTS, congestion_exposure
 from gate_triage.yard_store import YardError, stamp
 
 
@@ -55,13 +55,18 @@ def build_context(snapshot, event):
              fact('F6', 'Refrigeration observation', dict(temperature=c['temperature'], setpoint=c['setpoint'], minutesSinceReport=c['reported'], plug=c['plug']) if c['cargo']=='reefer' else 'Not a refrigerated container'),
              fact('F7', 'Server assessment for selected issue', action),
              fact('F8', 'Recorded task stages', [dict(issue=j['issue'],stage=j['stage']) for j in snapshot['run']['jobs'] if j['containerId']==c['id']]),
-             fact('F9', 'Observation version', c['observationVersion'])]
+             fact('F9', 'Observation version', c['observationVersion']),
+             fact('F10', 'Demo cargo and pickup-delay exposure', dict(perishable=c.get('perishable', False), commodity=c.get('commodity'),
+                  outboundRoute=c.get('outboundRoute'), delayMinutes=congestion_exposure(c, snapshot['scenario'])['delayMinutes'],
+                  handlingWindowMinutes=c['handlingWindowMinutes'], source='demo_profile_v2'))]
     urgent = action['importance'] >= 70 and action['urgency'] >= 60
     return dict(containerId=c['id'], language='nl' if snapshot['run']['port']=='rotterdam' else 'en',
                 issue=event['issue'], recipientRole=OWNER[event['issue']], facts=facts,
                 escalation='supervisor_now' if urgent else 'responsible_team',
                 rules=['Human review required. This is a synthetic demo, not a dispatch order.',
                        'Independent customs, access and safety restrictions remain in force.',
+                       'Pickup windows and delay estimates are demo inputs, not shelf-life limits. No inference of spoilage from congestion alone.',
+                       'A congestion exception is a pickup restriction, not a customs hold. Do not invent authority clearances. Authorized stationary cold-chain checks, maintenance and coordination may proceed with safe access while pickup remains blocked.',
                        'No permission to release, move cargo, bypass restrictions, send email or control equipment.'])
 
 

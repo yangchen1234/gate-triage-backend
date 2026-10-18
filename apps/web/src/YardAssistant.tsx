@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { api } from './api.ts';
 import type { ModelStatus } from './types.ts';
 import { useYardLocale } from './YardLocale.tsx';
-import { ISSUE } from './yard-demo.ts';
+import { ISSUE, issuePresentation } from './yard-demo.ts';
 import type { Issue } from './yard-demo.ts';
 import { YardApiError, yardETag } from './yard-api.ts';
 import type { YardSnapshot } from './yard-api.ts';
@@ -17,9 +17,11 @@ export default function YardAssistant({snapshot,containerId,issue,disabled}:{sna
  const [model,setModel]=useState<ModelStatus|null>(null),[connectionOpen,setConnectionOpen]=useState(false),[connectionBusy,setConnectionBusy]=useState(false);
  const [code,setCode]=useState(''),[personalKey,setPersonalKey]=useState(''),[modelId,setModelId]=useState('');
  const [job,setJob]=useState<YardAdvisory|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState(''),[uncertain,setUncertain]=useState(false),[copied,setCopied]=useState(false);
- const [question,setQuestion]=useState(''),[tab,setTab]=useState<'guidance'|'email'|'evidence'>('guidance'),[subject,setSubject]=useState(''),[body,setBody]=useState('');
+ const [tab,setTab]=useState<'guidance'|'email'|'evidence'>('guidance'),[subject,setSubject]=useState(''),[body,setBody]=useState('');
  const mounted=useRef(true),lock=useRef(false),started=useRef(false),intent=useRef<{body:AdvisoryRequest;etag:string;key:string}|null>(null);
  const port=snapshot.run.port;
+ const container=snapshot.catalog.find(c=>c.id===containerId);
+ const issueLabel=container?issuePresentation(container,issue).short:ISSUE[issue].short;
  const transportSafe=window.location.protocol==='https:'||['127.0.0.1','localhost','[::1]'].includes(window.location.hostname);
  const stale=!!job&&advisoryIsStale(job,snapshot.runId,snapshot.revision);
  const running=busy||job?.status==='running';
@@ -29,6 +31,17 @@ export default function YardAssistant({snapshot,containerId,issue,disabled}:{sna
   void yardAssistantApi.latest(port,containerId,issue).then(j=>{if(mounted.current&&!started.current)setJob(j);}).catch(()=>{if(mounted.current)setError(t('Could not load saved drafts.'));});
   return()=>{mounted.current=false;};
  },[port,containerId,issue,t]);
+ useEffect(()=>{
+  let active=true,checking=false;
+  const check=async()=>{
+   if(checking||document.visibilityState!=='visible')return;checking=true;
+   try{const status=await assistantModel();if(active)setModel(status);}
+   catch{if(active)setModel(null);}
+   finally{checking=false;}
+  };
+  const timer=window.setInterval(()=>void check(),60000);window.addEventListener('focus',check);
+  return()=>{active=false;clearInterval(timer);window.removeEventListener('focus',check);};
+ },[]);
  useEffect(()=>{
   if(job?.status!=='running')return;
   let active=true,polling=false;
@@ -61,7 +74,7 @@ export default function YardAssistant({snapshot,containerId,issue,disabled}:{sna
  }
  async function generate(retry=false){
   if(lock.current||disabled||job?.status==='running')return;
-  if(!retry)intent.current={body:{containerId,issue,question:question.trim()},etag:yardETag(snapshot),key:crypto.randomUUID()};
+  if(!retry)intent.current={body:{containerId,issue,question:''},etag:yardETag(snapshot),key:crypto.randomUUID()};
   const request=intent.current;if(!request)return;
   lock.current=true;started.current=true;setBusy(true);setError('');
   try{
@@ -85,7 +98,7 @@ export default function YardAssistant({snapshot,containerId,issue,disabled}:{sna
  }
  return <section className="yd-assistant" aria-label={t('Agent suggestions panel')}>
   <div className="yd-assistant-heading"><div><Sparkles size={17}/><h3>{t('Agent suggestions')}</h3></div><span>{t('DRAFT ONLY')}</span></div>
-  <p className="yd-assistant-intro">{t('Ask about this exception or draft a fault email from the recorded evidence.')}</p>
+  <p className="yd-assistant-intro">{t('Generate suggested actions and a fault email from the current evidence.')}</p>
   <button className="yd-assistant-connection" aria-expanded={connectionOpen} onClick={()=>setConnectionOpen(v=>!v)}><KeyRound size={13}/><span>{t(model?.configured?'Agent connected':model?.server_available?'Team access required':'Connect agent')}</span><ChevronDown size={13}/></button>
   {connectionOpen&&<div className="yd-assistant-auth">
    <div><strong>{t('Agent connection')}</strong><button className="yd-text-button" disabled={connectionBusy} onClick={()=>void refreshConnection()} aria-label={t('Refresh agent connection')}><RefreshCw size={13}/></button></div>
@@ -96,9 +109,9 @@ export default function YardAssistant({snapshot,containerId,issue,disabled}:{sna
    </>}
    {!transportSafe&&<p role="alert">{t('Use HTTPS or localhost to connect the agent.')}</p>}
   </div>}
-  <label className="yd-assistant-question" htmlFor="yd-assistant-question">{t('Question or drafting request')}<textarea id="yd-assistant-question" rows={2} maxLength={800} placeholder={t('What should we verify first?')} value={question} onChange={e=>setQuestion(e.target.value)} disabled={running||uncertain}/></label>
-  <div className="yd-assistant-context"><span>{containerId}</span><span>{t(ISSUE[issue].short)}</span></div>
-  <button className="yd-primary yd-assistant-generate" disabled={disabled||running||uncertain||!model?.configured} onClick={()=>void generate()}>{running?<LoaderCircle size={14} className="spin"/>:<Sparkles size={14}/>} {t(running?'Generating suggestions…':job?'Refresh suggestions':'Generate suggestions')}</button>
+
+  <div className="yd-assistant-context"><span>{containerId}</span><span>{t(issueLabel)}</span></div>
+  <button className="yd-primary yd-assistant-generate" disabled={disabled||running||uncertain||!model?.configured} onClick={()=>void generate()}>{running?<LoaderCircle size={14} className="spin"/>:<Sparkles size={14}/>} {t(running?'Generating…':'Generate')}</button>
   {!model?.configured&&<small className="yd-assistant-hint">{t('Connect the agent above to generate. Opening this panel makes no model call.')}</small>}
   {error&&<div className="yd-assistant-error" role="alert">{t(agentErrorCopy(error))}</div>}
   {uncertain&&<button className="yd-secondary" disabled={busy||disabled} onClick={()=>void generate(true)}>{t('Check the same request')}</button>}

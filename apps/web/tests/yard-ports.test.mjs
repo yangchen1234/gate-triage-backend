@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { makeDemo, PORTS, summarize, issuesFor, plugSummary } from '../src/yard-demo.ts';
+import { makeDemo, PORTS, summarize, issuesFor, plugSummary, isPerishable } from '../src/yard-demo.ts';
 import { createYardRun, loadYardRun, saveYardRun, parseYardRun, transitionWorkflow, projectYard } from '../src/yard-workflow.ts';
 import { translateYard, formatYardNumber, formatYardTime } from '../src/yard-language.ts';
 const at = '2026-10-17T22:00:00Z';
@@ -27,7 +27,7 @@ test('all Rotterdam disruption effects stay within the modeled circuit and acces
   assert.ok(held); assert.deepEqual(new Set(issuesFor(held, 'power')), new Set(['power', 'customs']));
   for (const c of rt.flatMap(b => b.containers)) {
     assert.equal(issuesFor(c, 'power').includes('power'), c.plug?.circuit === 'R1');
-    assert.equal(issuesFor(c, 'congestion').includes('congestion'), ['C03', 'C04'].includes(c.block));
+    assert.equal(issuesFor(c, 'congestion').includes('congestion'), ['C03', 'C04'].includes(c.block) || isPerishable(c));
   }
 });
 test('Rotterdam gate-out and cache validation use its own fixture rather than the LA IDs', () => {

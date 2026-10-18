@@ -1,7 +1,7 @@
 import { TriangleAlert } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { DemoContainer, DemoScenario, Issue } from './yard-demo.ts';
-import { SCENARIOS, supplyFor } from './yard-demo.ts';
+import { congestionExposure, issuePresentation, SCENARIOS, supplyFor } from './yard-demo.ts';
 import { useYardLocale } from './YardLocale.tsx';
 import './yard-evidence.css';
 
@@ -18,6 +18,7 @@ export default function YardEvidence({ container, issues, scenario, customsClear
     const sensorMissing = issues.includes('sensor');
     const powerInterrupted = issues.includes('power');
     const accessConstrained = issues.includes('congestion');
+    const exposure = congestionExposure(container, scenario);
     const weightDelta = (container.weight - container.declared) / 1000;
     const temperatureDelta = container.temperature - container.setpoint;
     const signed = (n: number) => `${n > 0 ? '+' : n < 0 ? '−' : ''}${number(Math.abs(n))}`;
@@ -68,11 +69,12 @@ export default function YardEvidence({ container, issues, scenario, customsClear
                 </div>
             </>}
             {accessConstrained && <div className="yd-evidence-card yd-evidence-single is-restricted">
-                <dt><span>{t('Outbound access constrained')}</span>{badge('Access restricted')}</dt>
-                <dd>{t(SCENARIOS[scenario].name)} · {t('Block')} {container.block}</dd>
+                <dt><span>{t(issuePresentation(container, 'congestion').label)}</span>{badge('Access restricted')}</dt>
+                <dd>{exposure.route} · +{exposure.delayMinutes} {t('min pickup delay')}</dd>
             </div>}
         </dl>
         <dl className="yd-evidence-context">
+            <EvidenceContext label="Cargo profile">{t(container.commodity || 'General cargo')}</EvidenceContext>
             <EvidenceContext label="Source">{t('Server database · synthetic observations')}</EvidenceContext>
             <EvidenceContext label="Assigned reefer plug">{t(container.plug ? `${container.plug.id} · ${container.plug.circuit}` : 'None · no connection assigned')}</EvidenceContext>
             <EvidenceContext label="Handling window">{number(container.handlingWindowMinutes)} {t('min · synthetic')}</EvidenceContext>

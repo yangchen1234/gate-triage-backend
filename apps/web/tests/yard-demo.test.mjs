@@ -75,8 +75,8 @@ test('independent hold follow-up survives emergency care and a changed priority 
   const c = { ...makeDemo().find(b => b.id === 'B01').containers.find(c => c.plug), issue: 'customs', handlingWindowMinutes: 30 };
   assert.equal(actionFor(c, 'customs', 'routine').quadrant, 'do');
   const emergency = actionsFor(c, 'combined');
-  assert.deepEqual(new Set(emergency.map(a => a.issue)), new Set(['customs', 'power']));
-  assert.equal(emergency.find(a => a.issue === 'customs').quadrant, 'plan');
+  assert.deepEqual(new Set(emergency.map(a => a.issue)), new Set(['customs', 'power', 'congestion']));
+  assert.equal(emergency.find(a => a.issue === 'customs').quadrant, 'do');
   assert.equal(emergency.find(a => a.issue === 'power').quadrant, 'do');
   assert.equal(c.issue, 'customs');
   const all = makeDemo().flatMap(b => b.containers);

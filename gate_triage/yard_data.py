@@ -29,6 +29,30 @@ ZONES = [
 LEVEL = {'clear': 0, 'customs': 1, 'weight': 2, 'temperature': 3, 'sensor': 2, 'power': 3, 'congestion': 2}
 LABEL = {'customs': 'Recorded customs hold', 'weight': 'Declaration mismatch', 'temperature': 'Temperature excursion', 'sensor': 'Sensor report missing', 'power': 'Reefer circuit R1 interrupted', 'congestion': 'Outbound access constrained'}
 STAGES = {'queued': 'Queued', 'in_progress': 'In progress', 'awaiting_verification': 'Verify result', 'resolved': 'Resolved'}
+POLICY_VERSION = 'yard-v2-congestion'
+CONGESTION_DELAY_MINUTES = 120  # Scenario input, not a measured travel time or cargo shelf life.
+
+
+def cargo_profile(c):
+    """Deterministic demo enrichment also supports already-persisted v1 observations.
+
+    No RNG calls: identity, positions, measurements and existing audit stay intact.
+    Refrigerated does not imply perishable: every fifth reefer models pharmaceuticals.
+    """
+    serial = int(''.join(ch for ch in c['id'] if ch.isdigit()) or '0')
+    perish = c['cargo'] == 'reefer' and serial % 5 != 0
+    commodity = ('Fresh produce' if serial % 2 else 'Seafood') if perish else 'Pharmaceuticals' if c['cargo'] == 'reefer' else 'Empty equipment' if c['cargo'] == 'empty' else 'General cargo'
+    route = 'PICKUP-1' if c['block'] in ('A01', 'A02', 'B01', 'B02', 'C01', 'C03') else 'EMPTY-2' if c['block'] == 'C04' else None
+    return dict(perishable=perish, commodity=commodity, outboundRoute=route, cargoProfileSource='demo_profile_v2')
+
+
+def congestion_exposure(c, scenario):
+    profile = cargo_profile(c)
+    affected = scenario in ('congestion', 'combined') and bool(profile['outboundRoute']) and not c.get('verifiedAlternateAccess') and c['yardStatus'] == 'in-yard'
+    delay = CONGESTION_DELAY_MINUTES if affected else 0
+    return dict(affected=affected, route=profile['outboundRoute'], delayMinutes=delay,
+                windowMinutes=c['handlingWindowMinutes'], remainingMinutes=c['handlingWindowMinutes'] - delay,
+                direct=c['block'] in ('C03', 'C04'), perishable=profile['perishable'])
 
 
 def make_yard(port='la', seed=None):
@@ -67,6 +91,8 @@ def make_yard(port='la', seed=None):
                         plug=dict(id=f'{bid}-{bay}-{row}-{tier}', circuit=circuit) if equipped else None))
         blocks.append(dict(id=bid, purpose=purpose, short=short, maxTiers=tiers, pluggedRows=plugged_rows, circuit=circuit, flow=flow,
             group=bid[0], col=index % 4, row=index // 4, capacity=18 * 4 * tiers, plugCapacity=18 * plugged_rows * tiers, containers=containers))
+    for b in blocks:
+        for c in b['containers']: c.update(cargo_profile(c))
     return blocks
 
 
@@ -75,7 +101,8 @@ def issues_for(c, scenario):
     issues = set(c.get('extraIssues', []))
     if c['issue'] != 'clear': issues.add(c['issue'])
     if c['cargo'] == 'reefer' and c['plug'] and c['plug']['circuit'] == 'R1' and scenario in ('power', 'combined') and not c.get('verifiedUnitBackup'): issues.add('power')
-    if c['block'] in ('C03', 'C04') and scenario in ('congestion', 'combined') and not c.get('verifiedAlternateAccess'): issues.add('congestion')
+    exposure = congestion_exposure(c, scenario)
+    if exposure['affected'] and (exposure['direct'] or exposure['perishable']): issues.add('congestion')
     return sorted(issues, key=lambda i: (-LEVEL[i], i))
 
 
@@ -101,8 +128,21 @@ def assess(c, issue, scenario):
             importance, urgency = 90, 95
             reasons.append('Scenario circuit outage raises verification impact and urgency.')
     elif issue == 'congestion':
-        importance, urgency = 88, 90
-        reasons = ['Affected outbound block needs prompt coordination to contain queue spillback.']
+        exposure = congestion_exposure(c, scenario)
+        if exposure['perishable']:
+            importance = 94 if c['criticalCargo'] else 90
+            urgency = 96 if exposure['remainingMinutes'] <= 0 else 90 if exposure['remainingMinutes'] <= 60 else 78 if exposure['remainingMinutes'] <= 180 else 65
+            reasons = ['Perishable cargo depends on the congested pickup corridor, including units still in reefer storage.',
+                       f"Demo delay {exposure['delayMinutes']} min versus pickup window {exposure['windowMinutes']} min; remaining margin {exposure['remainingMinutes']} min.",
+                       'Confirm cold-chain care and coordinate an authorized pickup alternative; delay alone does not establish spoilage.']
+        else:
+            importance, urgency = (65, 75) if c['cargo'] == 'empty' else (78, 82)
+            reasons = ['Affected outbound block needs prompt coordination to contain queue spillback.']
+    exposure = congestion_exposure(c, scenario)
+    if exposure['affected'] and exposure['perishable'] and issue in ('customs', 'weight', 'sensor'):
+        importance = max(importance, 92 if c['criticalCargo'] else 88)
+        urgency = max(urgency, 92 if exposure['remainingMinutes'] <= 60 else 78)
+        reasons.append('Congestion raises the consequence and urgency of this perishable prerequisite; responsible staff must reconcile it without bypassing the control.')
     if issue in ('weight', 'customs'):
         reasons.append('Pickup is also blocked by this scenario; plan prerequisite work while access/care is addressed.' if blocked else f"Synthetic next handling window: {c['handlingWindowMinutes']} min (not an operational deadline).")
     quadrant = ('do' if urgency >= 60 else 'plan') if importance >= 70 else ('coordinate' if urgency >= 60 else 'monitor')
@@ -111,6 +151,7 @@ def assess(c, issue, scenario):
 
 def project(c, resolutions, departed=False):
     c = deepcopy(c)
+    c.update(cargo_profile(c))
     fixed = {r['issue'] for r in resolutions if r['containerId'] == c['id']}
     if c['issue'] in fixed: c['issue'] = 'clear'
     c['extraIssues'] = [i for i in c.get('extraIssues', []) if i not in fixed]

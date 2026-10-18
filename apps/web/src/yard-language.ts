@@ -4,6 +4,47 @@ import type { DemoPort } from './yard-demo.ts';
 // with parameterized messages for IDs/counts; user-entered notes are never translated.
 const dutch: Record<string, string> = Object.fromEntries(`
 Agent suggestions panel|Paneel met agentaanbevelingen
+Generate|Genereren
+Generating…|Bezig met genereren…
+Generate suggested actions and a fault email from the current evidence.|Genereer voorgestelde acties en een storingsmail op basis van de actuele gegevens.
+Problem|Probleem
+Perishable goods|Bederfelijke goederen
+Perishable cargo|Bederfelijke lading
+Fresh produce|Verse producten
+Seafood|Vis en zeevruchten
+Pharmaceuticals|Geneesmiddelen
+General cargo|Algemene lading
+Perishable pickup delayed|Ophalen bederfelijke lading vertraagd
+Perishable delay|Vertraging bederfelijke lading
+Prioritize pickup and confirm cold-chain care|Geef ophalen voorrang en bevestig koelketenzorg
+Gate / trucking + reefer coordinator|Coördinator poort / transport en reefer
+Scenario priority changes|Prioriteitswijzigingen door scenario
+Congestion emergency · priorities recalculated|Verkeersopstopping · prioriteiten herberekend
+Power emergency · priorities recalculated|Stroomstoring · prioriteiten herberekend
+Whole-yard impact · same containers, current server scores|Impact op het hele terrein · dezelfde containers, actuele serverscores
+Do-first containers|Containers met hoogste prioriteit
+Newly high priority|Nieuwe hoge prioriteit
+Perishables delayed|Bederfelijke lading vertraagd
+Demo pickup delay|Demovertraging bij ophalen
+Routine inventory|Reguliere voorraad
+min pickup delay|min ophaalvertraging
+Raised to Do first|Verhoogd naar Direct aanpakken
+Urgent care / perishable delay|Spoedzorg / vertraagde bederfelijke lading
+Demo pickup window|Demo-ophaalvenster
+Margin after delay|Marge na vertraging
+Routine score|Reguliere score
+Routine inventory · no exception action|Reguliere voorraad · geen afwijkingsactie
+This container|Deze container
+ do first| hoogste prioriteit
+Now|Nu
+Keep cold-chain care in place; confirm a usable pickup appointment and escalate the time-critical case to the supervisor. Resolve independent holds in parallel.|Houd de koelketenzorg in stand; bevestig een bruikbare ophaalafspraak en escaleer de tijdkritische situatie naar de supervisor. Los afzonderlijke blokkades gelijktijdig op.
+Perishable cargo depends on the congested pickup corridor, including units still in reefer storage.|Bederfelijke lading is afhankelijk van de verstopte ophaalroute, ook containers die nog in reeferopslag staan.
+Confirm cold-chain care and coordinate an authorized pickup alternative; delay alone does not establish spoilage.|Bevestig koelketenzorg en stem een toegestaan ophaalalternatief af; vertraging alleen bewijst geen bederf.
+Congestion raises the consequence and urgency of this perishable prerequisite; responsible staff must reconcile it without bypassing the control.|Opstopping verhoogt de impact en urgentie van deze voorwaarde voor bederfelijke lading; bevoegde medewerkers moeten dit oplossen zonder controles over te slaan.
+120 min demo pickup delay · C03/C04 access and dependent perishable cargo are affected|120 min demo-ophaalvertraging · toegang C03/C04 en afhankelijke bederfelijke lading zijn getroffen
+R1 power loss + 120 min demo pickup delay · separate cargo care from release|Stroomuitval R1 + 120 min demo-ophaalvertraging · scheid ladingzorg en vrijgave
+Pickup route|Ophaalroute
+Cargo profile|Ladingprofiel
 Use HTTPS or localhost to connect the agent.|Gebruik HTTPS of localhost om de agent te verbinden.
 The agent provider did not respond in time. No action was taken. Try a shorter drafting request or generate again later.|De agentaanbieder reageerde niet op tijd. Er is geen actie uitgevoerd. Probeer een korter verzoek of genereer later opnieuw.
 Agent suggestions|Agentaanbevelingen
@@ -578,6 +619,11 @@ departed|vertrokken
 
 // Parameterized messages use explicit whole-message templates, not word replacement.
 const templates: [string, string][] = [
+  ['{n} high-priority containers', '{n} containers met hoge prioriteit'],
+  ['{n} do first', '{n} hoogste prioriteit'],
+  ['Demo delay {delay} min versus pickup window {window} min; remaining margin {margin} min.', 'Demovertraging {delay} min tegenover ophaalvenster {window} min; resterende marge {margin} min.'],
+  ['{cargo} depends on pickup route {route}, with {delay} min of demo delay. Current location: {block}.', '{cargo} is afhankelijk van ophaalroute {route}, met {delay} min demovertraging. Huidige locatie: {block}.'],
+
   ['Block {id}', 'Blok {id}'], ['{id} · stack layout', '{id} · stapelindeling'],
   ['{n} synthetic blocks', '{n} gesimuleerde blokken'], ['{a} / {b} modeled slots', '{a} / {b} gesimuleerde posities'],
   ['{n} temperature / power flags', '{n} temperatuur- / stroommeldingen'], ['{n} confirmed gate-outs · fixed capacity', '{n} bevestigde uitritten · vaste capaciteit'],

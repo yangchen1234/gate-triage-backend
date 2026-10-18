@@ -265,3 +265,30 @@ def test_ambiguous_failure_after_commit_can_be_retried_without_duplicate_departu
     assert len(retried.json()['run']['departures'])==1
     events=client.get('/api/yard/ports/la/audit').json()['events']
     assert len([e for e in events if e['type']=='gate_out'])==1
+
+
+def test_congestion_recalculates_same_inventory_and_keeps_resolved_access_local(client):
+    normal = snapshot(client)
+    rows = active(normal)
+    fresh = next(c for c in rows if c['perishable'] and c['issue'] == 'clear')
+    baseline = sum(any(a['quadrant'] == 'do' for a in c['assessments']['routine']) for c in rows)
+    changed = advance(client, normal, dict(type='scenario', scenario='congestion'))
+    current = active(changed)
+    urgent = sum(any(a['quadrant'] == 'do' for a in c['assessments']['congestion']) for c in current)
+    assert urgent > baseline + 100
+    assert {c['id'] for c in current} == {c['id'] for c in rows}
+    selected = next(c for c in current if c['id'] == fresh['id'])
+    assert selected['block'] == fresh['block'] and selected['temperature'] == fresh['temperature']
+    assert selected['assessments']['routine'] == []
+    assert next(a for a in selected['assessments']['congestion'] if a['issue'] == 'congestion')['quadrant'] == 'do'
+    for c in current:
+        for issue in ('weight', 'customs'):
+            if any(a['issue'] == issue for a in c['assessments']['routine']):
+                assert any(a['issue'] == issue for a in c['assessments']['congestion'])
+    after = resolve(client, changed, fresh['id'], 'congestion', 'congestion')
+    updated = next(c for c in active(after) if c['id'] == fresh['id'])
+    assert not any(a['issue'] == 'congestion' for a in updated['assessments']['congestion'])
+    assert any(a['issue'] == 'congestion' for c in active(after) if c['id'] != fresh['id'] and c['perishable'] for a in c['assessments']['congestion'])
+    assert len(active(after)) == len(rows)  # Verified pickup alternative is not physical gate-out.
+    restored = advance(client, after, dict(type='scenario', scenario='routine'))
+    assert all('congestion' not in [a['issue'] for a in c['assessments']['routine']] for c in active(restored))
