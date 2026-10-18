@@ -3,7 +3,32 @@ import type { DemoPort } from './yard-demo.ts';
 // English source keys keep the existing LA interface unchanged. Dutch labels are explicit,
 // with parameterized messages for IDs/counts; user-entered notes are never translated.
 const dutch: Record<string, string> = Object.fromEntries(`
+Agent suggestions panel|Paneel met agentaanbevelingen
+Use HTTPS or localhost to connect the agent.|Gebruik HTTPS of localhost om de agent te verbinden.
+The agent provider did not respond in time. No action was taken. Try a shorter drafting request or generate again later.|De agentaanbieder reageerde niet op tijd. Er is geen actie uitgevoerd. Probeer een korter verzoek of genereer later opnieuw.
+Agent suggestions|Agentaanbevelingen
+Agent connected|Agent verbonden
+Connect agent|Agent verbinden
+Agent connection|Agentverbinding
+Refresh agent connection|Agentverbinding vernieuwen
+Disconnect agent|Agent loskoppelen
+Connect team agent|Teamagent verbinden
+Team access needs API credentials and a separate access code configured on the server.|Teamtoegang vereist API-inloggegevens en een aparte toegangscode op de server.
+Provider API key|API-sleutel van aanbieder
+Generating suggestions…|Aanbevelingen genereren…
+Refresh suggestions|Aanbevelingen vernieuwen
+Generate suggestions|Aanbevelingen genereren
+Could not load the agent connection.|De agentverbinding kon niet worden geladen.
+Connect the agent above to generate. Opening this panel makes no model call.|Verbind de agent hierboven om te genereren. Het openen van dit paneel start geen modelaanroep.
+Agent-generated|Door agent gegenereerd
 Claude fault assistant|Claude-assistent voor storingen
+This Claude key requires a workspace. Set ANTHROPIC_WORKSPACE_ID on the server and restart, or use a workspace-scoped key.|Deze Claude-sleutel vereist een werkruimte. Stel ANTHROPIC_WORKSPACE_ID in op de server en herstart, of gebruik een sleutel voor één werkruimte.
+Claude rejected the API key (401). Update ANTHROPIC_API_KEY on the server and restart before generating again.|Claude heeft de API-sleutel geweigerd (401). Werk ANTHROPIC_API_KEY bij op de server en herstart voordat u opnieuw genereert.
+The Claude account has insufficient API credit. Check billing in Claude Console before generating again.|Het Claude-account heeft onvoldoende API-tegoed. Controleer de facturering in Claude Console voordat u opnieuw genereert.
+Claude denied access (403). Check the key and workspace permissions.|Claude heeft toegang geweigerd (403). Controleer de rechten van de sleutel en werkruimte.
+Claude could not find the configured model or resource. Check ANTHROPIC_MODEL and workspace access.|Claude kon het ingestelde model of de resource niet vinden. Controleer ANTHROPIC_MODEL en werkruimtetoegang.
+Claude rate or quota limit reached (429). Wait before generating again.|Claude-snelheidslimiet of quotum bereikt (429). Wacht voordat u opnieuw genereert.
+Claude rejected or could not complete the request. Check model configuration and provider availability.|Claude heeft het verzoek geweigerd of kon het niet voltooien. Controleer het model en de beschikbaarheid van de aanbieder.
 Claude assistant|Claude-assistent
 DRAFT ONLY|ALLEEN CONCEPT
 Ask about this exception or draft a fault email from the recorded evidence.|Stel een vraag over deze afwijking of maak een storingsmail op basis van geregistreerde gegevens.
@@ -87,6 +112,7 @@ Choose a container|Kies een container
 Demo port|Demohaven
 Demo terminal|Demoterminal
 SYNTHETIC|GESIMULEERD
+DEMO ONLY|ALLEEN DEMO
 Saved in this browser|Opgeslagen in deze browser
 Storage unavailable · keep tab open|Opslag niet beschikbaar · houd dit tabblad open
 About this prototype|Over deze demo

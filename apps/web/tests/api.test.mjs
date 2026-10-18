@@ -73,3 +73,14 @@ test('conflict errors retain safe server details instead of misreporting every c
   globalThis.fetch = async () => response({ detail: 'A plan is already running; wait before configuring Claude' }, 409);
   await assert.rejects(mod.api.configure('test-only-placeholder', 'account-model-id'), /already running/);
 });
+test('reconnecting replaces an expired bootstrap so remounting does not create another session', async () => {
+  const mod = await isolatedApi('expired-token'); let creates = 0;
+  globalThis.fetch = async (_url, init) => init.method === 'POST'
+    ? (creates++, response({ token: 'reconnected-token', revision: 1 }))
+    : response({ detail: 'Session expired' }, 401);
+  await assert.rejects(mod.loadSession(), err => err.status === 401);
+  await mod.newSession();
+  await mod.loadSession();
+  await mod.loadSession();
+  assert.equal(creates, 1);
+});

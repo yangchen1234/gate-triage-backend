@@ -197,6 +197,7 @@ def test_native_claude_response_validation_and_fixed_destination(monkeypatch,cor
         sent=json.loads(request.content)
         assert sent['tool_choice']=={'type':'tool','name':'draft_yard_advisory'}
         assert sent['max_tokens']==1800 and len(sent['tools'])==1
+        assert sent['thinking']=={'type':'disabled'}
         return httpx.Response(200,json={'stop_reason':'max_tokens' if corruption=='truncated' else 'tool_use','content':[{'type':'tool_use','name':'draft_yard_advisory','input':draft}]})
     original=httpx.Client
     monkeypatch.setattr(assistant.httpx,'Client',lambda **kw:original(transport=httpx.MockTransport(handle),**kw))
@@ -216,3 +217,67 @@ def test_native_claude_success_and_revocation(monkeypatch):
     cancel.set()
     with pytest.raises(ValueError):assistant.call_claude(context,'',cfg)
     assert len(requests)==1
+
+
+def test_native_claude_carries_optional_workspace_header(monkeypatch):
+    context={'containerId':'SIMU2000001','recipientRole':'Broker / customs liaison','escalation':'responsible_team','language':'en','facts':[{'id':'F4'},{'id':'F7'}],'rules':['Human review required.']}
+    draft={k:v for k,v in result(context).items() if k in assistant.Draft.model_fields}
+    workspace='wrkspc_SyntheticWorkspace1234'
+    def handle(request):
+        assert request.headers['anthropic-workspace-id']==workspace
+        assert 'workspace_id' not in json.loads(request.content)
+        return httpx.Response(200,json={'stop_reason':'tool_use','content':[{'type':'tool_use','name':'draft_yard_advisory','input':draft}]})
+    original=httpx.Client
+    monkeypatch.setattr(assistant.httpx,'Client',lambda **kw:original(transport=httpx.MockTransport(handle),**kw))
+    assert assistant.call_claude(context,'',dict(api_key=KEY,model='claude-test',workspace_id=workspace,_cancel=Event()))['source']=='claude'
+
+
+@pytest.mark.parametrize('status,message,expected',[
+    (400,'Must include anthropic-workspace-id header','workspace'),
+    (401,'Invalid x-api-key','authentication'),
+    (400,'Your credit balance is too low','credit'),
+    (403,'Missing permissions','permission'),
+    (404,'Unknown model','model'),
+    (429,'Rate limited','quota'),
+    (503,'Unavailable','provider'),
+])
+def test_provider_errors_map_to_fixed_credential_free_messages(connected,monkeypatch,status,message,expected):
+    client,auth,_=connected
+    def rejected(*args):raise assistant.provider_error(status,json.dumps({'error':{'message':message+' '+KEY}}))
+    monkeypatch.setattr(assistant,'call_claude',rejected)
+    job=complete(client,submit(client,auth,current(client)).json())
+    assert job['status']=='failed' and job['error']==assistant.CLAUDE_ERRORS[expected]
+    assert KEY not in json.dumps(job)
+
+
+def test_team_workspace_configuration_stays_out_of_personal_key_sessions(connected,monkeypatch):
+    from gate_triage.console import ConsoleStore,ConfigInput,TeamInput
+    from gate_triage import agent
+    client,_,_=connected
+    workspace='wrkspc_SyntheticWorkspace1234'
+    monkeypatch.setenv('ANTHROPIC_WORKSPACE_ID',workspace)
+    store=ConsoleStore(client.app.state.console_store.settings)
+    try:
+        token=store.create('local-test')['token']
+        store.authorize_team(token,TeamInput(access_code=TEAM))
+        cfg=store.reserve_assistant(token,'team-draft')
+        assert cfg['workspace_id']==workspace
+        seen=[]
+        monkeypatch.setattr(agent,'OpenAI',lambda **kw:seen.append(kw))
+        agent._client({'base_url':'https://api.anthropic.com/v1/',**cfg})
+        assert seen[0]['default_headers']=={'anthropic-workspace-id':workspace}
+        store.finish_assistant(token,'team-draft',cfg)
+        store.configure(token,ConfigInput(api_key=KEY,model='claude-test'))
+        cfg=store.reserve_assistant(token,'personal-draft')
+        assert 'workspace_id' not in cfg
+        store.finish_assistant(token,'personal-draft',cfg)
+    finally:store.close()
+
+
+def test_provider_timeout_is_explicit_and_does_not_leak_request_credentials(connected,monkeypatch):
+    client,auth,_=connected
+    def timed_out(*args):raise httpx.ReadTimeout(KEY)
+    monkeypatch.setattr(assistant,'call_claude',timed_out)
+    job=complete(client,submit(client,auth,current(client)).json())
+    assert job['status']=='failed' and job['error']==assistant.CLAUDE_ERRORS['timeout']
+    assert KEY not in json.dumps(job)

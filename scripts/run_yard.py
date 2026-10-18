@@ -22,6 +22,8 @@ def main():
         valid = dict(api_key=16 <= len(key) <= 2048 and not any(c.isspace() for c in key),
                      model=bool(re.fullmatch(r'claude-[A-Za-z0-9._-]{1,80}', model)),
                      access_code=16 <= len(code) <= 256 and not any(c.isspace() for c in code))
+        workspace = os.getenv('ANTHROPIC_WORKSPACE_ID', '')
+        if workspace: valid['workspace_id'] = bool(re.fullmatch(r'wrkspc_[A-Za-z0-9]{8,80}', workspace))
         for name, ok in valid.items(): print(f'{name}: {"configured" if ok else "missing or invalid"}')
         print('No provider request was made. Credentials were not printed.')
         return

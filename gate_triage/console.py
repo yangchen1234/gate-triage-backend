@@ -131,6 +131,8 @@ class ConsoleStore:
         self._server_key = None
         self._server_model = None
         self._team_code = None
+        workspace = os.getenv("ANTHROPIC_WORKSPACE_ID", "")
+        self._server_workspace = workspace if re.fullmatch(r"wrkspc_[A-Za-z0-9]{8,80}", workspace) else None
         key = os.getenv("ANTHROPIC_API_KEY", "")
         model = os.getenv("ANTHROPIC_MODEL", "")
         code = os.getenv("CONSOLE_TEAM_ACCESS_CODE", "")
@@ -181,6 +183,7 @@ class ConsoleStore:
             self._server_key = None
             self._team_code = None
             self._server_model = None
+            self._server_workspace = None
         self._executor.shutdown(wait=False, cancel_futures=True)
         self._sweeper.join(timeout=1)
 
@@ -342,7 +345,8 @@ class ConsoleStore:
             session.model_jobs += 1
             self._model_ips[session.ip].append(now)
             key = self._server_key if session.source == "render_environment" else session.key
-            return {"api_key": key.get_secret_value(), "model": session.model, "_cancel": session.cancel}
+            return {"api_key": key.get_secret_value(), "model": session.model, "_cancel": session.cancel,
+                    **({"workspace_id": self._server_workspace} if session.source == "render_environment" and self._server_workspace else {})}
 
     def finish_assistant(self, token, job_id, cfg):
         cfg.clear()
@@ -413,6 +417,8 @@ class ConsoleStore:
                 selected_key = self._server_key if session.source == "render_environment" else session.key
                 cfg = {"base_url": "https://api.anthropic.com/v1/", "api_key": selected_key.get_secret_value(),
                        "model": session.model, "_cancel": session.cancel}
+                if session.source == "render_environment" and self._server_workspace:
+                    cfg["workspace_id"] = self._server_workspace
                 session.model_jobs += 1
                 self._model_ips[session.ip].append(now)
             try:

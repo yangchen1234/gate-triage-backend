@@ -74,26 +74,65 @@ Never authorize release, lifting, unsafe access, equipment control or sending me
 Preserve all independent holds and restrictions. Priorities and escalation come from the server.
 Use English for language=en and Dutch for language=nl, including the email.
 For each proposed check cite the supplied fact IDs. Missing information must be explicit.
+Be concise: summary under 50 words, two or three checks with short rationales,
+at most three missing-information items, and an email body under 140 words.
 The email is a draft to the supplied recipient ROLE, not a real email address. Include the exact
 container ID and say this is a simulation. The subject must contain no newlines.
 Return your answer through draft_yard_advisory; that tool only formats text and performs no action.'''
 
 
+CLAUDE_ERRORS = {
+    'workspace': 'This Claude key requires a workspace. Set ANTHROPIC_WORKSPACE_ID on the server and restart, or use a workspace-scoped key.',
+    'authentication': 'Claude rejected the API key (401). Update ANTHROPIC_API_KEY on the server and restart before generating again.',
+    'credit': 'The Claude account has insufficient API credit. Check billing in Claude Console before generating again.',
+    'permission': 'Claude denied access (403). Check the key and workspace permissions.',
+    'model': 'Claude could not find the configured model or resource. Check ANTHROPIC_MODEL and workspace access.',
+    'quota': 'Claude rate or quota limit reached (429). Wait before generating again.',
+    'timeout': 'The agent provider did not respond in time. No action was taken. Try a shorter drafting request or generate again later.',
+    'provider': 'Claude rejected or could not complete the request. Check model configuration and provider availability.',
+}
+
+
+class ClaudeRequestError(Exception):
+    """Only fixed, credential-free messages can reach a saved advisory."""
+    def __init__(self, code): self.code = code
+
+
+def provider_error(status, raw):
+    try: message = str(json.loads(raw).get('error', {}).get('message', '')).lower()
+    except (ValueError, AttributeError): message = ''
+    if 'anthropic-workspace-id' in message:
+        return ClaudeRequestError('workspace')
+    if status == 401:
+        return ClaudeRequestError('authentication')
+    if 'credit balance' in message or 'insufficient credit' in message:
+        return ClaudeRequestError('credit')
+    if status == 403:
+        return ClaudeRequestError('permission')
+    if status == 404:
+        return ClaudeRequestError('model')
+    if status == 429:
+        return ClaudeRequestError('quota')
+    return ClaudeRequestError('provider')
+
+
 def call_claude(context, question, cfg):
     if cfg['_cancel'].is_set(): raise ValueError('access revoked')
-    payload = dict(model=cfg['model'], max_tokens=1800, system=SYSTEM,
+    payload = dict(model=cfg['model'], max_tokens=1800, thinking={'type':'disabled'}, system=SYSTEM,
                    messages=[dict(role='user', content=json.dumps(dict(context=context, operatorQuestion=question), ensure_ascii=False))],
                    tools=[dict(name='draft_yard_advisory', description='Format an advisory and an unsent email draft.', input_schema=Draft.model_json_schema())],
                    tool_choice=dict(type='tool', name='draft_yard_advisory'))
     # Fixed provider destination, bounded timeout, no redirects or automatic retries.
-    with httpx.Client(timeout=httpx.Timeout(25, connect=5), follow_redirects=False, trust_env=False) as client:
+    headers = {'x-api-key':cfg['api_key'], 'anthropic-version':'2023-06-01'}
+    if cfg.get('workspace_id'): headers['anthropic-workspace-id'] = cfg['workspace_id']
+    with httpx.Client(timeout=httpx.Timeout(60, connect=5), follow_redirects=False, trust_env=False) as client:
         with client.stream('POST', 'https://api.anthropic.com/v1/messages',
-                           headers={'x-api-key':cfg['api_key'], 'anthropic-version':'2023-06-01'}, json=payload) as response:
-            response.raise_for_status()
+                           headers=headers, json=payload) as response:
             raw = bytearray()
             for chunk in response.iter_bytes():
                 raw.extend(chunk)
                 if len(raw) > 64000: raise ValueError('provider response too large')
+            if response.is_error: raise provider_error(response.status_code, raw)
     if cfg['_cancel'].is_set(): raise ValueError('access revoked')
     data = json.loads(raw)
     if data.get('stop_reason') != 'tool_use': raise ValueError('incomplete provider response')
@@ -136,6 +175,12 @@ class YardAssistant:
         try:
             result = call_claude(job['context'], job['question'], cfg)
             self.yard.finish_advisory(job['id'], result=result)
+        except ClaudeRequestError as error:
+            try: self.yard.finish_advisory(job['id'], error=CLAUDE_ERRORS.get(error.code, CLAUDE_ERRORS['provider']))
+            except sqlite3.Error: pass
+        except httpx.TimeoutException:
+            try: self.yard.finish_advisory(job['id'], error=CLAUDE_ERRORS['timeout'])
+            except sqlite3.Error: pass
         except Exception:
             # Never serialize or log exceptions that might contain request credentials.
             try: self.yard.finish_advisory(job['id'], error='Claude could not complete this draft. No action was taken. Check access, model availability or quota before generating again.')

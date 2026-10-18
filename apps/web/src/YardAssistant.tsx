@@ -10,6 +10,7 @@ import type { YardSnapshot } from './yard-api.ts';
 import { advisoryIsStale, assistantModel, yardAssistantApi } from './yard-assistant-api.ts';
 import type { AdvisoryRequest, YardAdvisory } from './yard-assistant-api.ts';
 import './yard-assistant.css';
+const agentErrorCopy = (message:string) => message.replace(/\bClaude\b/g,'agent provider').replace(/^agent provider/,'The agent provider');
 
 export default function YardAssistant({snapshot,containerId,issue,disabled}:{snapshot:YardSnapshot;containerId:string;issue:Exclude<Issue,'clear'>;disabled:boolean}) {
  const {t,formatTime}=useYardLocale();
@@ -24,7 +25,7 @@ export default function YardAssistant({snapshot,containerId,issue,disabled}:{sna
  const running=busy||job?.status==='running';
  useEffect(()=>{
   mounted.current=true;
-  void assistantModel().then(m=>{if(mounted.current)setModel(m);}).catch(()=>{if(mounted.current)setError(t('Could not load the Claude connection.'));});
+  void assistantModel().then(m=>{if(mounted.current)setModel(m);}).catch(()=>{if(mounted.current)setError(t('Could not load the agent connection.'));});
   void yardAssistantApi.latest(port,containerId,issue).then(j=>{if(mounted.current&&!started.current)setJob(j);}).catch(()=>{if(mounted.current)setError(t('Could not load saved drafts.'));});
   return()=>{mounted.current=false;};
  },[port,containerId,issue,t]);
@@ -43,19 +44,19 @@ export default function YardAssistant({snapshot,containerId,issue,disabled}:{sna
  useEffect(()=>{if(job?.result){setSubject(job.result.subject);setBody(job.result.body);setCopied(false);}},[job?.id,job?.status]);
  async function refreshConnection(){
   setConnectionBusy(true);setError('');
-  try{setModel(await assistantModel());}catch{setError(t('Could not load the Claude connection.'));}
+  try{setModel(await assistantModel());}catch{setError(t('Could not load the agent connection.'));}
   finally{setConnectionBusy(false);}
  }
  async function connect(personal:boolean){
   if(connectionBusy||!transportSafe)return;
   const secret=(personal?personalKey:code).trim();setPersonalKey('');setCode('');setConnectionBusy(true);setError('');
   try{setModel(personal?await api.configure(secret,modelId.trim()):await api.connectTeam(secret));setConnectionOpen(false);}
-  catch(e){setError(e instanceof Error?e.message:t('Claude connection failed.'));}
+  catch(e){setError(e instanceof Error?e.message:t('Agent connection failed.'));}
   finally{setConnectionBusy(false);}
  }
  async function disconnect(){
   setConnectionBusy(true);
-  try{setModel(await api.disconnect());setCode('');setPersonalKey('');}catch(e){setError(e instanceof Error?e.message:t('Claude connection failed.'));}
+  try{setModel(await api.disconnect());setCode('');setPersonalKey('');}catch(e){setError(e instanceof Error?e.message:t('Agent connection failed.'));}
   finally{setConnectionBusy(false);}
  }
  async function generate(retry=false){
@@ -82,28 +83,28 @@ export default function YardAssistant({snapshot,containerId,issue,disabled}:{sna
   try{await navigator.clipboard.writeText(`${t('To role')}: ${job?.result?.recipientRole}\n${t('Subject')}: ${subject}\n\n${body}`);setCopied(true);}
   catch{setError(t('Select and copy the draft text manually.'));}
  }
- return <section className="yd-assistant" aria-label={t('Claude fault assistant')}>
-  <div className="yd-assistant-heading"><div><Sparkles size={17}/><h3>{t('Claude assistant')}</h3></div><span>{t('DRAFT ONLY')}</span></div>
+ return <section className="yd-assistant" aria-label={t('Agent suggestions panel')}>
+  <div className="yd-assistant-heading"><div><Sparkles size={17}/><h3>{t('Agent suggestions')}</h3></div><span>{t('DRAFT ONLY')}</span></div>
   <p className="yd-assistant-intro">{t('Ask about this exception or draft a fault email from the recorded evidence.')}</p>
-  <button className="yd-assistant-connection" aria-expanded={connectionOpen} onClick={()=>setConnectionOpen(v=>!v)}><KeyRound size={13}/><span>{t(model?.configured?'Claude connected':model?.server_available?'Team access required':'Connect Claude')}</span><ChevronDown size={13}/></button>
+  <button className="yd-assistant-connection" aria-expanded={connectionOpen} onClick={()=>setConnectionOpen(v=>!v)}><KeyRound size={13}/><span>{t(model?.configured?'Agent connected':model?.server_available?'Team access required':'Connect agent')}</span><ChevronDown size={13}/></button>
   {connectionOpen&&<div className="yd-assistant-auth">
-   <div><strong>{t('Claude connection')}</strong><button className="yd-text-button" disabled={connectionBusy} onClick={()=>void refreshConnection()} aria-label={t('Refresh Claude connection')}><RefreshCw size={13}/></button></div>
-   {model?.configured?<><p>{model.model}<br/>{t(model.source==='render_environment'?'Team key stays on the server.':'Personal key is held in temporary server memory.')}</p><button className="yd-secondary" disabled={connectionBusy||running} onClick={()=>void disconnect()}><Unplug size={13}/>{t('Disconnect Claude')}</button></>:<>
-    {model?.server_available?<form onSubmit={e=>{e.preventDefault();void connect(false);}}><label htmlFor="yd-team-code">{t('Team access code')}</label><input id="yd-team-code" type="password" value={code} maxLength={256} autoComplete="new-password" onChange={e=>setCode(e.target.value)} disabled={connectionBusy||!transportSafe}/><button className="yd-primary" disabled={connectionBusy||!code.trim()||!transportSafe}>{t('Connect team Claude')}</button></form>:<p>{t('Team Claude needs ANTHROPIC_API_KEY, ANTHROPIC_MODEL and CONSOLE_TEAM_ACCESS_CODE on the server.')}</p>}
-    <details><summary>{t('Use a temporary personal key')}</summary><form onSubmit={e=>{e.preventDefault();void connect(true);}}><label htmlFor="yd-personal-key">{t('Claude API key')}</label><input id="yd-personal-key" type="password" value={personalKey} maxLength={2048} autoComplete="new-password" onChange={e=>setPersonalKey(e.target.value)} disabled={connectionBusy||!transportSafe}/><label htmlFor="yd-model-id">{t('Exact model ID')}</label><input id="yd-model-id" value={modelId} placeholder="claude-sonnet-4-6" maxLength={87} autoComplete="off" onChange={e=>setModelId(e.target.value)} disabled={connectionBusy||!transportSafe}/><button className="yd-primary" disabled={connectionBusy||!personalKey.trim()||!modelId.trim()||!transportSafe}>{t('Connect temporarily')}</button></form></details>
+   <div><strong>{t('Agent connection')}</strong><button className="yd-text-button" disabled={connectionBusy} onClick={()=>void refreshConnection()} aria-label={t('Refresh agent connection')}><RefreshCw size={13}/></button></div>
+   {model?.configured?<><p>{model.model}<br/>{t(model.source==='render_environment'?'Team key stays on the server.':'Personal key is held in temporary server memory.')}</p><button className="yd-secondary" disabled={connectionBusy||running} onClick={()=>void disconnect()}><Unplug size={13}/>{t('Disconnect agent')}</button></>:<>
+    {model?.server_available?<form onSubmit={e=>{e.preventDefault();void connect(false);}}><label htmlFor="yd-team-code">{t('Team access code')}</label><input id="yd-team-code" type="password" value={code} maxLength={256} autoComplete="new-password" onChange={e=>setCode(e.target.value)} disabled={connectionBusy||!transportSafe}/><button className="yd-primary" disabled={connectionBusy||!code.trim()||!transportSafe}>{t('Connect team agent')}</button></form>:<p>{t('Team access needs API credentials and a separate access code configured on the server.')}</p>}
+    <details><summary>{t('Use a temporary personal key')}</summary><form onSubmit={e=>{e.preventDefault();void connect(true);}}><label htmlFor="yd-personal-key">{t('Provider API key')}</label><input id="yd-personal-key" type="password" value={personalKey} maxLength={2048} autoComplete="new-password" onChange={e=>setPersonalKey(e.target.value)} disabled={connectionBusy||!transportSafe}/><label htmlFor="yd-model-id">{t('Exact model ID')}</label><input id="yd-model-id" value={modelId} placeholder="claude-sonnet-4-6" maxLength={87} autoComplete="off" onChange={e=>setModelId(e.target.value)} disabled={connectionBusy||!transportSafe}/><button className="yd-primary" disabled={connectionBusy||!personalKey.trim()||!modelId.trim()||!transportSafe}>{t('Connect temporarily')}</button></form></details>
     <small>{t('Credentials are cleared on submit and never saved in browser storage. Access lasts up to 15 minutes.')}</small>
    </>}
-   {!transportSafe&&<p role="alert">{t('Use HTTPS or localhost to connect Claude.')}</p>}
+   {!transportSafe&&<p role="alert">{t('Use HTTPS or localhost to connect the agent.')}</p>}
   </div>}
   <label className="yd-assistant-question" htmlFor="yd-assistant-question">{t('Question or drafting request')}<textarea id="yd-assistant-question" rows={2} maxLength={800} placeholder={t('What should we verify first?')} value={question} onChange={e=>setQuestion(e.target.value)} disabled={running||uncertain}/></label>
   <div className="yd-assistant-context"><span>{containerId}</span><span>{t(ISSUE[issue].short)}</span></div>
-  <button className="yd-primary yd-assistant-generate" disabled={disabled||running||uncertain||!model?.configured} onClick={()=>void generate()}>{running?<LoaderCircle size={14} className="spin"/>:<Sparkles size={14}/>} {t(running?'Claude is drafting…':job?'Generate a new draft':'Generate with Claude')}</button>
-  {!model?.configured&&<small className="yd-assistant-hint">{t('Connect Claude above to generate. Opening this panel makes no model call.')}</small>}
-  {error&&<div className="yd-assistant-error" role="alert">{t(error)}</div>}
+  <button className="yd-primary yd-assistant-generate" disabled={disabled||running||uncertain||!model?.configured} onClick={()=>void generate()}>{running?<LoaderCircle size={14} className="spin"/>:<Sparkles size={14}/>} {t(running?'Generating suggestions…':job?'Refresh suggestions':'Generate suggestions')}</button>
+  {!model?.configured&&<small className="yd-assistant-hint">{t('Connect the agent above to generate. Opening this panel makes no model call.')}</small>}
+  {error&&<div className="yd-assistant-error" role="alert">{t(agentErrorCopy(error))}</div>}
   {uncertain&&<button className="yd-secondary" disabled={busy||disabled} onClick={()=>void generate(true)}>{t('Check the same request')}</button>}
-  {job?.status==='failed'&&<div className="yd-assistant-error" role="alert">{t(job.error||'Draft request failed.')}</div>}
+  {job?.status==='failed'&&<div className="yd-assistant-error" role="alert">{t(agentErrorCopy(job.error||'Draft request failed.'))}</div>}
   {job?.result&&<div className="yd-assistant-result">
-   <div className="yd-assistant-result-meta"><span>Claude · {job.result.model}</span><time>{formatTime(job.result.generatedAt)}</time></div>
+   <div className="yd-assistant-result-meta"><span>{t('Agent-generated')}</span><time>{formatTime(job.result.generatedAt)}</time></div>
    {stale&&<div className="yd-assistant-stale" role="status">{t('Yard data changed. This draft is out of date; generate again before using it.')}</div>}
    <div className="yd-assistant-tabs" role="tablist" aria-label={t('Assistant output')}>{(['guidance','email','evidence'] as const).map(key=><button key={key} role="tab" id={`yd-assistant-tab-${key}`} aria-selected={tab===key} aria-controls="yd-assistant-output" onClick={()=>setTab(key)}>{t(key==='guidance'?'Suggestions':key==='email'?'Fault email':'Source facts')}</button>)}</div>
    <div id="yd-assistant-output" role="tabpanel" aria-labelledby={`yd-assistant-tab-${tab}`}>

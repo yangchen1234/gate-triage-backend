@@ -193,7 +193,7 @@ retry handling, audit, data provenance, storage limits and deployment. Hosted pe
 storage must be configured before relying on SQLite across Render redeploys; this
 implementation does not provision a database service or deploy the branch.
 
-The yard inspector also has an optional **Claude assistant** for evidence-based
+The yard inspector also has an optional **Agent suggestions** panel for evidence-based
 suggestions and editable fault-email drafts. See [connection and API details](docs/yard-claude-assistant.md).
 For local `.env` loading, start `.venv/bin/python scripts/run_yard.py` instead of
 the bare uvicorn command. Opening the panel makes no model request; explicit
