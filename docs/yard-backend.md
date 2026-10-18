@@ -244,7 +244,9 @@ Scoring is server-owned, with a TypeScript reference verified against it:
 | Empty pickup in C04 | 65 | 75 |
 
 Margin is `handlingWindowMinutes - modeledDelayMinutes`. It is an appointment / demo
-handling-window margin, never remaining safe shelf life. Thresholds are configurable
+handling-window margin, never remaining safe shelf life. The two inspector cards show
+these durations in days (`minutes / 1440`, up to three decimals, including negative
+margins). Stored inputs and scoring thresholds remain in minutes. Thresholds are configurable
 code constants for demonstration, not food safety limits. Gate-out still requires all
 independent controls and accepted work to be resolved. A raised customs priority
 means faster liaison follow-up, not permission to bypass customs.

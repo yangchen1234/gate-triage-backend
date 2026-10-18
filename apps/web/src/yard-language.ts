@@ -32,9 +32,11 @@ min pickup delay|min ophaalvertraging
 Raised to Do first|Verhoogd naar Direct aanpakken
 Urgent care / perishable delay|Spoedzorg / vertraagde bederfelijke lading
 Demo pickup window|Demo-ophaalvenster
+days|dagen
 Margin after delay|Marge na vertraging
 Routine score|Reguliere score
 Routine inventory · no exception action|Reguliere voorraad · geen afwijkingsactie
+No routine action for this issue|Geen reguliere actie voor deze afwijking
 This container|Deze container
  do first| hoogste prioriteit
 Now|Nu
