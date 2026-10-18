@@ -4,6 +4,32 @@ import type { DemoPort } from './yard-demo.ts';
 // with parameterized messages for IDs/counts; user-entered notes are never translated.
 const dutch: Record<string, string> = Object.fromEntries(`
 YARD DECISION SUPPORT|BESLISONDERSTEUNING CONTAINERTERREIN
+Server rules|Serverregels
+Observation version|Waarnemingsversie
+Last observation|Laatste waarneming
+New observation requires follow-up|Nieuwe waarneming vereist opvolging
+Database-backed review decisions. Detailed task progress is in Post-action.|Beoordelingen opgeslagen in de database. Taakvoortgang staat onder Opvolging.
+Connection interrupted. Showing the last acknowledged yard data.|Verbinding onderbroken. De laatst bevestigde terreingegevens worden getoond.
+Yard database temporarily unavailable. Retry the same request.|Terreindatabase tijdelijk niet beschikbaar. Probeer hetzelfde verzoek opnieuw.
+Yard workspace expired or unavailable. Reconnect to continue.|De terreinwerkruimte is verlopen of niet beschikbaar. Verbind opnieuw om door te gaan.
+Work completion needs result verification. A normal container remains in inventory; only confirmed physical gate-out releases its occupied tier slot. This is a database-backed simulation.|Voltooiing vereist resultaatverificatie. Een normale container blijft in voorraad; alleen bevestigde fysieke uitrit maakt de positie vrij. Deze simulatie wordt in de database opgeslagen.
+Connected · SQLite|Verbonden · SQLite
+Saving to database…|Opslaan in database…
+Connection interrupted|Verbinding onderbroken
+Connecting to the yard database…|Verbinden met de terreindatabase…
+Retry connection|Opnieuw verbinden
+Retry save|Opslag opnieuw proberen
+Refresh data|Gegevens vernieuwen
+Saved in database|Opgeslagen in database
+Server database · synthetic observations|Serverdatabase · gesimuleerde waarnemingen
+Simulate a new observation|Nieuwe waarneming simuleren
+Adds a server-recorded synthetic event. Existing independent holds remain active.|Voegt een gesimuleerde waarneming toe aan de server. Afzonderlijke blokkades blijven actief.
+New server demo run created. Previous run retained in audit history.|Nieuwe demonstratie op de server aangemaakt. De vorige blijft in de historie bewaard.
+New observation requires another check.|Een nieuwe waarneming vereist een extra controle.
+Connection interrupted. The save may have reached the server; retry the same request to confirm.|Verbinding onderbroken. Het verzoek kan opgeslagen zijn; probeer hetzelfde verzoek opnieuw ter bevestiging.
+The yard changed. Current data has been refreshed; review the action before trying again.|Het terrein is gewijzigd. Actuele gegevens zijn vernieuwd; beoordeel de actie opnieuw.
+Task stage changed. Refresh its current state before continuing.|De taakstatus is gewijzigd. Vernieuw de huidige status voordat u verdergaat.
+The yard API saves synthetic inventory, observations, decisions, task progress and gate-outs in SQLite. Changes are verified by the server. Foreground pages refresh every two seconds. No agent, Terminal49 or equipment is called. Browser-only history from the previous prototype is retained separately and is not imported as verified evidence.|De terrein-API bewaart gesimuleerde voorraad, waarnemingen, beoordelingen, taken en uitritten in SQLite. De server controleert wijzigingen. Actieve pagina’s vernieuwen elke twee seconden. Geen aanroepen naar agent, Terminal49 of materieel. Eerdere browserhistorie blijft apart bewaard en wordt niet als geverifieerd bewijs geïmporteerd.
 Cancel|Annuleren
 Also active:|Ook actief:
 pending actions|openstaande acties

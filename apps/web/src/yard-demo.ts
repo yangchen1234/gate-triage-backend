@@ -9,10 +9,11 @@ export type Issue = 'clear' | 'customs' | 'weight' | 'temperature' | 'sensor' | 
 export type Cargo = 'dry' | 'reefer' | 'hazmat' | 'empty';
 export type Quadrant = 'do' | 'plan' | 'coordinate' | 'monitor';
 export type PowerCircuit = 'R1' | 'R2';
-export type DemoContainer = { id: string; block: string; bay: number; row: number; tier: number; cargo: Cargo; carrier: string; yardStatus: 'in-yard' | 'departed'; issue: Issue; priority: number; temperature: number; setpoint: number; reported: number; weight: number; declared: number; handlingWindowMinutes: number; criticalCargo: boolean; verifiedUnitBackup?: boolean; verifiedAlternateAccess?: boolean; plug: { id: string; circuit: PowerCircuit } | null };
+export type ActionAssessment = { issue: Exclude<Issue, 'clear'>; importance: number; urgency: number; quadrant: Quadrant; reasons: string[] };
+export type DemoContainer = { observationVersion?: number; lastObservedAt?: string; lastObservedSource?: string; assessments?: Partial<Record<DemoScenario, ActionAssessment[]>>; id: string; block: string; bay: number; row: number; tier: number; cargo: Cargo; carrier: string; yardStatus: 'in-yard' | 'departed'; issue: Issue; priority: number; temperature: number; setpoint: number; reported: number; weight: number; declared: number; handlingWindowMinutes: number; criticalCargo: boolean; verifiedUnitBackup?: boolean; verifiedAlternateAccess?: boolean; plug: { id: string; circuit: PowerCircuit } | null };
 export type ZoneSpec = { id: string; purpose: string; short: string; maxTiers: number; pluggedRows: number; circuit: PowerCircuit | null; flow: string };
 export type DemoBlock = ZoneSpec & { group: string; col: number; row: number; capacity: number; plugCapacity: number; containers: DemoContainer[] };
-export type DemoDecision = { id: string; scenario: DemoScenario; issue: Issue; choice: 'accepted' | 'dismissed'; note: string; at: string };
+export type DemoDecision = { observationVersion?: number; id: string; scenario: DemoScenario; issue: Issue; choice: 'accepted' | 'dismissed'; note: string; at: string };
 export type DemoAction = { id: string; container: DemoContainer; issue: Exclude<Issue, 'clear'>; importance: number; urgency: number; quadrant: Quadrant; reasons: string[] };
 export type YardLookup = { containerId: string; company: string };
 export const CARRIERS: Record<string, string> = { MAEU: 'Maersk', CMDU: 'CMA CGM', ONEY: 'Ocean Network Express (ONE)', MSCU: 'MSC', HLCU: 'Hapag-Lloyd' };
@@ -87,6 +88,7 @@ export function plugSummary(b: DemoBlock, scenario: DemoScenario) {
   return { capacity: b.plugCapacity, connected, affected: b.containers.filter(c => supplyFor(c, scenario) === 'interrupted').length, offline: offline ? b.plugCapacity : 0, available: offline ? 0 : b.plugCapacity - connected };
 }
 export function issuesFor(c: DemoContainer, scenario: DemoScenario): Issue[] {
+  if (c.assessments?.[scenario]) return c.assessments[scenario]!.map(a => a.issue);
   const issues: Issue[] = c.issue === 'clear' ? [] : [c.issue];
   if (c.cargo === 'reefer' && supplyFor(c, scenario) === 'interrupted') issues.push('power');
   if (['congestion', 'combined'].includes(scenario) && ['C03', 'C04'].includes(c.block) && !c.verifiedAlternateAccess) issues.push('congestion');
@@ -104,6 +106,8 @@ export const QUADRANTS: Record<Quadrant, { name: string; instruction: string; ax
 // Independent axes. Cutoffs 70/60, 60-min handling window and 90-min telemetry age
 // are DEMO policy parameters, not validated industry safety limits or a production SOP.
 export function actionFor(c: DemoContainer, issue: Exclude<Issue, 'clear'>, scenario: DemoScenario): DemoAction {
+  const assessment = c.assessments?.[scenario]?.find(a => a.issue === issue);
+  if (assessment) return { ...assessment, id: `${c.id}:${issue}`, container: c };
   let importance = 40, urgency = 30;
   const reasons: string[] = [], blocked = issuesFor(c, scenario).some(i => i === 'power' || i === 'congestion');
   switch (issue) {

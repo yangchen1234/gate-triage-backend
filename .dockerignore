@@ -10,3 +10,8 @@ tests
 **/dist
 **/*.tsbuildinfo
 .local
+
+.local/
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm

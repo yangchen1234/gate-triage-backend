@@ -1,0 +1,49 @@
+{
+  "source": "Legacy TypeScript synthetic fixtures / yard-v1, not observed port data",
+  "profiles": [
+    {
+      "port": "la",
+      "seed": 27149,
+      "fixture": "4e2f6f89982aee6516f806d5f43f1645ae133cd68fd6df07dd35a106c01e9e23",
+      "policies": {
+        "routine": "c81184b5bc2b08ac8cf5d026d84c6107a96eb1faa66f1171f261ba48b94ec5b7",
+        "power": "75cbc44235acafffd18f7514f97fce2748076630c394107e547924d0f888f2c3",
+        "congestion": "56e09d207a4c6ed166a30cd7bd7c91696c994e6d3e898ade0bc654824c812762",
+        "combined": "9047b8567a0ae47b665ce3e2f3fd3d212a6421eed9388a87c5728076c381a9b5"
+      }
+    },
+    {
+      "port": "rotterdam",
+      "seed": 44329,
+      "fixture": "d3d0aef244704ddb1010e91d22f6f94c0bd7353246b3da83c16970d3a3314069",
+      "policies": {
+        "routine": "3dac0296e9c832baf46ab443570bac6b3e0ea524d998f911e8c94268040c2126",
+        "power": "28a587e8c93790cff9d67466b9df92bf25e59f09bf45ad9a3283bb895a09f372",
+        "congestion": "a1d8c07160672b319e9febdd6ab0472475c65bf88a79d441ddbbc9e8be05f3dd",
+        "combined": "314bbdfc9819d83bc68bcdb763ad0b94761a5a75551055b3c6b395e4d087be0f"
+      }
+    },
+    {
+      "port": "la",
+      "seed": 27150,
+      "fixture": "eca85867d3e3eeafc4b29024b612ea9b1c1416b6a05acedc4459d145139ccc08",
+      "policies": {
+        "routine": "4ac83bf5c5468da40373af2b09b4509d29fda93dc8765eae8bd072a28e7fd7e4",
+        "power": "4a63e1f649629a6a75a7c053b0d1e3ed0b2de279b6a6900382365f3e7eefefab",
+        "congestion": "f31e16f1996fa7e244486ab1a15f2b1902738648007bcbc26f89a0b38c3356b6",
+        "combined": "eb5955ce478f95ceb2c67c649b1c0a978777da54f51f8137f9d84f88c8dcd2e4"
+      }
+    },
+    {
+      "port": "rotterdam",
+      "seed": 44330,
+      "fixture": "37bed1c5e355e7bf42c954f1f4dc1825280efa6a5172b240fc598e9d4c2aab81",
+      "policies": {
+        "routine": "2959704fff50a79d0ed67997e40dab7abc3ffc0b28cdadc14c3fe36692c8aa74",
+        "power": "8006ec5f70dd2ee54e9a97eef2dca7e69790b75705672b285593ad6a16005d80",
+        "congestion": "01ea4480696200fe904c70f4d9d541bd83296b82919626a51aff4974db18d5a9",
+        "combined": "969c945dff0167d7aba15000ea6f02486b4f4e8365d239f94ad6383045259cab"
+      }
+    }
+  ]
+}

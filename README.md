@@ -176,3 +176,19 @@ The repository is public and can be shared directly with teammates. For push acc
 Ryan contributed the dataset and current scoring engine. Codex assisted with API implementation, service integration, fee statistics, deployment configuration, testing and documentation. IBM Bob's IDE agent originally implemented `scripts/smoke_api.py`; Codex subsequently reviewed it, corrected asynchronous explanation comparisons and scenario restoration handling, and added regression coverage. The [IBM Bob record](docs/ibm-bob.md) documents that contribution.
 
 Gate Triage provides recommendations and a synthetic simulation for human review. It does not clear customs holds, authorize physical container release or control terminal equipment. Source evidence and rule explanations remain available to support review. Live Terminal49 integration and real operational validation are future work.
+
+
+### Database-backed yard demonstration
+
+Open `/?preview=yard` to use the LA/Rotterdam yard UI with the non-agent backend.
+Start `uvicorn main:app --host 127.0.0.1 --port 8010 --workers 1` and the web dev server
+on port 5176. The header must show **Connected · SQLite**. Inventory, scenarios,
+observations, decisions, post-action progress, resolutions and gate-outs now live in
+`.local/yard.sqlite3` (`YARD_DATABASE_PATH` overrides it). The browser uses acknowledged
+server snapshots and conditional updates rather than localStorage operational state.
+Agent generation and the original queue API remain unchanged.
+
+See [the yard backend contract](docs/yard-backend.md) for commands, concurrency,
+retry handling, audit, data provenance, storage limits and deployment. Hosted persistent
+storage must be configured before relying on SQLite across Render redeploys; this
+implementation does not provision a database service or deploy the branch.

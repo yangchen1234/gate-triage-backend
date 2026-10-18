@@ -1,3 +1,8 @@
+> **Current integration:** the active yard UI now uses the persistent non-agent API.
+> The browser-only lifecycle described in earlier design sections is retained as
+> historical context/reference tests. See [yard-backend.md](yard-backend.md) for the
+> current server/database contract and deployment limits.
+
 # Yard action desk — UI prototype
 
 This isolated React preview uses reproducible, locally generated data. It borrows the block-oriented yard and searchable inventory patterns in RBS TOPS public product material, focusing on exception decisions rather than equipment execution.
