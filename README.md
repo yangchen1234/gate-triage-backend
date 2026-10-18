@@ -1,8 +1,10 @@
 # Gate Triage
 
-Gate Triage is a Ports & Logistics hackathon prototype for terminal planners. When carrier declarations, scale readings, customs records and reefer sensors disagree, it ranks containers and recommends `release`, `slow`, `inspect` or `reroute` actions for human review. Scenario switches show how the queue changes when lanes close, customs systems go offline or Zone B loses power.
+Gate Triage is a Ports & Logistics hackathon demonstration for terminal yard coordinators. It identifies container exceptions, ranks the next actions by importance and urgency, and tracks accepted work through verification or confirmed gate-out. Decisions support human operators; they do not control equipment or authorize real releases.
 
-The web console now adapts the existing Workbench design to Ryan's 100-container dataset and planner. Switch among **Los Angeles (LAX), Shanghai (SHA), and Rotterdam (RTM)**, inspect source evidence, generate a plan, and review draft outreach before recording an internal decision. Each browser session has its own scenario. The separate PostgreSQL Workbench, map, and time-stepped simulation remain outside this release.
+The homepage opens the final **yard dashboard**. Switch between **Los Angeles (12 blocks, English)** and **Rotterdam (8 blocks, Dutch)**; search containers by number or carrier; inspect stacks from top tier to ground; review four action quadrants; and manage post-action work and inventory. Routine, reefer power outage, shared exit congestion and combined scenarios preserve the same cohort while recalculating priorities. Pickup delays use whole days, with a minimum positive delay of one day.
+
+The yard runs against a transactional **SQLite database** through `/api/yard`. Fresh fixtures contain 1,780 LA containers and 1,142 Rotterdam containers; departures and resolutions change the current workspace. An optional **Agent suggestions** panel drafts a notification email with recipient/CC roles, editable subject and body, and supporting evidence. Generation is explicit and authenticated; no email is sent automatically. Actual email addresses must be supplied by the operator.
 
 - **Repository:** <https://github.com/yangchen1234/gate-triage-backend>
 - **Hosted API:** <https://gate-triage-backend.onrender.com>
@@ -11,7 +13,9 @@ The web console now adapts the existing Workbench design to Ryan's 100-container
 - **Frontend examples:** [JavaScript and curl guide](docs/api-usage.md)
 - **Where the money figures come from:** [Tariff assumptions](docs/tariff-assumptions.md) — one example public tariff per port, what it covers and what it does not. Also returned as `tariff_basis` / `data_note` on `/plan` and in every `decision_trace`.
 
-The repository includes Ryan's scoring engine and **100 synthetic containers**, re-evaluated under three port profiles. These are what-if configurations of one dataset, not live containers in three ports. It does not use live Terminal49 data or execute real port operations. Rules-only mode works without a key. For a shared team Claude connection, the service owner sets `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, and a private `CONSOLE_TEAM_ACCESS_CODE` in **Render → Environment**. Teammates enter only that access code in the web console; the API key never enters the browser. All three values are required, and a key alone does not enable public model use. Per-session personal keys remain an advanced option. Configuration is not a live model-access check; generation reports the actual mode and any fallback. See the [agent and credential contract](docs/agent-console.md).
+Ryan's original **100-container scoring console** remains available at `/?view=legacy`, with Los Angeles, Shanghai and Rotterdam profiles and its existing API contracts. `/?preview=yard` remains compatible with the final yard view. These are separate synthetic datasets and demonstration policies, not live Terminal49 traffic. The separate PostgreSQL Workbench and time-stepped simulator remain outside this release.
+
+The yard rules and workflow operate without a model key. For shared agent access, the service owner sets `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, and a private `CONSOLE_TEAM_ACCESS_CODE` in **Render → Environment**, plus `ANTHROPIC_WORKSPACE_ID` if required by the key. Teammates enter only the access code; the provider key stays on the server. Browser agent access lasts up to 15 minutes and ends on server restart; Generate opens reconnection settings when access expires. Configuration alone does not verify provider access. See the [yard backend contract](docs/yard-backend.md) and [agent connection details](docs/yard-claude-assistant.md).
 
 ## Run locally
 
@@ -48,7 +52,7 @@ python scripts/smoke_api.py http://127.0.0.1:8000
 
 The script checks the endpoints, all four scenario presets, queue ordering, action counts and the fee calculation. It temporarily changes the shared scenario and restores the original state afterward. A failed restoration also makes the check fail.
 
-## API contract
+## Legacy API contract
 
 | Method | Path | Response |
 |---|---|---|
@@ -61,7 +65,7 @@ The script checks the endpoints, all four scenario presets, queue ordering, acti
 | `POST` | `/plan/approve` | Legacy shared in-memory decision; no message is sent |
 | `GET` | `/plan/approvals` | Legacy shared decisions |
 
-The web console uses isolated authenticated endpoints under `/api/console`, not the legacy shared scenario. Create a session, authorize its team connection or configure an optional personal key, explicitly dispatch a plan, poll the returned job, then record a decision. See [the full flow](docs/agent-console.md#agent-api-flow) and `/docs`. Model calls require a console token, an authorized team connection or personal session key, an explicit generation request, and the current revision. Page refresh and job polling do not trigger new model calls.
+The legacy web console uses isolated authenticated endpoints under `/api/console`, not the legacy shared scenario. Create a session, authorize its team connection or configure an optional personal key, explicitly dispatch a plan, poll the returned job, then record a decision. See [the full flow](docs/agent-console.md#agent-api-flow) and `/docs`. The yard's workflow endpoints are documented separately in [the yard backend contract](docs/yard-backend.md). Model calls require a console token, an authorized team connection or personal session key, an explicit generation request, and the current revision. Page refresh and job polling do not trigger new model calls.
 
 Container records retain their original data fields, including `container_id`, `cargo_type`, `consignee_type`, `sources`, `demurrage_usd_per_day`, `free_days_left`, `zone` and `arrived_at`. The scorer adds source `trust` values and the fields `priority`, `urgency`, `conflict_score`, `action` and `reason`. Scores range from 0 to 1. Non-refrigerated containers have `sources.reefer: null`.
 
@@ -151,7 +155,7 @@ The repository includes a [Dockerfile](Dockerfile) and [Render Blueprint](render
 
 Render's free service may sleep while idle. Open `/health` before the demo and allow time for it to wake up. See [Render's free service documentation](https://render.com/docs/free).
 
-Run **one worker and one instance**. The new web console has isolated expiring process-memory sessions; its keys, scenarios, jobs, and decisions reset on restart or redeployment. Legacy endpoints retain their shared process-memory scenario and approvals. Durable storage and multi-instance session routing are outside this release. The independent local Workbench branch retains its PostgreSQL implementation.
+Run **one worker and one instance**. Yard inventory, decisions, tasks, observations and email drafts are stored in SQLite. The current free Render service has an ephemeral filesystem: its database is not durable across redeploys or replacement. Local SQLite data survives a process restart; hosted persistence requires a persistent volume or external database. No paid storage is provisioned by this release. Agent authorizations remain in process memory and expire independently. The legacy console and legacy APIs retain their process-memory scenarios and approvals. See [backup and storage details](docs/yard-backend.md#deployment-and-backup).
 
 CORS allows all origins by default, with credentials disabled. Set `CORS_ORIGINS` to restrict legacy frontend origins. New console operations require `X-Console-Token`; CORS is not authentication. Legacy scenario writes remain public, so existing legacy clients share state. Public `GET /plan` is rules-only and never uses a deployment's model key. Do not enable a paid legacy `CLOUD_REASONER` on the public demo without separately protecting the legacy routes.
 
@@ -177,3 +181,25 @@ The repository is public and can be shared directly with teammates. For push acc
 Ryan contributed the dataset and current scoring engine. Codex assisted with API implementation, service integration, fee statistics, deployment configuration, testing and documentation. IBM Bob's IDE agent originally implemented `scripts/smoke_api.py`; Codex subsequently reviewed it, corrected asynchronous explanation comparisons and scenario restoration handling, and added regression coverage. The [IBM Bob record](docs/ibm-bob.md) documents that contribution.
 
 Gate Triage provides recommendations and a synthetic simulation for human review. It does not clear customs holds, authorize physical container release or control terminal equipment. Source evidence and rule explanations remain available to support review. Live Terminal49 integration and real operational validation are future work.
+
+
+## Yard API and notification drafts
+
+Open `/` to use the LA/Rotterdam yard UI with the database-backed workflow. The existing `/?preview=yard` link also works.
+Start `uvicorn main:app --host 127.0.0.1 --port 8010 --workers 1` and the web dev server
+on port 5176. The header must show **Connected · SQLite**. Inventory, scenarios,
+observations, decisions, post-action progress, resolutions and gate-outs now live in
+`.local/yard.sqlite3` (`YARD_DATABASE_PATH` overrides it). The browser uses acknowledged
+server snapshots and conditional updates rather than localStorage operational state.
+Agent generation and the original queue API remain unchanged.
+
+See [the yard backend contract](docs/yard-backend.md) for commands, concurrency,
+retry handling, audit, data provenance, storage limits and deployment. Hosted persistent
+storage must be configured before relying on SQLite across Render redeploys; this
+implementation does not provision a database service or deploy the branch.
+
+The yard inspector also has an optional **Agent suggestions** panel for evidence-based
+suggestions and editable fault-email drafts. See [connection and API details](docs/yard-claude-assistant.md).
+For local `.env` loading, start `.venv/bin/python scripts/run_yard.py` instead of
+the bare uvicorn command. Opening the panel makes no model request; explicit
+generation requires authorized Claude access. Drafting never sends email or changes inventory.

@@ -31,7 +31,7 @@ def make_settings(tmp_path, rows):
     def make(data=None, **overrides):
         path = tmp_path / "containers.json"
         path.write_text(json.dumps(rows if data is None else data), encoding="utf-8")
-        return Settings(containers_file=path, **overrides)
+        return Settings(containers_file=path, **{'yard_database_path':tmp_path/'yard.sqlite3', **overrides})
 
     return make
 

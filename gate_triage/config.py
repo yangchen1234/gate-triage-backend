@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parent.parent
 @dataclass(frozen=True)
 class Settings:
     containers_file: Path = ROOT / "data" / "containers.json"
+    yard_database_path: Path = ROOT / '.local' / 'yard.sqlite3'
     scorer: str = "gate_triage.score:score"
     containers_per_lane_per_day: int = 12
     cors_origins: tuple[str, ...] = ("*",)
@@ -21,6 +22,7 @@ class Settings:
     def from_env(cls) -> "Settings":
         return cls(
             containers_file=Path(os.getenv("CONTAINERS_FILE", str(ROOT / "data" / "containers.json"))),
+            yard_database_path=Path(os.getenv('YARD_DATABASE_PATH', str(ROOT / '.local' / 'yard.sqlite3'))),
             scorer=os.getenv("SCORER", "gate_triage.score:score"),
             containers_per_lane_per_day=int(os.getenv("CONTAINERS_PER_LANE_PER_DAY", "12")),
             cors_origins=tuple(x.strip() for x in os.getenv("CORS_ORIGINS", "*").split(",") if x.strip()),

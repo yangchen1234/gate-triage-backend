@@ -7,6 +7,7 @@ from pathlib import Path
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -26,6 +27,10 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
+        from gate_triage.yard_store import YardStore
+        app.state.yard_store = YardStore(config.yard_database_path)
+        from gate_triage.yard_assistant import YardAssistant
+        app.state.yard_assistant = YardAssistant(app.state.yard_store, console_store)
         service = QueueService(config, scorer=scorer, reasoner=reasoner)
         app.state.service = service
         task = None
@@ -36,6 +41,7 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
         finally:
             if console_store is not None:
                 console_store.close()
+            app.state.yard_assistant.close()
             if task:
                 await task
 
@@ -46,13 +52,15 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
     app.add_middleware(CORSMiddleware, allow_origins=list(config.cors_origins),
                        allow_credentials=False, allow_methods=["GET", "POST", "PUT", "DELETE"], allow_headers=["*"])
 
+    app.add_middleware(GZipMiddleware, minimum_size=1500)
+
     @app.middleware("http")
     async def browser_headers(request, call_next):
         response = await call_next(request)
         response.headers["X-Content-Type-Options"] = "nosniff"
         response.headers["Referrer-Policy"] = "no-referrer"
         response.headers["X-Frame-Options"] = "DENY"
-        if request.url.path.startswith("/api/console"):
+        if request.url.path.startswith(("/api/console", "/api/yard")):
             response.headers["Cache-Control"] = "no-store"
         elif request.url.path == "/":
             response.headers["Cache-Control"] = "no-store"
@@ -141,6 +149,12 @@ def create_app(settings: Settings | None = None, *, scorer: ScoreFunction | None
             "scoring_ms": snapshot.scoring_ms, "scenario": snapshot.scenario,
             "scorer": config.scorer,
         }
+
+    from gate_triage.yard_api import install_yard
+    install_yard(app)
+
+    from gate_triage.yard_assistant import install_yard_assistant
+    install_yard_assistant(app)
 
     from gate_triage.console import install_console
     console_store = install_console(app, config)

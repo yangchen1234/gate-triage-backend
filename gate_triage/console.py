@@ -131,6 +131,8 @@ class ConsoleStore:
         self._server_key = None
         self._server_model = None
         self._team_code = None
+        workspace = os.getenv("ANTHROPIC_WORKSPACE_ID", "")
+        self._server_workspace = workspace if re.fullmatch(r"wrkspc_[A-Za-z0-9]{8,80}", workspace) else None
         key = os.getenv("ANTHROPIC_API_KEY", "")
         model = os.getenv("ANTHROPIC_MODEL", "")
         code = os.getenv("CONSOLE_TEAM_ACCESS_CODE", "")
@@ -181,6 +183,7 @@ class ConsoleStore:
             self._server_key = None
             self._team_code = None
             self._server_model = None
+            self._server_workspace = None
         self._executor.shutdown(wait=False, cancel_futures=True)
         self._sweeper.join(timeout=1)
 
@@ -315,6 +318,44 @@ class ConsoleStore:
             self._erase(session)
             return {"model": self._model_meta(session)}
 
+    def assistant_access(self, token):
+        """Authorize the yard assistant without exposing any provider credential."""
+        with self._lock:
+            session = self._get(token)
+            if not self._model_meta(session)["configured"]:
+                raise HTTPException(409, "Connect Claude before generating a yard advisory")
+
+    def reserve_assistant(self, token, job_id):
+        """Share the existing session, spending and concurrency limits with yard drafts."""
+        with self._lock:
+            session = self._get(token)
+            self.assistant_access(token)
+            if session.active_job:
+                raise HTTPException(409, "An assistant request is already running for this session")
+            now = time()
+            while session.calls and session.calls[0] < now - 60:
+                session.calls.popleft()
+            if len(session.calls) >= 4 or session.model_jobs >= 12 or len(self._model_ips[session.ip]) >= 24:
+                raise HTTPException(429, "Claude request limit reached; wait or reconnect later")
+            if not self._model_slots.acquire(blocking=False):
+                raise HTTPException(429, "Model concurrency limit reached; retry later")
+            session.active_job = job_id
+            session.cancel = Event()
+            session.calls.append(now)
+            session.model_jobs += 1
+            self._model_ips[session.ip].append(now)
+            key = self._server_key if session.source == "render_environment" else session.key
+            return {"api_key": key.get_secret_value(), "model": session.model, "_cancel": session.cancel,
+                    **({"workspace_id": self._server_workspace} if session.source == "render_environment" and self._server_workspace else {})}
+
+    def finish_assistant(self, token, job_id, cfg):
+        cfg.clear()
+        with self._lock:
+            session = self.sessions.get(token)
+            if session and session.active_job == job_id:
+                session.active_job = None
+        self._model_slots.release()
+
     @staticmethod
     def _job_view(session, job):
         result = deepcopy({key: value for key, value in job.items() if not key.startswith("_")})
@@ -376,6 +417,8 @@ class ConsoleStore:
                 selected_key = self._server_key if session.source == "render_environment" else session.key
                 cfg = {"base_url": "https://api.anthropic.com/v1/", "api_key": selected_key.get_secret_value(),
                        "model": session.model, "_cancel": session.cancel}
+                if session.source == "render_environment" and self._server_workspace:
+                    cfg["workspace_id"] = self._server_workspace
                 session.model_jobs += 1
                 self._model_ips[session.ip].append(now)
             try:
@@ -453,6 +496,8 @@ def install_console(app: FastAPI, settings: Settings) -> ConsoleStore:
     async def safe_validation(request, exc):
         if request.url.path.startswith("/api/console"):
             return JSONResponse(status_code=422, content={"detail": "Invalid console request; check fields and limits"})
+        if request.url.path.startswith("/api/yard"):
+            return JSONResponse(status_code=422, content={"detail": "Invalid yard request; check fields and limits"})
         return await request_validation_exception_handler(request, exc)
 
     @router.get("/ports")

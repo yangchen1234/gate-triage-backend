@@ -1,0 +1,53 @@
+{
+  "source": "Cross-language synthetic fixtures / yard-v3-shared-access-days; legacy physical cohort retained, not observed port data",
+  "profiles": [
+    {
+      "port": "la",
+      "seed": 27149,
+      "fixture": "09854fd852d90f371fca3f83c52824996ecba20b98be869c1b864d1d2040a94a",
+      "policies": {
+        "routine": "e29c13b33ee82a5e079d241ffbb7164d3311157dad1c3056cde6192e97282d6d",
+        "power": "ca2c7df4532f1d35ea55e655557c450703d753aaf27fef0d6f784685810924c5",
+        "congestion": "0323828d12ac82644c828a7de050000e19d87fdd2afae1f6769ad8690ae1bc7d",
+        "combined": "0ba5103067b741814b294d46a6c2155a24978863c60f8b8aa855b438001abbb5"
+      },
+      "legacyFixture": "4e2f6f89982aee6516f806d5f43f1645ae133cd68fd6df07dd35a106c01e9e23"
+    },
+    {
+      "port": "rotterdam",
+      "seed": 44329,
+      "fixture": "3bd3c1375be6f84ecaaec1f1ffb104f20991c26f9fbe658ef69d960fdb01b343",
+      "policies": {
+        "routine": "88f8dd8c5e5bc922fad754a78d3a8a679fe09b83cabfc0ff695fb1002f152746",
+        "power": "a6ce7ee78fc0851a0609d8d83f0cab9710ffd19ddecffe611780cfd0a9ed7d6e",
+        "congestion": "03afbfe9b40fbbbfda9d9c03a1c2dbd3709ae8e31ec6d87dc3f6d24845b0cf51",
+        "combined": "07e58fd1cb46150da261e9e33781ae5ab5d0261d2b59c779dfdc492039370ec4"
+      },
+      "legacyFixture": "d3d0aef244704ddb1010e91d22f6f94c0bd7353246b3da83c16970d3a3314069"
+    },
+    {
+      "port": "la",
+      "seed": 27150,
+      "fixture": "38d99f83391bf455fcf31eef3f1b7d0864b98b535ee889975164e94a185aa328",
+      "policies": {
+        "routine": "3924b375697abfb3e08dc0a6d34bbbb7395dc1127d5474759eec74a63c8a6a05",
+        "power": "16d157742a207dc5f09ed833505c822803c9d16a86e071939f2c628e09feab26",
+        "congestion": "081a56c90b1b642ebed1cea73b35df04511b291145ee9689d90739ad475189f4",
+        "combined": "f27d29c9524de1b744888c4c73abb8795d880dfb3fb2c84b82657f8516b69ad1"
+      },
+      "legacyFixture": "eca85867d3e3eeafc4b29024b612ea9b1c1416b6a05acedc4459d145139ccc08"
+    },
+    {
+      "port": "rotterdam",
+      "seed": 44330,
+      "fixture": "67605764b24d068f6c6d4e277055b448800cd7e22cf02117e82d046b5b7b26a6",
+      "policies": {
+        "routine": "68d926f301ca46947eff89fc378d9aaed1757ae8b57f7e80e06b32ca4cd6e6be",
+        "power": "72dd7304d9e31a483617d5ac589d73d9bd031df76dd78ba84127c457bf0c1b8c",
+        "congestion": "34eb33913f52b62d8a31d6de90a8550d150bb39f80a7cad265ff636e93e941aa",
+        "combined": "f217ee547b215c0d90e1a26fa151be13e98e5c34aca6cf55733cfc7c58acbcb1"
+      },
+      "legacyFixture": "37bed1c5e355e7bf42c954f1f4dc1825280efa6a5172b240fc598e9d4c2aab81"
+    }
+  ]
+}

@@ -32,15 +32,23 @@ export async function newSession(): Promise<Snapshot> {
   const data = await request<Snapshot & { token: string }>('/session', { method: 'POST' });
   token = data.token;
   try { sessionStorage.setItem(TOKEN_STORAGE, token); } catch { /* No key is ever stored here. */ }
+  bootstrap = Promise.resolve(data);
   return data;
 }
 
 let bootstrap: Promise<Snapshot> | null = null;
 export function loadSession(): Promise<Snapshot> {
   // Shared across React StrictMode's initial effects: never create duplicate sessions.
-  if (!bootstrap) bootstrap = token ? request<Snapshot>('/session') : newSession();
+  if (!bootstrap) {
+    const pending = token ? request<Snapshot>('/session') : newSession();
+    const shared = pending.catch(error => { if (bootstrap === shared) bootstrap = null; throw error; });
+    bootstrap = shared;
+  }
   return bootstrap;
 }
+
+// A scoped session capability, never the provider API key.
+export const consoleSessionHeaders = (): Record<string,string> => token ? { 'X-Console-Token': token } : {};
 
 export const api = {
   session: () => request<Snapshot>('/session'),

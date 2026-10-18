@@ -59,7 +59,9 @@ def _llm_source(cfg: dict | None) -> str:
 
 
 def _client(cfg: dict):
-    return OpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"], timeout=20.0, max_retries=0)
+    headers = {"anthropic-workspace-id": cfg["workspace_id"]} if cfg.get("workspace_id") else {}
+    return OpenAI(base_url=cfg["base_url"], api_key=cfg["api_key"], timeout=20.0, max_retries=0,
+                  **({"default_headers": headers} if headers else {}))
 
 
 def _close_client(client):
