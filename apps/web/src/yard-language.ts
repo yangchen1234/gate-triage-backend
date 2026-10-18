@@ -362,6 +362,21 @@ Urgency|Urgentie
 New action triggered by this scenario|Nieuwe actie door dit scenario
 Open action matrix|Actiematrix openen
 Evidence snapshot|Overzicht bewijsmateriaal
+active flag|actieve melding
+active flags|actieve meldingen
+No active flags|Geen actieve meldingen
+Weight mismatch|Gewicht wijkt af
+Temperature deviation|Temperatuurafwijking
+Declared|Aangegeven
+Measured|Gemeten
+Observed|Gemeten
+Setpoint|Instelwaarde
+Difference from declaration|Verschil met aangifte
+Difference from setpoint|Verschil met instelwaarde
+Release blocked|Vrijgave geblokkeerd
+Report missing|Melding ontbreekt
+Power interrupted|Voeding onderbroken
+Access restricted|Toegang beperkt
 Source|Bron
 Fixture + verified demo updates|Demodata + geverifieerde updates
 Declared / measured|Aangegeven / gemeten
