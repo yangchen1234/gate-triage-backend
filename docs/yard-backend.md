@@ -255,8 +255,9 @@ The same comparator drives inventory and stack representatives, so urgent perish
 records become visible on the map as well as in Actions. Yellow labels identify
 perishables; red indicates an active urgent care / perishable-delay problem. Customs
 has a separate blue map color. Problem, proposed action and evidence remain distinct.
-The scenario impact panel compares current, whole-yard server scores against routine;
-it counts each container once and separately shows newly high-priority stock.
+Scenario changes update the map, queue and inspector directly. The queue marks newly
+high-priority actions with their current scores; there is no duplicate scenario-summary
+card above the map.
 
 Fresh deterministic fixture results (no operational throughput claim):
 
