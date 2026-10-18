@@ -26,14 +26,15 @@ test('disruptions preserve the cohort and independent customs holds', () => {
   assert.ok(combined.exceptions > normal.exceptions);
   assert.deepEqual(blocks, original);
 });
-test('power follows an assigned circuit, not zone names; congestion stays scoped', () => {
+test('power follows an assigned circuit, not zone names; shared congestion follows sensitive cargo', () => {
   const base = { ...makeDemo()[0].containers[0], issue: 'clear', plug: null };
   assert.deepEqual(issuesFor({ ...base, block: 'B01', cargo: 'reefer' }, 'power'), []);
   assert.deepEqual(issuesFor({ ...base, block: 'B03', cargo: 'dry' }, 'power'), []);
   assert.deepEqual(issuesFor({ ...base, block: 'B01', cargo: 'reefer', plug: { id: 'test', circuit: 'R1' } }, 'power'), ['power']);
   assert.deepEqual(issuesFor({ ...base, block: 'C01', cargo: 'reefer', plug: { id: 'test', circuit: 'R2' } }, 'power'), []);
-  assert.deepEqual(issuesFor({ ...base, block: 'C03' }, 'congestion'), ['congestion']);
+  assert.deepEqual(issuesFor({ ...base, block: 'C03' }, 'congestion'), []);
   assert.deepEqual(issuesFor({ ...base, block: 'C02' }, 'congestion'), []);
+  assert.deepEqual(issuesFor({ ...base, block: 'A03', perishable: true }, 'congestion'), ['congestion']);
 });
 test('infrastructure has unique, finite plug assignments and heterogeneous zone limits', () => {
   for (const seed of [27149, 27150, 1, 999]) {
@@ -62,8 +63,8 @@ test('action importance and urgency are independent and respond to disruption, n
   assert.equal(actionFor({ ...c, reported: 125, criticalCargo: true }, 'sensor', 'routine').quadrant, 'do');
   assert.equal(actionFor({ ...c, reported: 89 }, 'sensor', 'routine').quadrant, 'monitor');
   assert.equal(actionFor({ ...c, reported: 90 }, 'sensor', 'routine').quadrant, 'coordinate');
-  assert.equal(actionFor({ ...c, handlingWindowMinutes: 60 }, 'weight', 'routine').quadrant, 'do');
-  assert.equal(actionFor({ ...c, handlingWindowMinutes: 61 }, 'weight', 'routine').quadrant, 'plan');
+  assert.equal(actionFor({ ...c, pickupWindowDays: 1 }, 'weight', 'routine').quadrant, 'do');
+  assert.equal(actionFor({ ...c, pickupWindowDays: 2 }, 'weight', 'routine').quadrant, 'plan');
   const outage = actionsFor(c, 'power');
   assert.equal(outage.length, 2);
   assert.ok(outage.every(a => a.quadrant === 'do'));
@@ -72,7 +73,7 @@ test('action importance and urgency are independent and respond to disruption, n
   assert.equal(actionFor(c, 'sensor', 'routine').quadrant, 'monitor');
 });
 test('independent hold follow-up survives emergency care and a changed priority is not release', () => {
-  const c = { ...makeDemo().find(b => b.id === 'B01').containers.find(c => c.plug), issue: 'customs', handlingWindowMinutes: 30 };
+  const c = { ...makeDemo().find(b => b.id === 'B01').containers.find(c => c.plug), issue: 'customs', pickupWindowDays: 1 };
   assert.equal(actionFor(c, 'customs', 'routine').quadrant, 'do');
   const emergency = actionsFor(c, 'combined');
   assert.deepEqual(new Set(emergency.map(a => a.issue)), new Set(['customs', 'power', 'congestion']));

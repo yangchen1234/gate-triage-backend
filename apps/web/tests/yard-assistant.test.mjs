@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-const {yardAssistantApi,assistantModel,advisoryIsStale}=await import('../src/yard-assistant-api.ts');
+const {yardAssistantApi,assistantModel,advisoryIsStale,assistantConnectionState}=await import('../src/yard-assistant-api.ts');
 const response=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json'}});
 const model={configured:true,model:'claude-test',source:'render_environment',server_available:true};
 const draft={id:'job-1',requestId:'request-1',runId:'run-1',inputRevision:3,port:'la',containerId:'SIMU1',issue:'customs',status:'running',stale:false};
@@ -57,4 +57,14 @@ test('advisory freshness includes run identity, revision and explicit server inv
  assert.equal(advisoryIsStale(draft,'run-1',4),true);
  assert.equal(advisoryIsStale(draft,'new-run',3),true);
  assert.equal(advisoryIsStale({...draft,stale:true},'run-1',3),true);
+});
+
+test('connection readiness honors expiry instead of leaving a misleading ready state',()=>{
+ const now=Date.parse('2026-10-18T01:00:00Z');
+ assert.equal(assistantConnectionState(null,now),'checking');
+ assert.equal(assistantConnectionState({...model,key_expires_at:'2026-10-18T01:15:00Z'},now),'ready');
+ assert.equal(assistantConnectionState({...model,key_expires_at:'2026-10-18T01:00:00Z'},now),'expired');
+ assert.equal(assistantConnectionState({...model,key_expires_at:'invalid'},now),'expired');
+ assert.equal(assistantConnectionState({...model,configured:false},now),'team_required');
+ assert.equal(assistantConnectionState({...model,configured:false,server_available:false},now),'unavailable');
 });

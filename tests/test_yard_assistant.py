@@ -23,7 +23,7 @@ HEADERS={'X-Yard-Request':'1'}
 def result(context):
     return dict(summary='Verify the recorded exception before dependent handling.',
                 recommendations=[dict(action='Request an authorized check.',rationale='Recorded issue needs verification.',evidenceIds=['F4','F7'])],
-                missingInformation=['On-site confirmation'],subject='SIMULATION: container follow-up',
+                missingInformation=['On-site confirmation'],subject=f"SIMULATION: {context['containerId']} follow-up",
                 body=f"SIMULATION: Please verify the recorded exception for {context['containerId']}. This is a draft, not release permission.",
                 recipientRole=context['recipientRole'],escalation=context['escalation'],source='claude',model='claude-test',
                 language=context['language'],generatedAt='2026-10-17T00:00:00Z',rules=context['rules'],delivery='draft_only')
@@ -172,6 +172,40 @@ def test_session_rate_limit_is_shared_with_the_existing_console(connected):
     assert len(calls)==4
 
 
+def test_email_routing_uses_issue_carrier_and_severity_not_invented_contacts(connected):
+    client,auth,calls=connected
+    state=current(client)
+    changed=client.post('/api/yard/ports/la/commands',json={'type':'scenario','scenario':'congestion'},
+                        headers={**HEADERS,'If-Match':state.headers['etag'],'Idempotency-Key':str(uuid4())})
+    assert changed.status_code==200
+    state=current(client)
+    snapshot=state.json()
+    for cargo,coordinator in [('dry','Terminal cargo coordinator'),('reefer','Reefer coordinator')]:
+        c=next(c for c in snapshot['catalog'] if c['cargo']==cargo and any(a['issue']=='congestion' for a in c['assessments']['congestion']))
+        context=assistant.build_context(snapshot,dict(containerId=c['id'],issue='congestion'))
+        assert context['recipientRole']=='Gate / trucking coordinator'
+        assert coordinator in context['ccRoles']
+        assert 'Operations supervisor' in context['ccRoles']
+        assert f"{assistant.CARRIERS[c['carrier']]} carrier representative" in context['ccRoles']
+        assert '@' not in json.dumps(context['ccRoles'])
+    assert not calls  # Routing and opening the panel do not call a paid model.
+
+
+def test_expired_agent_access_never_calls_provider_or_creates_a_draft(connected):
+    client,auth,calls=connected
+    state=current(client)
+    store=client.app.state.console_store
+    store.sessions[auth['X-Console-Token']].key_expires=time.time()-1
+    response=submit(client,auth,state)
+    assert response.status_code==409 and not calls
+    model=client.get('/api/console/session',headers=auth).json()['model']
+    assert not model['configured'] and model['server_available']
+    # Reauthorizing the existing server key restores access without changing yard state.
+    assert client.put('/api/console/agent/team',json={'access_code':TEAM},headers=auth).status_code==200
+    assert complete(client,submit(client,auth,state).json())['status']=='succeeded'
+    assert len(calls)==1 and current(client).headers['etag']==state.headers['etag']
+
+
 def test_restart_preserves_completed_drafts_and_interrupts_running_ones(connected):
     client,auth,_=connected;state=current(client)
     done=complete(client,submit(client,auth,state).json())
@@ -180,16 +214,17 @@ def test_restart_preserves_completed_drafts_and_interrupts_running_ones(connecte
     restarted=YardStore(store.path);restarted.interrupt_advisories()
     assert restarted.advisory(token,'la',done['id'])['result']==done['result']
     assert restarted.advisory(token,'la',pending['id'])['status']=='failed'
-    with sqlite3.connect(store.path) as db:assert db.execute('PRAGMA user_version').fetchone()[0]==3
+    with sqlite3.connect(store.path) as db:assert db.execute('PRAGMA user_version').fetchone()[0]==4
 
 
-@pytest.mark.parametrize('corruption',['evidence','subject','identity','truncated','secret'])
+@pytest.mark.parametrize('corruption',['evidence','subject','identity','subject_identity','truncated','secret'])
 def test_native_claude_response_validation_and_fixed_destination(monkeypatch,corruption):
     context={'containerId':'SIMU2000001','recipientRole':'Broker / customs liaison','escalation':'responsible_team','language':'en','facts':[{'id':'F4'},{'id':'F7'}],'rules':['Human review required.']}
     draft={k:v for k,v in result(context).items() if k in assistant.Draft.model_fields}
     if corruption=='evidence':draft['recommendations'][0]['evidenceIds']=['F999']
     if corruption=='subject':draft['subject']='Hello\r\nBcc: other@example.test'
     if corruption=='identity':draft['body']='SIMULATION SIMU2009999'
+    if corruption=='subject_identity':draft['subject']='Follow-up without container identity'
     if corruption=='secret':draft['body']+=' '+KEY
     def handle(request):
         assert str(request.url)=='https://api.anthropic.com/v1/messages'

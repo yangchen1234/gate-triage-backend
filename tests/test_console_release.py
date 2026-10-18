@@ -1,7 +1,15 @@
 """Release integration checks: the shareable site and legacy API coexist safely."""
 from fastapi.testclient import TestClient
+import pytest
 
 import main
+
+
+@pytest.fixture(autouse=True)
+def isolated_yard_database(monkeypatch, tmp_path):
+    # Starting a test app interrupts orphaned draft jobs on its database. Never
+    # let release checks touch the operator's running local demonstration.
+    monkeypatch.setenv('YARD_DATABASE_PATH', str(tmp_path/'yard.sqlite3'))
 
 
 def test_public_legacy_plan_never_uses_deployment_model_credentials(monkeypatch):

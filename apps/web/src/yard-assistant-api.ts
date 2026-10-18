@@ -1,13 +1,21 @@
 import { api, ApiError, consoleSessionHeaders, loadSession, newSession } from './api.ts';
 import { ensureYardSession, YardApiError, yardRequest } from './yard-api.ts';
 import type { DemoPort, Issue } from './yard-demo.ts';
+import type { ModelStatus } from './types.ts';
 export type AdvisoryRequest = { containerId:string; issue:Exclude<Issue,'clear'>; question:string };
 export type YardAdvisory = {
  id:string; requestId:string; runId:string; inputRevision:number; port:DemoPort; containerId:string; issue:Issue;
  question:string; status:'running'|'succeeded'|'failed'; stale:boolean; createdAt:string; completedAt:string|null; error:string|null;
- context:{ recipientRole:string; escalation:'supervisor_now'|'responsible_team'; language:'en'|'nl'; facts:{id:string;label:string;value:unknown}[]; rules:string[] };
- result:null|{summary:string;recommendations:{action:string;rationale:string;evidenceIds:string[]}[];missingInformation:string[];subject:string;body:string;recipientRole:string;escalation:string;source:'claude';model:string;language:string;generatedAt:string;rules:string[];delivery:'draft_only'};
+ context:{ recipientRole:string; ccRoles?:string[]; escalation:'supervisor_now'|'responsible_team'; language:'en'|'nl'; facts:{id:string;label:string;value:unknown}[]; rules:string[] };
+ result:null|{summary:string;recommendations:{action:string;rationale:string;evidenceIds:string[]}[];missingInformation:string[];subject:string;body:string;recipientRole:string;ccRoles?:string[];escalation:string;source:'claude';model:string;language:string;generatedAt:string;rules:string[];delivery:'draft_only'};
 };
+export function assistantConnectionState(model:ModelStatus|null, now=Date.now()) {
+ if(!model)return 'checking';
+ const expires=model.key_expires_at?Date.parse(model.key_expires_at):null;
+ if(model.configured&&expires!==null&&(!Number.isFinite(expires)||expires<=now))return 'expired';
+ if(model.configured)return 'ready';
+ return model.server_available?'team_required':'unavailable';
+}
 export async function assistantModel() {
  try { await loadSession(); return (await api.session()).model; }
  catch(error) { if(error instanceof ApiError && error.status===401) return (await newSession()).model; throw error; }

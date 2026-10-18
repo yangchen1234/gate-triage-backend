@@ -10,7 +10,7 @@ export type Cargo = 'dry' | 'reefer' | 'hazmat' | 'empty';
 export type Quadrant = 'do' | 'plan' | 'coordinate' | 'monitor';
 export type PowerCircuit = 'R1' | 'R2';
 export type ActionAssessment = { issue: Exclude<Issue, 'clear'>; importance: number; urgency: number; quadrant: Quadrant; reasons: string[] };
-export type DemoContainer = { perishable?: boolean; commodity?: string; outboundRoute?: string | null; cargoProfileSource?: string; observationVersion?: number; lastObservedAt?: string; lastObservedSource?: string; assessments?: Partial<Record<DemoScenario, ActionAssessment[]>>; id: string; block: string; bay: number; row: number; tier: number; cargo: Cargo; carrier: string; yardStatus: 'in-yard' | 'departed'; issue: Issue; priority: number; temperature: number; setpoint: number; reported: number; weight: number; declared: number; handlingWindowMinutes: number; criticalCargo: boolean; verifiedUnitBackup?: boolean; verifiedAlternateAccess?: boolean; plug: { id: string; circuit: PowerCircuit } | null };
+export type DemoContainer = { pickupWindowDays?: number; perishable?: boolean; commodity?: string; outboundRoute?: string | null; cargoProfileSource?: string; observationVersion?: number; lastObservedAt?: string; lastObservedSource?: string; assessments?: Partial<Record<DemoScenario, ActionAssessment[]>>; id: string; block: string; bay: number; row: number; tier: number; cargo: Cargo; carrier: string; yardStatus: 'in-yard' | 'departed'; issue: Issue; priority: number; temperature: number; setpoint: number; reported: number; weight: number; declared: number; handlingWindowMinutes: number; criticalCargo: boolean; verifiedUnitBackup?: boolean; verifiedAlternateAccess?: boolean; plug: { id: string; circuit: PowerCircuit } | null };
 export type ZoneSpec = { id: string; purpose: string; short: string; maxTiers: number; pluggedRows: number; circuit: PowerCircuit | null; flow: string };
 export type DemoBlock = ZoneSpec & { group: string; col: number; row: number; capacity: number; plugCapacity: number; containers: DemoContainer[] };
 export type DemoDecision = { observationVersion?: number; id: string; scenario: DemoScenario; issue: Issue; choice: 'accepted' | 'dismissed'; note: string; at: string };
@@ -46,8 +46,8 @@ export function zoneFor(id: string, port: DemoPort = 'la') { return zonesFor(por
 export const SCENARIOS: Record<DemoScenario, { name: string; detail: string }> = {
   routine: { name: 'Routine operations', detail: 'Normal conditions · review day-to-day exceptions' },
   power: { name: 'Reefer circuit R1 outage', detail: 'Only connected reefers in B01/B02 lose supply; circuit R2 in C01 remains energized' },
-  congestion: { name: 'Outbound congestion', detail: '120 min demo pickup delay · C03/C04 access and dependent perishable cargo are affected' },
-  combined: { name: 'Combined disruption', detail: 'R1 power loss + 120 min demo pickup delay · separate cargo care from release' },
+  congestion: { name: 'Outbound congestion', detail: 'Shared yard exit congestion · 1 day demo delay · perishable priorities reassessed across the yard' },
+  combined: { name: 'Combined disruption', detail: 'R1 power loss + shared yard exit congestion · separate cargo care from pickup' },
 };
 export const ISSUE: Record<Issue, { label: string; short: string; color: string; level: number; owner: string; action: string; prerequisite: string }> = {
   clear: { label: 'No flagged exception', short: 'Routine', color: '#86bbae', level: 0, owner: 'Terminal coordinator', action: 'Review pickup readiness', prerequisite: 'Verify line release, customs clearance, appointment and receiving arrangements.' },
@@ -59,22 +59,24 @@ export const ISSUE: Record<Issue, { label: string; short: string; color: string;
   congestion: { label: 'Outbound access constrained', short: 'Access', color: '#dfb566', level: 2, owner: 'Gate / trucking coordinator', action: 'Review pickup sequence and appointments', prerequisite: 'Confirm which access is affected and coordinate a valid pickup window. Do not assume all gates are closed.' },
 };
 function random(seed: number) { let n = seed >>> 0; return () => { n = (Math.imul(n, 1664525) + 1013904223) >>> 0; return n / 4294967296; }; }
-export const CONGESTION_DELAY_MINUTES = 120;
+export const CONGESTION_DELAY_DAYS = 1;
 export function cargoProfile(c: Pick<DemoContainer, 'id' | 'cargo' | 'block'>) {
-  const serial = Number(c.id.replace(/\D/g, '') || '0'), perishable = c.cargo === 'reefer' && serial % 5 !== 0;
-  const commodity = perishable ? serial % 2 ? 'Fresh produce' : 'Seafood' : c.cargo === 'reefer' ? 'Pharmaceuticals' : c.cargo === 'empty' ? 'Empty equipment' : 'General cargo';
-  const outboundRoute = ['A01', 'A02', 'B01', 'B02', 'C01', 'C03'].includes(c.block) ? 'PICKUP-1' : c.block === 'C04' ? 'EMPTY-2' : null;
-  return { perishable, commodity, outboundRoute, cargoProfileSource: 'demo_profile_v2' };
+  const serial = Number(c.id.replace(/\D/g, '') || '0');
+  const refrigeratedPerish = c.cargo === 'reefer' && serial % 5 !== 0, ambientPerish = c.cargo === 'dry' && serial % 19 === 0;
+  const perishable = refrigeratedPerish || ambientPerish;
+  const commodity = ambientPerish ? 'Ambient produce' : refrigeratedPerish ? serial % 2 ? 'Fresh produce' : 'Seafood' : c.cargo === 'reefer' ? 'Pharmaceuticals' : c.cargo === 'empty' ? 'Empty equipment' : 'General cargo';
+  return { perishable, commodity, outboundRoute: 'YARD-EXIT', pickupWindowDays: 1 + serial % 5, cargoProfileSource: 'demo_profile_v3' };
 }
+export function pickupWindowDays(c: DemoContainer) { return c.pickupWindowDays ?? cargoProfile(c).pickupWindowDays; }
 export function isPerishable(c: DemoContainer) { return c.perishable ?? cargoProfile(c).perishable; }
 export function congestionExposure(c: DemoContainer, scenario: DemoScenario) {
   const profile = cargoProfile(c), route = c.outboundRoute === undefined ? profile.outboundRoute : c.outboundRoute;
   const affected = ['congestion', 'combined'].includes(scenario) && Boolean(route) && !c.verifiedAlternateAccess && c.yardStatus === 'in-yard';
-  const delayMinutes = affected ? CONGESTION_DELAY_MINUTES : 0;
-  return { affected, route, delayMinutes, windowMinutes: c.handlingWindowMinutes, remainingMinutes: c.handlingWindowMinutes - delayMinutes, direct: ['C03', 'C04'].includes(c.block), perishable: isPerishable(c) };
+  const delayDays = affected ? CONGESTION_DELAY_DAYS : 0;
+  return { affected, route, delayDays, windowDays: pickupWindowDays(c), remainingDays: pickupWindowDays(c) - delayDays, direct: false, perishable: isPerishable(c) };
 }
 export function issuePresentation(c: DemoContainer, issue: Issue) {
-  if (issue === 'congestion' && isPerishable(c)) return { ...ISSUE[issue], label: 'Perishable pickup delayed', short: 'Perishable delay', action: 'Prioritize pickup and confirm cold-chain care', owner: 'Gate / trucking + reefer coordinator', color: '#ce654e', level: 3 };
+  if (issue === 'congestion' && isPerishable(c)) return { ...ISSUE[issue], label: 'Perishable pickup delayed', short: 'Perishable delay', action: c.cargo === 'reefer' ? 'Prioritize pickup and confirm cold-chain care' : 'Prioritize pickup and confirm cargo care', owner: c.cargo === 'reefer' ? 'Gate / trucking + reefer coordinator' : 'Gate / trucking + terminal coordinator', color: '#ce654e', level: 3 };
   return ISSUE[issue];
 }
 export function makeDemo(seed?: number, port: DemoPort = 'la'): DemoBlock[] {
@@ -111,7 +113,7 @@ export function issuesFor(c: DemoContainer, scenario: DemoScenario): Issue[] {
   const issues: Issue[] = c.issue === 'clear' ? [] : [c.issue];
   if (c.cargo === 'reefer' && supplyFor(c, scenario) === 'interrupted') issues.push('power');
   const exposure = congestionExposure(c, scenario);
-  if (exposure.affected && (exposure.direct || exposure.perishable)) issues.push('congestion');
+  if (exposure.affected && exposure.perishable) issues.push('congestion');
   return issues.sort((a, b) => ISSUE[b].level - ISSUE[a].level || a.localeCompare(b));
 }
 export function primaryIssue(c: DemoContainer, scenario: DemoScenario): Issue { return actionsFor(c, scenario).sort(compareActions)[0]?.issue || 'clear'; }
@@ -132,7 +134,7 @@ export const QUADRANTS: Record<Quadrant, { name: string; instruction: string; ax
   coordinate: { name: 'Coordinate promptly', instruction: 'Route to the responsible team', axes: 'Less important · urgent', color: '#ad813c' },
   monitor: { name: 'Monitor', instruction: 'Batch follow-up and reassess', axes: 'Less important · less urgent', color: '#6b857d' },
 };
-// Independent axes. Cutoffs 70/60, 60-min handling window and 90-min telemetry age
+// Independent axes. Cutoffs 70/60, whole-day pickup windows and 90-min telemetry age
 // are DEMO policy parameters, not validated industry safety limits or a production SOP.
 export function actionFor(c: DemoContainer, issue: Exclude<Issue, 'clear'>, scenario: DemoScenario): DemoAction {
   const assessment = c.assessments?.[scenario]?.find(a => a.issue === issue);
@@ -142,17 +144,17 @@ export function actionFor(c: DemoContainer, issue: Exclude<Issue, 'clear'>, scen
   switch (issue) {
     case 'power': importance = 98; urgency = 98; reasons.push(`Assigned plug ${c.plug?.id} is on interrupted ${c.plug?.circuit}.`, 'Active cold-chain interruption: supervisor and maintenance review now.'); break;
     case 'temperature': importance = 95; urgency = 95; reasons.push('Observed excursion requires prompt verification; damage is not inferred.'); break;
-    case 'weight': importance = 85; urgency = !blocked && c.handlingWindowMinutes <= 60 ? 85 : 40; reasons.push('Identity / weight evidence must be reconciled before dependent handling.'); break;
-    case 'customs': importance = 80; urgency = !blocked && c.handlingWindowMinutes <= 60 ? 80 : 30; reasons.push('Authorized clearance is a hard prerequisite; this action is follow-up, not release.'); break;
+    case 'weight': importance = 85; urgency = !blocked && pickupWindowDays(c) <= 1 ? 85 : 40; reasons.push('Identity / weight evidence must be reconciled before dependent handling.'); break;
+    case 'customs': importance = 80; urgency = !blocked && pickupWindowDays(c) <= 1 ? 80 : 30; reasons.push('Authorized clearance is a hard prerequisite; this action is follow-up, not release.'); break;
     case 'sensor': importance = c.criticalCargo ? 80 : 45; urgency = c.reported >= 90 ? 75 : 35; reasons.push(`${c.reported} min without a report; ${c.criticalCargo ? 'higher-sensitivity' : 'standard'} demo cargo.`, 'Telemetry follow-up only; missing data does not establish loss of power.'); if (supplyFor(c, scenario) === 'interrupted') { importance = 90; urgency = 95; reasons.push('Scenario circuit outage raises verification impact and urgency.'); } break;
     case 'congestion': {
       const exposure = congestionExposure(c, scenario);
       if (exposure.perishable) {
         importance = c.criticalCargo ? 94 : 90;
-        urgency = exposure.remainingMinutes <= 0 ? 96 : exposure.remainingMinutes <= 60 ? 90 : exposure.remainingMinutes <= 180 ? 78 : 65;
-        reasons.push('Perishable cargo depends on the congested pickup corridor, including units still in reefer storage.',
-          `Demo delay ${exposure.delayMinutes} min versus pickup window ${exposure.windowMinutes} min; remaining margin ${exposure.remainingMinutes} min.`,
-          'Confirm cold-chain care and coordinate an authorized pickup alternative; delay alone does not establish spoilage.');
+        urgency = exposure.remainingDays <= 0 ? 96 : exposure.remainingDays <= 1 ? 90 : exposure.remainingDays <= 3 ? 78 : 65;
+        reasons.push('Perishable cargo depends on the shared yard exit; its delay risk is assessed per container, across all storage areas.',
+          `Demo delay ${exposure.delayDays} days versus pickup window ${exposure.windowDays} days; remaining margin ${exposure.remainingDays} days.`,
+          c.cargo === 'reefer' ? 'Confirm cold-chain care and coordinate an authorized pickup alternative; delay alone does not establish spoilage.' : 'Confirm ambient cargo storage requirements and coordinate an authorized pickup alternative; delay alone does not establish spoilage.');
       } else {
         importance = c.cargo === 'empty' ? 65 : 78; urgency = c.cargo === 'empty' ? 75 : 82;
         reasons.push('Affected outbound block needs prompt coordination to contain queue spillback.');
@@ -163,15 +165,15 @@ export function actionFor(c: DemoContainer, issue: Exclude<Issue, 'clear'>, scen
   const exposure = congestionExposure(c, scenario);
   if (exposure.affected && exposure.perishable && ['customs', 'weight', 'sensor'].includes(issue)) {
     importance = Math.max(importance, c.criticalCargo ? 92 : 88);
-    urgency = Math.max(urgency, exposure.remainingMinutes <= 60 ? 92 : 78);
+    urgency = Math.max(urgency, exposure.remainingDays <= 1 ? 92 : 78);
     reasons.push('Congestion raises the consequence and urgency of this perishable prerequisite; responsible staff must reconcile it without bypassing the control.');
   }
-  if (issue === 'customs' || issue === 'weight') reasons.push(blocked ? 'Pickup is also blocked by this scenario; plan prerequisite work while access/care is addressed.' : `Synthetic next handling window: ${c.handlingWindowMinutes} min (not an operational deadline).`);
+  if (issue === 'customs' || issue === 'weight') reasons.push(blocked ? 'Pickup is also blocked by this scenario; plan prerequisite work while access/care is addressed.' : `Demo pickup window: ${pickupWindowDays(c)} days (not a shelf-life deadline).`);
   const quadrant: Quadrant = importance >= 70 ? urgency >= 60 ? 'do' : 'plan' : urgency >= 60 ? 'coordinate' : 'monitor';
   return { id: `${c.id}:${issue}`, container: c, issue, importance, urgency, quadrant, reasons };
 }
 export function actionsFor(c: DemoContainer, scenario: DemoScenario): DemoAction[] { return issuesFor(c, scenario).filter((i): i is Exclude<Issue, 'clear'> => i !== 'clear').map(i => actionFor(c, i, scenario)); }
-export function compareActions(a: DemoAction, b: DemoAction) { return b.urgency - a.urgency || b.importance - a.importance || (isPerishable(a.container) && isPerishable(b.container) ? a.container.handlingWindowMinutes - b.container.handlingWindowMinutes : 0) || a.id.localeCompare(b.id); }
+export function compareActions(a: DemoAction, b: DemoAction) { return b.urgency - a.urgency || b.importance - a.importance || (isPerishable(a.container) && isPerishable(b.container) ? pickupWindowDays(a.container) - pickupWindowDays(b.container) : 0) || a.id.localeCompare(b.id); }
 export function selectContainers(containers: DemoContainer[], scenario: DemoScenario, query: string, block: string, exceptions: boolean): DemoContainer[] {
   const text = query.toLowerCase().trim();
   return containers.filter(c => (block === 'all' || c.block === block) && (!exceptions || primaryIssue(c, scenario) !== 'clear') && (!text || `${c.id} ${c.block} ${c.carrier} ${c.cargo} ${issuesFor(c, scenario).map(i => ISSUE[i].label).join(' ')}`.toLowerCase().includes(text))).sort((a, b) => compareAttention(a, b, scenario));

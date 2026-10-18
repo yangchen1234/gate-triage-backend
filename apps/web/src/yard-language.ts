@@ -4,6 +4,20 @@ import type { DemoPort } from './yard-demo.ts';
 // with parameterized messages for IDs/counts; user-entered notes are never translated.
 const dutch: Record<string, string> = Object.fromEntries(`
 Agent suggestions panel|Paneel met agentaanbevelingen
+Draft a notification email for the responsible team, with the problem, impact and requested actions.|Stel een meldingsmail op voor het verantwoordelijke team, met het probleem, de impact en de gevraagde acties.
+Notification email|Meldingsmail
+Cc roles|Cc-rollen
+Recipient roles are suggested. Confirm the actual email addresses before sending.|Ontvangerrollen worden voorgesteld. Controleer de daadwerkelijke e-mailadressen vóór verzending.
+Agent access expired|Agenttoegang verlopen
+Checking agent connection…|Agentverbinding controleren…
+Checking connection…|Verbinding controleren…
+Access until|Toegang tot
+Agent access expired after 15 minutes. Click Generate to reconnect.|Agenttoegang is na 15 minuten verlopen. Klik op Genereren om opnieuw te verbinden.
+Server credentials are configured. Click Generate to connect with the team access code.|Servergegevens zijn ingesteld. Klik op Genereren om met de teamtoegangscode te verbinden.
+Click Generate to check the connection.|Klik op Genereren om de verbinding te controleren.
+Connect the agent to draft an email. Click Generate to open connection settings.|Verbind de agent om een e-mail op te stellen. Klik op Genereren om de verbindingsinstellingen te openen.
+Wait for the current yard update to finish.|Wacht tot de huidige terreinupdate is voltooid.
+Request status is uncertain. Check the same request before generating another draft.|De verzoekstatus is onzeker. Controleer hetzelfde verzoek voordat u een nieuw concept genereert.
 Generate|Genereren
 Generating…|Bezig met genereren…
 Generate suggested actions and a fault email from the current evidence.|Genereer voorgestelde acties en een storingsmail op basis van de actuele gegevens.
@@ -33,6 +47,19 @@ Raised to Do first|Verhoogd naar Direct aanpakken
 Urgent care / perishable delay|Spoedzorg / vertraagde bederfelijke lading
 Demo pickup window|Demo-ophaalvenster
 days|dagen
+day|dag
+day pickup delay|dag ophaalvertraging
+days pickup delay|dagen ophaalvertraging
+days · demo only|dagen · alleen demo
+Ambient produce|Landbouwproducten op omgevingstemperatuur
+Shared exit delay|Vertraging bij gedeelde uitgang
+Shared yard exit congestion · 1 day demo delay · perishable priorities reassessed across the yard|Opstopping bij gedeelde terreinuitgang · 1 dag demovertraging · prioriteiten van bederfelijke lading herzien op het hele terrein
+R1 power loss + shared yard exit congestion · separate cargo care from pickup|Stroomuitval R1 en opstopping bij gedeelde uitgang · scheid ladingzorg en ophalen
+Prioritize pickup and confirm cargo care|Geef ophalen voorrang en bevestig ladingzorg
+Gate / trucking + terminal coordinator|Coördinator poort / transport en terminal
+Confirm ambient storage requirements and a usable pickup appointment; escalate the time-critical case to the supervisor. Resolve independent holds in parallel.|Bevestig de opslagvoorwaarden op omgevingstemperatuur en een bruikbare ophaalafspraak; escaleer de tijdkritische situatie naar de supervisor. Los afzonderlijke blokkades gelijktijdig op.
+Perishable cargo depends on the shared yard exit; its delay risk is assessed per container, across all storage areas.|Bederfelijke lading is afhankelijk van de gedeelde terreinuitgang; het vertragingsrisico wordt per container beoordeeld in alle opslaggebieden.
+Confirm ambient cargo storage requirements and coordinate an authorized pickup alternative; delay alone does not establish spoilage.|Bevestig de opslagvoorwaarden van de lading op omgevingstemperatuur en stem een toegestaan ophaalalternatief af; vertraging alleen bewijst geen bederf.
 Margin after delay|Marge na vertraging
 Routine score|Reguliere score
 Routine inventory · no exception action|Reguliere voorraad · geen afwijkingsactie
@@ -622,6 +649,10 @@ departed|vertrokken
 
 // Parameterized messages use explicit whole-message templates, not word replacement.
 const templates: [string, string][] = [
+  ['Demo delay {delay} days versus pickup window {window} days; remaining margin {margin} days.', 'Demovertraging {delay} dagen tegenover ophaalvenster {window} dagen; resterende marge {margin} dagen.'],
+  ['Demo pickup window: {n} days (not a shelf-life deadline).', 'Demo-ophaalvenster: {n} dagen (geen houdbaarheidstermijn).'],
+  ['{cargo} depends on pickup route {route}, with {delay} days of demo delay. Current location: {block}.', '{cargo} is afhankelijk van ophaalroute {route}, met {delay} dagen demovertraging. Huidige locatie: {block}.'],
+
   ['{n} temperature / power alerts across tiers', '{n} temperatuur- / stroommeldingen in de stapel'],
   ['{n} perishable containers delayed · queue priority raised', '{n} bederfelijke containers vertraagd · hogere wachtrijprioriteit'],
   ['{n} high-priority containers', '{n} containers met hoge prioriteit'],

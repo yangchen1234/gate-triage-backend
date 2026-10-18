@@ -14,29 +14,35 @@ def cohort(port='la'):
 
 
 @pytest.mark.parametrize('port', ['la', 'rotterdam'])
-def test_congestion_reaches_dependent_perishables_not_every_reefer_or_export(port):
+def test_shared_congestion_reaches_scattered_perishables_without_area_closures(port):
     rows = cohort(port)
     perishable = [c for c in rows if c['perishable']]
     assert perishable and any(c['cargo'] == 'reefer' and not c['perishable'] for c in rows)
-    assert {c['block'] for c in perishable} == {'B01', 'B02', 'C01'}
+    assert len({c['block'] for c in perishable}) >= (8 if port == 'la' else 6)
+    ambient = [c for c in perishable if c['cargo'] == 'dry']
+    assert ambient and all(c['plug'] is None and c['commodity'] == 'Ambient produce' for c in ambient)
     for c in rows:
-        expected = c['block'] in ('C03', 'C04') or c['perishable']
+        expected = c['perishable']
         assert ('congestion' in issues_for(c, 'congestion')) == expected
-        if c['block'] in ('A03', 'A04', 'B03', 'B04', 'C02'):
-            assert not congestion_exposure(c, 'congestion')['affected']
+        exposure = congestion_exposure(c, 'congestion')
+        assert exposure['affected'] and exposure['route'] == 'YARD-EXIT'
+        assert exposure['delayDays'] == 1
+        assert isinstance(exposure['windowDays'], int) and exposure['windowDays'] >= 1
+        assert isinstance(exposure['remainingDays'], int)
+        if c['cargo'] in ('empty', 'hazmat'): assert not c['perishable']
     assert all('congestion' not in issues_for(c, 'routine') for c in rows)
 
 
 def test_delay_margin_and_prerequisite_scores_rise_without_clearing_controls():
-    c = deepcopy(next(c for c in cohort() if c['perishable'] and c['issue'] == 'clear'))
-    c.update(issue='customs', handlingWindowMinutes=200)
+    c = deepcopy(next(c for c in cohort() if c['perishable'] and c['cargo'] == 'reefer' and c['issue'] == 'clear'))
+    c.update(issue='customs', pickupWindowDays=3)
     original = deepcopy(c)
     routine, blocked = assess(c, 'customs', 'routine'), assess(c, 'customs', 'congestion')
     assert routine['quadrant'] == 'plan' and blocked['quadrant'] == 'do'
     assert blocked['importance'] > routine['importance'] and blocked['urgency'] > routine['urgency']
     for issue in ('weight', 'sensor'):
         assert assess(c, issue, 'congestion')['urgency'] > assess(c, issue, 'routine')['urgency']
-    urgencies = [assess({**c, 'handlingWindowMinutes': window}, 'congestion', 'congestion')['urgency'] for window in (360, 300, 180, 120, 15)]
+    urgencies = [assess({**c, 'pickupWindowDays': window}, 'congestion', 'congestion')['urgency'] for window in (5, 4, 2, 1)]
     assert urgencies == sorted(urgencies) and urgencies[-1] < assess(c, 'power', 'combined')['urgency']
     assert c == original and 'customs' in issues_for(c, 'congestion')
     fixed = project(c, [dict(containerId=c['id'], issue='congestion')])
@@ -49,11 +55,12 @@ def test_empty_repositioning_does_not_outrank_perishable_pickup():
     rows = cohort()
     empty = next(c for c in rows if c['block'] == 'C04')
     fresh = next(c for c in rows if c['perishable'])
-    assert assess(empty, 'congestion', 'congestion')['quadrant'] == 'coordinate'
+    assert 'congestion' not in issues_for(empty, 'congestion')
     assert assess(fresh, 'congestion', 'congestion')['quadrant'] == 'do'
 
 
-def test_upgrade_preserves_originals_workflows_and_invalidates_old_etag_once(tmp_path):
+@pytest.mark.parametrize('previous_version', [2, 3])
+def test_upgrade_preserves_originals_workflows_and_invalidates_old_etag_once(tmp_path, previous_version):
     path = tmp_path / 'upgrade.sqlite3'
     store = YardStore(path)
     token, _ = store.session()
@@ -63,7 +70,7 @@ def test_upgrade_preserves_originals_workflows_and_invalidates_old_etag_once(tmp
         raw = json.loads(db.execute('SELECT data FROM yard_containers WHERE id=?', (cid,)).fetchone()[0])
         for key in cargo_profile(raw): raw.pop(key, None)
         db.execute('UPDATE yard_containers SET data=?,original_data=? WHERE id=?', (json.dumps(raw), json.dumps(raw), cid))
-        db.execute('PRAGMA user_version=2')
+        db.execute(f'PRAGMA user_version={previous_version}')
     upgraded = YardStore(path)
     after, fresh_etag = upgraded.snapshot(token, 'la', etag)
     assert after['runId'] == before['runId'] and after['revision'] == before['revision'] + 1

@@ -27,7 +27,7 @@ test('all Rotterdam disruption effects stay within the modeled circuit and acces
   assert.ok(held); assert.deepEqual(new Set(issuesFor(held, 'power')), new Set(['power', 'customs']));
   for (const c of rt.flatMap(b => b.containers)) {
     assert.equal(issuesFor(c, 'power').includes('power'), c.plug?.circuit === 'R1');
-    assert.equal(issuesFor(c, 'congestion').includes('congestion'), ['C03', 'C04'].includes(c.block) || isPerishable(c));
+    assert.equal(issuesFor(c, 'congestion').includes('congestion'), isPerishable(c));
   }
 });
 test('Rotterdam gate-out and cache validation use its own fixture rather than the LA IDs', () => {

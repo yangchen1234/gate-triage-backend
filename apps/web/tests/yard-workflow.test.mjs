@@ -91,11 +91,11 @@ test('reefer departure frees occupancy but never energizes an offline circuit', 
   assert.equal(after.capacity, before.capacity);
   assert.equal(after.available, 0);
 });
-test('one verified alternate access does not reopen the entire blocked pickup region', () => {
-  const c = all.find(c => c.block === 'C03' && c.issue === 'clear');
+test('one verified alternate access does not reopen the shared exit for other units', () => {
+  const c = all.find(c => c.perishable && c.issue === 'clear');
   const run = resolve(createYardRun(), c, 'congestion', 'congestion');
   assert.deepEqual(issuesFor(projectContainer(c, run), 'congestion'), []);
-  const other = all.find(x => x.block === 'C03' && x.id !== c.id);
+  const other = all.find(x => x.perishable && x.id !== c.id);
   assert.ok(issuesFor(projectContainer(other, run), 'congestion').includes('congestion'));
 });
 test('pending accepted work blocks gate-out even when its scenario is switched off', () => {

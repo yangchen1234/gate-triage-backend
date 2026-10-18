@@ -1,7 +1,7 @@
 import { TriangleAlert } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { DemoContainer, DemoScenario, Issue } from './yard-demo.ts';
-import { congestionExposure, issuePresentation, SCENARIOS, supplyFor } from './yard-demo.ts';
+import { congestionExposure, issuePresentation, pickupWindowDays, SCENARIOS, supplyFor } from './yard-demo.ts';
 import { useYardLocale } from './YardLocale.tsx';
 import './yard-evidence.css';
 
@@ -69,15 +69,15 @@ export default function YardEvidence({ container, issues, scenario, customsClear
                 </div>
             </>}
             {accessConstrained && <div className="yd-evidence-card yd-evidence-single is-restricted">
-                <dt><span>{t(issuePresentation(container, 'congestion').label)}</span>{badge('Access restricted')}</dt>
-                <dd>{exposure.route} · +{exposure.delayMinutes} {t('min pickup delay')}</dd>
+                <dt><span>{t(issuePresentation(container, 'congestion').label)}</span>{badge('Shared exit delay')}</dt>
+                <dd>{exposure.route} · +{exposure.delayDays} {t(exposure.delayDays === 1 ? 'day pickup delay' : 'days pickup delay')}</dd>
             </div>}
         </dl>
         <dl className="yd-evidence-context">
             <EvidenceContext label="Cargo profile">{t(container.commodity || 'General cargo')}</EvidenceContext>
             <EvidenceContext label="Source">{t('Server database · synthetic observations')}</EvidenceContext>
             <EvidenceContext label="Assigned reefer plug">{t(container.plug ? `${container.plug.id} · ${container.plug.circuit}` : 'None · no connection assigned')}</EvidenceContext>
-            <EvidenceContext label="Handling window">{number(container.handlingWindowMinutes)} {t('min · synthetic')}</EvidenceContext>
+            <EvidenceContext label="Handling window">{number(pickupWindowDays(container))} {t('days · demo only')}</EvidenceContext>
             <EvidenceContext label="Observation version">{number(container.observationVersion || 0)}</EvidenceContext>
             {container.lastObservedAt && <EvidenceContext label="Last observation">{formatTime(container.lastObservedAt)}</EvidenceContext>}
             <EvidenceContext label="Scenario">{t(SCENARIOS[scenario].name)}</EvidenceContext>

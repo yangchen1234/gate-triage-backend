@@ -74,17 +74,17 @@ class YardStore:
         db = sqlite3.connect(self.path, timeout=5, isolation_level=None)
         try:
             version = db.execute('PRAGMA user_version').fetchone()[0]
-            if version > 3: raise RuntimeError('Yard database schema is newer than this application')
+            if version > 4: raise RuntimeError('Yard database schema is newer than this application')
             db.execute('PRAGMA journal_mode=WAL')
             db.executescript(SCHEMA)
             db.execute('BEGIN IMMEDIATE')
-            if db.execute('PRAGMA user_version').fetchone()[0] < 3:
+            if db.execute('PRAGMA user_version').fetchone()[0] < 4:
                 at = stamp()
                 for rid, revision in db.execute('SELECT id,revision FROM yard_runs WHERE active=1').fetchall():
                     db.execute('UPDATE yard_runs SET revision=?,updated_at=? WHERE id=?', (revision + 1, at, rid))
                     db.execute('INSERT INTO yard_audit(run,revision,type,at,data) VALUES (?,?,?,?,?)',
-                               (rid, revision + 1, 'policy_upgrade', at, encode(dict(policyVersion=POLICY_VERSION, source='demo_profile_v2'))))
-                db.execute('PRAGMA user_version=3')
+                               (rid, revision + 1, 'policy_upgrade', at, encode(dict(policyVersion=POLICY_VERSION, source='demo_profile_v3'))))
+                db.execute('PRAGMA user_version=4')
             db.commit()
         finally:
             db.close()
